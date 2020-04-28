@@ -9,7 +9,7 @@
         android:roundIcon="@drawable/icon4apl"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Register"></activity>
+
         <activity android:name=".WelcomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -20,6 +20,10 @@
         <activity
             android:name=".Login"
             android:theme="@style/AppTheme.darks"></activity>
+        <activity android:name=".Register"
+            android:label="Registrasi"
+            android:parentActivityName=".Login"
+            android:theme="@style/Theme.AppCompat.Light.DarkActionBar"></activity>
         <activity
             android:name=".MainActivity"
             android:label="@string/title_activity_welcome"
