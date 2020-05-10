@@ -4,6 +4,8 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
@@ -53,6 +55,9 @@ public class Proyek_adapter extends RecyclerView.Adapter<Proyek_adapter.ViewHold
             super(view);
             nama_proyek = (TextView)view.findViewById(R.id.nameproyek);
             lokasi_proyek = (TextView)view.findViewById(R.id.lokasiproyek);
+            Animation anim = AnimationUtils.loadAnimation(context, R.anim.itemproyekanim);
+            view.startAnimation(anim);
+
         }
     }
 
