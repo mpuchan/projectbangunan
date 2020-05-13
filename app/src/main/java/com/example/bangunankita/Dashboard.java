@@ -29,7 +29,7 @@ public class Dashboard extends AppCompatActivity {
     private Proyek_adapter proyek_adapter;
     private ArrayList<Proyek_model> proyekModels=new ArrayList<>();
     private RecyclerView mRecyclerView;
-    private ProgressBar  mProgressBar;
+//    private ProgressBar  mProgressBar;
     private TextView nameuser;
     SwipeRefreshLayout swipeRefreshLayout;
     @Override
@@ -37,11 +37,12 @@ public class Dashboard extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
         nameuser = findViewById(R.id.nameuser);
-        mProgressBar=(ProgressBar)findViewById(R.id.progress_bar);
-        mProgressBar.setVisibility(View.VISIBLE);
+//        mProgressBar=(ProgressBar)findViewById(R.id.progress_bar);
+//        mProgressBar.setVisibility(View.VISIBLE);
         mRecyclerView= findViewById(R.id.rv_proyek);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-
+        swipeRefreshLayout = findViewById(R.id.swiperf);
+        swipeRefreshLayout.setRefreshing(true);
         nameuser.setText(""+getIntent().getStringExtra("nama"));
         parseJson();
     }
@@ -59,7 +60,7 @@ public class Dashboard extends AppCompatActivity {
             @Override
             public void onResponse(Call<List<Proyek_model>> call,
                                    Response<List<Proyek_model>> response) {
-                mProgressBar.setVisibility(View.GONE);
+                swipeRefreshLayout.setRefreshing(false);
                 if (response.isSuccessful() && response.body()!=null) {
                     proyekModels = new ArrayList<>(response.body());
                     proyek_adapter=new Proyek_adapter(proyekModels,Dashboard.this);
@@ -69,7 +70,7 @@ public class Dashboard extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<List<Proyek_model>> call, Throwable t) {
-                mProgressBar.setVisibility(View.GONE);
+                swipeRefreshLayout.setRefreshing(false);
                 Toast.makeText(Dashboard.this,"Oops! Something went wrong!",
                         Toast.LENGTH_SHORT).show();
             }
