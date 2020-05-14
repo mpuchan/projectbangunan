@@ -27,57 +27,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 android:background="@color/bg_screen4r"
-                app:popupTheme="@style/AppTheme.darks" />
+                app:logo="@drawable/hammer1"
+                app:popupTheme="@style/AppTheme.darks"
+                app:titleTextColor="#FFFFFF" />
 
         </com.google.android.material.appbar.AppBarLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#FF6D00">
-
-            <TextView
-                android:id="@+id/textView4"
-                android:layout_width="168dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
-
-            <TextView
-                android:id="@+id/nameuser"
-                android:layout_width="189dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:padding="10dp"
-                android:paddingStart="5dp"
-                android:paddingLeft="5dp"
-                android:paddingTop="10dp"
-                android:paddingEnd="5dp"
-                android:text="Mpu Chanakya"
-                android:textAlignment="textEnd"
-                android:textColor="#FFFFFF"
-                android:textStyle="bold" />
-
-            <ImageView
-                android:id="@+id/imageView"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_gravity="start|right"
-                android:layout_weight="1"
-                android:adjustViewBounds="false"
-                android:cropToPadding="true"
-                android:padding="3dp"
-                android:paddingStart="3dp"
-                android:paddingLeft="3dp"
-                android:paddingTop="3dp"
-                android:paddingEnd="3dp"
-                android:paddingRight="3dp"
-                android:paddingBottom="3dp"
-                android:scaleType="fitCenter"
-                android:topLeftRadius="50dp"
-                android:topRightRadius="50dp"
-                app:srcCompat="@drawable/icon4apl" />
-
-        </LinearLayout>
+            android:background="#FF6D00"/>
 
 
         <LinearLayout
@@ -104,6 +63,7 @@
                 android:paddingTop="10dp"
                 android:text="LIST DATA PROYEK"
                 android:textAlignment="center"
+                android:textColor="@color/colorAccent2"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 

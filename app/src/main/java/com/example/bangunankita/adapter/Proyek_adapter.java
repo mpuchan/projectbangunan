@@ -6,6 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
@@ -46,6 +48,30 @@ public class Proyek_adapter extends RecyclerView.Adapter<Proyek_adapter.ViewHold
     public int getItemCount() {
         return articles.size();
     }
+
+//    @Override
+//    public Filter getFilter() {
+//        return filter;
+//
+//    }
+
+//    Filter filter = new Filter() {
+//        @Override
+//        protected FilterResults performFiltering(CharSequence constraint) {
+//            ArrayList<Proyek_model> filterproyek =new ArrayList<>();
+//            if (charSequence.toString().isEmpty()){
+//                filterproyek.addAll()
+//            }
+//
+//
+//            return null;
+//        }
+//
+//        @Override
+//        protected void publishResults(CharSequence constraint, FilterResults results) {
+//
+//        }
+//    }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
         private TextView nama_proyek,lokasi_proyek;
