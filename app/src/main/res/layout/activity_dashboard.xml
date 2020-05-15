@@ -88,7 +88,7 @@
         android:layout_margin="@dimen/fab_margin"
         android:background="#FFAB40"
         android:backgroundTint="@color/colorAccent1"
-        app:backgroundTint="@color/colorPrimary"
+        app:borderWidth="3dp"
         app:rippleColor="#FFAB40"
         app:srcCompat="@drawable/ic_edit_white_24dp" />
 

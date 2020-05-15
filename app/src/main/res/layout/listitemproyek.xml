@@ -18,7 +18,8 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="159dp"
+            android:background="@drawable/design"
             android:orientation="vertical"
             android:padding="14dp">
 
@@ -43,8 +44,7 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/icon4apl"
-                        />
+                        android:src="@drawable/icon4apl" />
 
 
                 </LinearLayout>
@@ -75,16 +75,16 @@
             </LinearLayout>
 
             <LinearLayout
-                android:layout_marginLeft="6dp"
                 android:layout_width="match_parent"
-                android:orientation="horizontal"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="6dp"
+                android:orientation="horizontal">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
-                    android:orientation="horizontal"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:layout_height="wrap_content">
+                    android:orientation="horizontal">
 
 
                     <TextView
@@ -94,19 +94,18 @@
                         android:layout_weight="1" />
 
                     <ImageView
-                        android:layout_gravity="center"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                       />
+                        android:layout_gravity="center" />
 
 
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="wrap_content"
-                    android:orientation="horizontal"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:layout_height="wrap_content">
+                    android:orientation="horizontal">
 
 
                     <ImageView
@@ -128,9 +127,9 @@
 
                 <LinearLayout
                     android:layout_width="wrap_content"
-                    android:orientation="horizontal"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:layout_height="wrap_content">
+                    android:orientation="horizontal">
 
 
                     <ImageView
