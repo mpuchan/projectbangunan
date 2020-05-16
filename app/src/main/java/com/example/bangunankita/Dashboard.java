@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.bangunankita.Model.Proyek_model;
+import com.example.bangunankita.Retrovit.ApiClient;
 import com.example.bangunankita.Retrovit.RequestInterface;
 import com.example.bangunankita.adapter.Proyek_adapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -49,12 +50,14 @@ public class Dashboard extends AppCompatActivity {
 //        mProgressBar=(ProgressBar)findViewById(R.id.progress_bar);
 //        mProgressBar.setVisibility(View.VISIBLE);
         mRecyclerView = findViewById(R.id.rv_proyek);
+
         Fabadd = findViewById(R.id.fab);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         swipeRefreshLayout = findViewById(R.id.swiperf);
         swipeRefreshLayout.setRefreshing(true);
-        name.setText("" + getIntent().getStringExtra("nama"));
-        parseJson();
+        name.setText("" + getIntent().getStringExtra("accessToken"));
+//        Integer PengembangId = getIntent().getIntExtra("id");
+        getProyek();
 
         Fabadd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,16 +68,14 @@ public class Dashboard extends AppCompatActivity {
     }
 
 
-    private void parseJson() {
+    private void getProyek() {
 
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://proyekbangunan.000webhostapp.com/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
+        RequestInterface request = ApiClient.getClient().create(RequestInterface.class);
+        String token = name.getText().toString();
+        String apiKey = "oa00000000app";
+        Call<List<Proyek_model>> call = request.getProyek(1,apiKey,token);
 
-        RequestInterface request = retrofit.create(RequestInterface.class);
-        Call<List<Proyek_model>> call1 = request.getJson();
-        call1.enqueue(new Callback<List<Proyek_model>>() {
+        call.enqueue(new Callback<List<Proyek_model>>() {
             @Override
             public void onResponse(Call<List<Proyek_model>> call,
                                    Response<List<Proyek_model>> response) {

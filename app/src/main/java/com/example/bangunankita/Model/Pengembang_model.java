@@ -35,6 +35,9 @@ public class Pengembang_model {
     @SerializedName("salt")
     @Expose
     private String salt;
+    @SerializedName("accessToken")
+    @Expose
+    private String accessToken;
 
     public Integer getId() {
         return id;
@@ -99,6 +102,15 @@ public class Pengembang_model {
 
     public void setPicture(String picture) {
         this.picture = picture;
+    }
+
+
+    public String getAccessToken() {
+        return accessToken;
+    }
+
+    public void setAccessToken(String AccessToken) {
+        this.accessToken = accessToken;
     }
 
     public Integer getStatus() {

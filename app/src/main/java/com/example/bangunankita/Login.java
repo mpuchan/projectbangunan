@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.bangunankita.Model.Pengembang_model;
+import com.example.bangunankita.Retrovit.ApiClient;
 import com.example.bangunankita.Retrovit.RequestInterface;
 
 import java.util.HashMap;
@@ -22,9 +23,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Login extends AppCompatActivity {
-    private Retrofit retrofit;
     private RequestInterface requestInterface;
-    private String BASE_URL ="http://192.168.43.163:3000/api/v1/";
     private Button signup;
     private Button login;
     private EditText email;
@@ -35,11 +34,7 @@ public class Login extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         init();
-        retrofit = new Retrofit.Builder()
-                .baseUrl(BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        requestInterface = retrofit.create(RequestInterface.class);
+        requestInterface = ApiClient.getClient().create(RequestInterface.class);
 
         signup.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,10 +66,15 @@ public class Login extends AppCompatActivity {
                                     Toast.LENGTH_LONG).show();
                             AlertDialog.Builder builder1 = new AlertDialog.Builder(Login.this);
                             String nama= result.getNama();
+                            Integer id = result.getId();
+                            String accessToken = result.getAccessToken();
+
                             builder1.setMessage("Login Success");
                             builder1.show();
                             Intent dashboard=new Intent(Login.this, Dashboard.class);
                             dashboard.putExtra("nama",nama);
+                            dashboard.putExtra("id",id);
+                            dashboard.putExtra("accessToken",accessToken);
 
                             startActivity(dashboard);
 

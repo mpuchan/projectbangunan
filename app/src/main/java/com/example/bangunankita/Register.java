@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.bangunankita.Model.Pengembang_model;
+import com.example.bangunankita.Retrovit.ApiClient;
 import com.example.bangunankita.Retrovit.RequestInterface;
 
 import java.util.HashMap;
@@ -21,9 +22,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Register extends AppCompatActivity {
-    private Retrofit retrofit;
     private RequestInterface requestInterface;
-    private String BASE_URL ="http://192.168.43.163:3000/api/v1/";
     private Button regi1,cancel;
     private EditText nama,email,notelp,username,password,repass;
     @Override
@@ -31,11 +30,7 @@ public class Register extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         init();
-        retrofit = new Retrofit.Builder()
-                .baseUrl(BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        requestInterface = retrofit.create(RequestInterface.class);
+        requestInterface = ApiClient.getClient().create(RequestInterface.class);
 
         regi1.setOnClickListener(new View.OnClickListener() {
             @Override

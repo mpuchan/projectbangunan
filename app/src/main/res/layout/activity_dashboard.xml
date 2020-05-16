@@ -86,8 +86,9 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
-        android:background="#FFAB40"
-        android:backgroundTint="@color/colorAccent1"
+        android:background="@drawable/bg_circle"
+        android:backgroundTint="@color/design_default_color_error"
+        app:backgroundTint="@color/design_default_color_surface"
         app:borderWidth="3dp"
         app:rippleColor="#FFAB40"
         app:srcCompat="@drawable/ic_edit_white_24dp" />
