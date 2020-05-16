@@ -1,6 +1,8 @@
 package com.example.bangunankita.adapter;
 
 import android.content.Context;
+import android.nfc.Tag;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,10 +14,13 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.bangunankita.Dashboard;
 import com.example.bangunankita.Model.Proyek_model;
 import com.example.bangunankita.R;
 
 import java.util.ArrayList;
+
+import static androidx.constraintlayout.widget.Constraints.TAG;
 
 
 public class Proyek_adapter extends RecyclerView.Adapter<Proyek_adapter.ViewHolder> {
@@ -48,12 +53,12 @@ public class Proyek_adapter extends RecyclerView.Adapter<Proyek_adapter.ViewHold
     @Override
     public int getItemCount() {
         return proyeks.size();
+
     }
 
 
     public class ViewHolder extends RecyclerView.ViewHolder{
         private TextView nama_proyek,lokasi_proyek;
-
 
         public ViewHolder(View view) {
             super(view);

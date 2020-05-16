@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main_header"
+    android:layout_width="match_parent"
+    android:layout_height="200dp"
+    android:fitsSystemWindows="true">
+
+    <FrameLayout
+        android:id="@+id/greeting_img"
+        android:layout_width="match_parent"
+        android:layout_height="3000dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/bgheader"
+           >
+
+            <TextView
+                android:id="@+id/textView6"
+                android:layout_width="162dp"
+                android:layout_height="33dp" />
+
+            <TextView
+                android:id="@+id/namekita"
+                android:layout_width="wrap_content"
+                android:layout_height="41dp"
+                android:layout_weight="1"
+                android:paddingTop="13dp"
+                android:paddingRight="5dp"
+                android:text="TextView"
+                android:textAlignment="textEnd"
+                android:textColor="#FFFFFF"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/imageView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/common_google_signin_btn_icon_dark" />
+        </LinearLayout>
+
+    </FrameLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/greeting_text"
+        android:layout_alignParentBottom="true">
+
+        <include layout="@layout/main_image_slider" />
+
+    </RelativeLayout>
+
+</RelativeLayout>

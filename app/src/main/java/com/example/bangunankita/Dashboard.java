@@ -80,10 +80,13 @@ public class Dashboard extends AppCompatActivity {
             public void onResponse(Call<List<Proyek_model>> call,
                                    Response<List<Proyek_model>> response) {
                 swipeRefreshLayout.setRefreshing(false);
-                if (response.isSuccessful() && response.body() != null) {
+                if (response.code()==200 && response.body() != null) {
                     proyekModels = new ArrayList<>(response.body());
                     proyek_adapter = new Proyek_adapter(proyekModels, Dashboard.this);
                     mRecyclerView.setAdapter(proyek_adapter);
+                }else if(response.code() == 422){
+                    Toast.makeText(Dashboard.this, "Something Wrong",
+                            Toast.LENGTH_LONG).show();
                 }
             }
 
