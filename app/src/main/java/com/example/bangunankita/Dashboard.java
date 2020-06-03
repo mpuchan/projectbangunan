@@ -8,6 +8,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,29 +17,33 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.bangunankita.Model.Proyek_model;
+import com.example.bangunankita.Model.ResponseModel;
 import com.example.bangunankita.Retrovit.ApiClient;
 import com.example.bangunankita.Retrovit.RequestInterface;
 import com.example.bangunankita.adapter.Proyek_adapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Dashboard extends AppCompatActivity {
 
     private Proyek_adapter proyek_adapter;
-    private ArrayList<Proyek_model> proyekModels = new ArrayList<>();
+    private List<Proyek_model> proyekModels = new ArrayList<>();
     private RecyclerView mRecyclerView;
     private FloatingActionButton Fabadd;
     //    private ProgressBar  mProgressBar;
     private TextView name;
     SwipeRefreshLayout swipeRefreshLayout;
+    private String TAG = "Dashboard";
+    private String token;
+    private String idpengembang;
+    private int id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,9 +60,15 @@ public class Dashboard extends AppCompatActivity {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         swipeRefreshLayout = findViewById(R.id.swiperf);
         swipeRefreshLayout.setRefreshing(true);
-        name.setText("" + getIntent().getStringExtra("accessToken"));
-//        Integer PengembangId = getIntent().getIntExtra("id");
-        getProyek();
+
+//        proyekModels = new ArrayList<ResponseModel>(Collections.singleton(response.body()));
+
+        name.setText("" + getIntent().getStringExtra("nama"));
+
+       token = getIntent().getStringExtra("accessToken");
+        getProyek();;
+        Intent mIntent = getIntent();
+        id = mIntent.getIntExtra("id", id);
 
         Fabadd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,34 +82,39 @@ public class Dashboard extends AppCompatActivity {
     private void getProyek() {
 
         RequestInterface request = ApiClient.getClient().create(RequestInterface.class);
-        String token = name.getText().toString();
         String apiKey = "oa00000000app";
-        Call<List<Proyek_model>> call = request.getProyek(1,apiKey,token);
-
-        call.enqueue(new Callback<List<Proyek_model>>() {
+        Call <ResponseModel> call = request.getProyek(1,apiKey,token);
+        Toast.makeText(Dashboard.this, "Something wrong!",
+                Toast.LENGTH_SHORT).show();
+        call.enqueue(new Callback<ResponseModel>() {
             @Override
-            public void onResponse(Call<List<Proyek_model>> call,
-                                   Response<List<Proyek_model>> response) {
+            public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
                 swipeRefreshLayout.setRefreshing(false);
-                if (response.code()==200 && response.body() != null) {
-                    proyekModels = new ArrayList<>(response.body());
-                    proyek_adapter = new Proyek_adapter(proyekModels, Dashboard.this);
+                if (response.code() == 200 && response.body() != null) {
+//                    Proyek_model data = new Proyek_model();
+//                    data = response.body();
+
+                    proyekModels = response.body().getProyek();
+                    proyek_adapter = new Proyek_adapter(Dashboard.this,proyekModels);
                     mRecyclerView.setAdapter(proyek_adapter);
-                }else if(response.code() == 422){
-                    Toast.makeText(Dashboard.this, "Something Wrong",
-                            Toast.LENGTH_LONG).show();
+                    Log.d(TAG, "Tes" + proyek_adapter);
+
+
+                } else if (response.code() == 422) {
+                    Toast.makeText(Dashboard.this, "Something wrong!",
+                            Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
-            public void onFailure(Call<List<Proyek_model>> call, Throwable t) {
+            public void onFailure(Call<ResponseModel> call, Throwable t) {
                 swipeRefreshLayout.setRefreshing(false);
-                Toast.makeText(Dashboard.this, "Oops! Something went wrong!",
+                Toast.makeText(Dashboard.this, "Oops! Something went wrong!" + t.getMessage(),
                         Toast.LENGTH_SHORT).show();
+
             }
-
-
         });
+
 
     }
 

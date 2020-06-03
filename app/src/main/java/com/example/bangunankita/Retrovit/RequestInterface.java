@@ -2,6 +2,7 @@ package com.example.bangunankita.Retrovit;
 
 import com.example.bangunankita.Model.Pengembang_model;
 import com.example.bangunankita.Model.Proyek_model;
+import com.example.bangunankita.Model.ResponseModel;
 
 import java.util.HashMap;
 import java.util.List;
@@ -21,13 +22,13 @@ public interface RequestInterface {
         @POST("pengembang/register")
         Call<Void>actionRegisterMobile(@Body HashMap<String, String> map);
 
-        @GET("/api/pengembang/{id}")
-        Call<Pengembang_model> getUser(@Path("id") Long id);
+//        @GET("proyek/{PengembangId}/")
+//        Call<ResponseModel> getProyek();
 
         @GET("proyek/{PengembangId}/")
-        Call<List<Proyek_model>> getProyek(@Path("PengembangId") int PengembangId,
-                                           @Query("apiKey") String apiKey,
-                                           @Query("accessToken")String accessToken);
+        Call<ResponseModel> getProyek(@Path("PengembangId") int PengembangId,
+                                            @Query("apiKey") String apiKey,
+                                            @Query("accessToken")String accessToken);
 
 
 

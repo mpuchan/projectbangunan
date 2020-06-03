@@ -4,7 +4,9 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class Pengembang_model {
-
+    @SerializedName("Pengembang")
+    @Expose
+    private Pengembang_model pengembang;
     @SerializedName("id")
     @Expose
     private Integer id;

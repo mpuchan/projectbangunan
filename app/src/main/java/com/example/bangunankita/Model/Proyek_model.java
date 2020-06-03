@@ -3,7 +3,7 @@ package com.example.bangunankita.Model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Proyek_model {
+public class Proyek_model{
 
     @SerializedName("id")
     @Expose
@@ -26,9 +26,6 @@ public class Proyek_model {
     @SerializedName("updatedAt")
     @Expose
     private String updatedAt;
-    @SerializedName("Pengembang")
-    @Expose
-    private Pengembang_model pengembang;
 
     public Integer getId() {
         return id;
@@ -84,14 +81,6 @@ public class Proyek_model {
 
     public void setUpdatedAt(String updatedAt) {
         this.updatedAt = updatedAt;
-    }
-
-    public Pengembang_model getPengembang() {
-        return pengembang;
-    }
-
-    public void setPengembang(Pengembang_model pengembang) {
-        this.pengembang = pengembang;
     }
 
 }
