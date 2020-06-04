@@ -23,7 +23,6 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Login extends AppCompatActivity {
-    private RequestInterface requestInterface;
     private Button signup;
     private Button login;
     private EditText email;
@@ -34,8 +33,6 @@ public class Login extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         init();
-        requestInterface = ApiClient.getClient().create(RequestInterface.class);
-
         signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -53,7 +50,7 @@ public class Login extends AppCompatActivity {
                 map.put("username",email.getText().toString());
                 map.put("password",password.getText().toString());
 
-                Call<Pengembang_model> call = requestInterface.actionLogin(map);
+                Call<Pengembang_model> call = ApiClient.getRequestInterface().actionLogin(map);
 
                 call.enqueue(new Callback<Pengembang_model>() {
                     @Override

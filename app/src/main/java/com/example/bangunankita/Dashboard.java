@@ -44,6 +44,7 @@ public class Dashboard extends AppCompatActivity {
     private String token;
     private String idpengembang;
     private int id;
+    int PengembangID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,9 +67,10 @@ public class Dashboard extends AppCompatActivity {
         name.setText("" + getIntent().getStringExtra("nama"));
 
        token = getIntent().getStringExtra("accessToken");
-        getProyek();;
-        Intent mIntent = getIntent();
-        id = mIntent.getIntExtra("id", id);
+        getProyek();
+//        idpengembang =getIntent().getStringExtra("id");
+//        PengembangID =Integer.parseInt(idpengembang);
+
 
         Fabadd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,19 +82,14 @@ public class Dashboard extends AppCompatActivity {
 
 
     private void getProyek() {
-
-        RequestInterface request = ApiClient.getClient().create(RequestInterface.class);
         String apiKey = "oa00000000app";
-        Call <ResponseModel> call = request.getProyek(1,apiKey,token);
-        Toast.makeText(Dashboard.this, "Something wrong!",
-                Toast.LENGTH_SHORT).show();
+        Call <ResponseModel> call = ApiClient.getRequestInterface().getProyek(2,apiKey,token);
         call.enqueue(new Callback<ResponseModel>() {
             @Override
             public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
                 swipeRefreshLayout.setRefreshing(false);
-                if (response.code() == 200 && response.body() != null) {
-//                    Proyek_model data = new Proyek_model();
-//                    data = response.body();
+                String message = response.body().getMessage();
+                if (response.code() == 200 && message != null) {
 
                     proyekModels = response.body().getProyek();
                     proyek_adapter = new Proyek_adapter(Dashboard.this,proyekModels);

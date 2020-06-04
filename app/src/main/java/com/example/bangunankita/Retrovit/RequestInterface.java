@@ -15,7 +15,6 @@ import retrofit2.http.Query;
 import retrofit2.http.Path;
 
 public interface RequestInterface {
-        String apiKey = "oa00000000app";
         @POST("pengembang/signin")
         Call<Pengembang_model>actionLogin(@Body HashMap<String, String> map);
 

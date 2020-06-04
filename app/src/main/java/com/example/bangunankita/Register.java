@@ -22,7 +22,6 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Register extends AppCompatActivity {
-    private RequestInterface requestInterface;
     private Button regi1,cancel;
     private EditText nama,email,notelp,username,password,repass;
     @Override
@@ -30,7 +29,6 @@ public class Register extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         init();
-        requestInterface = ApiClient.getClient().create(RequestInterface.class);
 
         regi1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -45,7 +43,7 @@ public class Register extends AppCompatActivity {
                 map.put("retypePassword", repass.getText().toString());
 
 
-                    Call<Void> call = requestInterface.actionRegisterMobile(map);
+                    Call<Void> call = ApiClient.getRequestInterface().actionRegisterMobile(map);
                     call.enqueue(new Callback<Void>() {
                         @Override
                         public void onResponse(Call<Void> call, Response<Void> response) {
