@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,11 +21,13 @@ import com.example.bangunankita.Model.Proyek_model;
 import com.example.bangunankita.Model.ResponseModel;
 import com.example.bangunankita.Retrovit.ApiClient;
 import com.example.bangunankita.Retrovit.RequestInterface;
+import com.example.bangunankita.Util.SessionManager;
 import com.example.bangunankita.adapter.Proyek_adapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 
 import retrofit2.Call;
@@ -39,22 +42,26 @@ public class Dashboard extends AppCompatActivity {
     private FloatingActionButton Fabadd;
     //    private ProgressBar  mProgressBar;
     private TextView name;
+    private TextView datanull;
     SwipeRefreshLayout swipeRefreshLayout;
     private String TAG = "Dashboard";
     private String token;
-    private String idpengembang;
-    private int id;
+    private String stringid;
+    private ImageView image;
     int PengembangID;
+    SessionManager sm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
         name = findViewById(R.id.namekita);
+        datanull =findViewById(R.id.txt_resultadapter);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-//        mProgressBar=(ProgressBar)findViewById(R.id.progress_bar);
-//        mProgressBar.setVisibility(View.VISIBLE);
+        sm= new SessionManager(Dashboard.this);
+        image = findViewById(R.id.imageView3);
+
         mRecyclerView = findViewById(R.id.rv_proyek);
 
         Fabadd = findViewById(R.id.fab);
@@ -62,15 +69,15 @@ public class Dashboard extends AppCompatActivity {
         swipeRefreshLayout = findViewById(R.id.swiperf);
         swipeRefreshLayout.setRefreshing(true);
 
-//        proyekModels = new ArrayList<ResponseModel>(Collections.singleton(response.body()));
+        HashMap<String,String> map = sm.getDetailLogin();
 
-        name.setText("" + getIntent().getStringExtra("nama"));
 
-       token = getIntent().getStringExtra("accessToken");
-        getProyek();
-//        idpengembang =getIntent().getStringExtra("id");
-//        PengembangID =Integer.parseInt(idpengembang);
+        token=(map.get(sm.KEY_TOKEN));
+        stringid=(map.get(sm.KEY_ID));
 
+        name.setText(map.get(sm.KEY_NAMA));
+        sm.checkLogin();
+            getProyek();
 
         Fabadd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,20 +85,36 @@ public class Dashboard extends AppCompatActivity {
                 startActivity(new Intent(Dashboard.this, Add_Proyek.class));
             }
         });
+
+        image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sm.logout();
+                sm.checkLogin();
+            }
+        });
+
     }
 
 
     private void getProyek() {
         String apiKey = "oa00000000app";
-        Call <ResponseModel> call = ApiClient.getRequestInterface().getProyek(2,apiKey,token);
+        String idq="2";
+        PengembangID = Integer.parseInt(stringid);
+        Call <ResponseModel> call = ApiClient.getRequestInterface().getProyek(PengembangID,apiKey,token);
         call.enqueue(new Callback<ResponseModel>() {
             @Override
             public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
                 swipeRefreshLayout.setRefreshing(false);
-                String message = response.body().getMessage();
-                if (response.code() == 200 && message != null) {
+//                String message = response.body().getMessage();
+                if (response.code() == 200 ) {
 
                     proyekModels = response.body().getProyek();
+                    if (proyekModels == null) {
+                        datanull.setText("Data Proyek Masih Kosong");
+                    }else{
+                        datanull.setText(null);
+                    }
                     proyek_adapter = new Proyek_adapter(Dashboard.this,proyekModels);
                     mRecyclerView.setAdapter(proyek_adapter);
                     Log.d(TAG, "Tes" + proyek_adapter);
@@ -131,7 +154,6 @@ public class Dashboard extends AppCompatActivity {
             }
         });
         return super.onCreateOptionsMenu(menu);
-
 
     }
 }

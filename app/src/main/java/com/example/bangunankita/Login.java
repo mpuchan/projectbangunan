@@ -13,6 +13,7 @@ import android.widget.Toast;
 import com.example.bangunankita.Model.Pengembang_model;
 import com.example.bangunankita.Retrovit.ApiClient;
 import com.example.bangunankita.Retrovit.RequestInterface;
+import com.example.bangunankita.Util.SessionManager;
 
 import java.util.HashMap;
 
@@ -27,11 +28,13 @@ public class Login extends AppCompatActivity {
     private Button login;
     private EditText email;
     private EditText password;
+    private SessionManager sm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        sm = new SessionManager(Login.this);
         init();
         signup.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,12 +64,15 @@ public class Login extends AppCompatActivity {
                             Toast.makeText(Login.this,
                                     "Signin Succesfully",
                                     Toast.LENGTH_LONG).show();
+
                             AlertDialog.Builder builder1 = new AlertDialog.Builder(Login.this);
                             String nama= result.getNama();
                             Integer id = result.getId();
+                            String idk = String.valueOf(id);
                             String accessToken = result.getAccessToken();
+                            sm.storeLogin(idk,result.getUsername(),nama,accessToken);
 
-                            builder1.setMessage("Login Success");
+                            builder1.setMessage("Login Success"+id);
                             builder1.show();
                             Intent dashboard=new Intent(Login.this, Dashboard.class);
                             dashboard.putExtra("nama",nama);

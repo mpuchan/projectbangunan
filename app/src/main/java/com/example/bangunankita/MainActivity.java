@@ -7,15 +7,19 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ProgressBar;
 
+import com.example.bangunankita.Util.SessionManager;
+
 public class MainActivity extends Activity {
 
     private int waktu_loading=2000;
     ProgressBar prg;
+    SessionManager sm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        sm= new SessionManager(MainActivity.this);
         initComponents();
 
         new Thread(new Runnable() {
@@ -43,7 +47,8 @@ public class MainActivity extends Activity {
     }
 
     private void buka() {
-        Intent home=new Intent(MainActivity.this, Login.class);
+        sm.checkLogin();
+        Intent home=new Intent(MainActivity.this, Dashboard.class);
         startActivity(home);
 
     }
