@@ -75,10 +75,6 @@ public class Login extends AppCompatActivity {
                             builder1.setMessage("Login Success"+id);
                             builder1.show();
                             Intent dashboard=new Intent(Login.this, Dashboard.class);
-                            dashboard.putExtra("nama",nama);
-                            dashboard.putExtra("id",id);
-                            dashboard.putExtra("accessToken",accessToken);
-
                             startActivity(dashboard);
 
                         }else if (response.code()== 422){

@@ -1,5 +1,6 @@
 package com.example.bangunankita;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -8,9 +9,12 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.SearchView;
@@ -21,6 +25,7 @@ import com.example.bangunankita.Model.Proyek_model;
 import com.example.bangunankita.Model.ResponseModel;
 import com.example.bangunankita.Retrovit.ApiClient;
 import com.example.bangunankita.Retrovit.RequestInterface;
+import com.example.bangunankita.Util.RecyclerItemClickListener;
 import com.example.bangunankita.Util.SessionManager;
 import com.example.bangunankita.adapter.Proyek_adapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -34,7 +39,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class Dashboard extends AppCompatActivity {
+public class Dashboard extends AppCompatActivity implements Proyek_adapter.ClickedItem {
 
     private Proyek_adapter proyek_adapter;
     private List<Proyek_model> proyekModels = new ArrayList<>();
@@ -43,6 +48,7 @@ public class Dashboard extends AppCompatActivity {
     //    private ProgressBar  mProgressBar;
     private TextView name;
     private TextView datanull;
+    private TextView edit;
     SwipeRefreshLayout swipeRefreshLayout;
     private String TAG = "Dashboard";
     private String token;
@@ -50,6 +56,8 @@ public class Dashboard extends AppCompatActivity {
     private ImageView image;
     int PengembangID;
     SessionManager sm;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +67,7 @@ public class Dashboard extends AppCompatActivity {
         datanull =findViewById(R.id.txt_resultadapter);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        edit = findViewById(R.id.editproyek);
         sm= new SessionManager(Dashboard.this);
         image = findViewById(R.id.imageView3);
 
@@ -67,17 +76,16 @@ public class Dashboard extends AppCompatActivity {
         Fabadd = findViewById(R.id.fab);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         swipeRefreshLayout = findViewById(R.id.swiperf);
-        swipeRefreshLayout.setRefreshing(true);
+
+
 
         HashMap<String,String> map = sm.getDetailLogin();
-
-
         token=(map.get(sm.KEY_TOKEN));
         stringid=(map.get(sm.KEY_ID));
 
         name.setText(map.get(sm.KEY_NAMA));
         sm.checkLogin();
-            getProyek();
+
 
         Fabadd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,21 +94,44 @@ public class Dashboard extends AppCompatActivity {
             }
         });
 
+        proyek_adapter = new Proyek_adapter(this::ClickedUser);
+
         image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 sm.logout();
                 sm.checkLogin();
+                startActivity(new Intent(Dashboard.this, Perhitunganbidang.class));
+
             }
         });
 
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                swipeRefreshLayout.setRefreshing(true);
+                getProyek();
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
     }
 
+    @Override
+    protected void onResume() {
+
+        super.onResume();
+        getProyek();
+
+    }
 
     private void getProyek() {
         String apiKey = "oa00000000app";
-        String idq="2";
-        PengembangID = Integer.parseInt(stringid);
+        if (!TextUtils.isEmpty(stringid) && TextUtils.isDigitsOnly(stringid)) {
+            PengembangID = Integer.parseInt(stringid);
+        } else {
+            PengembangID =0;
+        }
+
         Call <ResponseModel> call = ApiClient.getRequestInterface().getProyek(PengembangID,apiKey,token);
         call.enqueue(new Callback<ResponseModel>() {
             @Override
@@ -110,6 +141,8 @@ public class Dashboard extends AppCompatActivity {
                 if (response.code() == 200 ) {
 
                     proyekModels = response.body().getProyek();
+                    Integer ids = response.body().getId();
+
                     if (proyekModels == null) {
                         datanull.setText("Data Proyek Masih Kosong");
                     }else{
@@ -135,7 +168,25 @@ public class Dashboard extends AppCompatActivity {
             }
         });
 
+//        edit.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//            }
+//        });
+    }
+    private void initDataIntent(final List<Proyek_model> matkulList){
+        mRecyclerView.addOnItemTouchListener(
+                new RecyclerItemClickListener(new RecyclerItemClickListener.OnItemClickListener() {
+                    @Override public void onItemClick(View view, int position) {
+                        int id = matkulList.get(position).getId();
+                        String namadosen = matkulList.get(position).getNamaProyek();
+                        String matkul = matkulList.get(position).getLokasi();
 
+                        Intent detailMatkul = new Intent(Dashboard.this,MenuProyek.class);
+                        startActivity(detailMatkul);
+                    }
+                }));
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -154,6 +205,12 @@ public class Dashboard extends AppCompatActivity {
             }
         });
         return super.onCreateOptionsMenu(menu);
+
+    }
+
+    @Override
+    public void ClickedUser(Proyek_model proyekModel) {
+        startActivity(new Intent(this,Edit_Proyek.class).putExtra("data", (Parcelable) proyekModel));
 
     }
 }

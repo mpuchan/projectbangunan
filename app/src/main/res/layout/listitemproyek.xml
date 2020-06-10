@@ -42,8 +42,11 @@
                     android:orientation="vertical">
 
                     <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:id="@+id/picture1"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:paddingRight="5dp"
+                        android:paddingBottom="5dp"
                         android:src="@drawable/icon4apl" />
 
 
@@ -59,8 +62,12 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="right"
                         android:fontFamily="@font/roboto_bold"
+                        android:foregroundTint="#FFFFFF"
+                        android:outlineAmbientShadowColor="#002C0B0B"
+                        android:outlineSpotShadowColor="#003A1414"
+                        android:shadowColor="#FFFFFF"
                         android:text="Food Menu1"
-                        android:textColor="#fdb501"
+                        android:textColor="#FFFFFF"
                         android:textSize="20dp"
                         android:textStyle="bold" />
 
@@ -109,12 +116,14 @@
 
 
                     <ImageView
+                        android:id="@+id/edit"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         app:srcCompat="@drawable/ic_edit_white_24dp" />
 
                     <TextView
+                        android:id="@+id/editproyek"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"

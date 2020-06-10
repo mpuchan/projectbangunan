@@ -31,9 +31,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class Add_Proyek extends AppCompatActivity {
+public class Edit_Proyek extends AppCompatActivity {
     private View background;
-
     private EditText et_tanggal;
     private SimpleDateFormat dateFormatter;
     private DatePickerDialog datePickerDialog;
@@ -46,15 +45,14 @@ public class Add_Proyek extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        overridePendingTransition(R.anim.animklikreveal, R.anim.animklikreveal);
-        setContentView(R.layout.activity_add__proyek);
+        setContentView(R.layout.activity_edit__proyek);
         et_tanggal = (EditText) findViewById(R.id.tanggal);
         namaproyek = (EditText) findViewById(R.id.nama);
         lokasi = findViewById(R.id.lokasi);
         tambah = findViewById(R.id.add_proyek);
-        sm= new SessionManager(Add_Proyek.this);
+        sm= new SessionManager(Edit_Proyek.this);
 
-        dateFormatter = new SimpleDateFormat("dd-MM-yyyy",Locale.US);
+        dateFormatter = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
         background = findViewById(R.id.background);
         idpengembang = findViewById(R.id.idt);
         et_tanggal.setFocusableInTouchMode(false);
@@ -71,44 +69,44 @@ public class Add_Proyek extends AppCompatActivity {
         token=(map.get(sm.KEY_TOKEN));
         apiKey = "oa00000000app";
 
-        tambah.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                HashMap<String, String> map = new HashMap<>();
-
-                map.put("nama_proyek", namaproyek.getText().toString());
-                map.put("lokasi", lokasi.getText().toString());
-                map.put("tanggal", et_tanggal.getText().toString());
-                map.put("PengembangId", idpengembang.getText().toString());
-
-
-                Call<ResponseModel> call = ApiClient.getRequestInterface().actionCreateProyek(apiKey,token,map);
-                call.enqueue(new Callback<ResponseModel>() {
-                    @Override
-                    public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
-                        if (response.code() == 200) {
-                            Toast.makeText(Add_Proyek.this,
-                                    "Tambah Data Proyek Berhasil",
-                                    Toast.LENGTH_LONG).show();
-                            Intent Dashboard = new Intent(Add_Proyek.this, Dashboard.class);
-                            startActivity(Dashboard);
-
-                        } else if (response.code() == 422) {
-                            Toast.makeText(Add_Proyek.this,
-                                    "Something Wrong",
-                                    Toast.LENGTH_LONG).show();
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<ResponseModel> call, Throwable t) {
-                        Toast.makeText(Add_Proyek.this, t.getMessage(),
-                                Toast.LENGTH_LONG).show();
-                    }
-                });
-
-            }
-        });
+//        tambah.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                HashMap<String, String> map = new HashMap<>();
+//
+//                map.put("nama_proyek", namaproyek.getText().toString());
+//                map.put("lokasi", lokasi.getText().toString());
+//                map.put("tanggal", et_tanggal.getText().toString());
+//                map.put("PengembangId", idpengembang.getText().toString());
+//
+//
+//                Call<ResponseModel> call = ApiClient.getRequestInterface().actionCreateProyek(apiKey,token,map);
+//                call.enqueue(new Callback<ResponseModel>() {
+//                    @Override
+//                    public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
+//                        if (response.code() == 200) {
+//                            Toast.makeText(Add_Proyek.this,
+//                                    "Tambah Data Proyek Berhasil",
+//                                    Toast.LENGTH_LONG).show();
+//                            Intent Dashboard = new Intent(Add_Proyek.this, Dashboard.class);
+//                            startActivity(Dashboard);
+//
+//                        } else if (response.code() == 422) {
+//                            Toast.makeText(Add_Proyek.this,
+//                                    "Something Wrong",
+//                                    Toast.LENGTH_LONG).show();
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onFailure(Call<ResponseModel> call, Throwable t) {
+//                        Toast.makeText(Add_Proyek.this, t.getMessage(),
+//                                Toast.LENGTH_LONG).show();
+//                    }
+//                });
+//
+//            }
+//        });
 
 
 
