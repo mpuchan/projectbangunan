@@ -36,22 +36,32 @@ import retrofit2.Response;
 public class Tambahbidang extends AppCompatActivity {
     private EditText panjangb,tinggib,panjangp,tinggip,panjangj,tinggij,luasb;
     private EditText hargab,hargas,hargap;
-    private TextView hasilb;
+    private TextView hasilb,hasilbid,hasilbat,hasilbat1,hasilse,hasilse1,
+            hasilse2,hasilpas,hasilpas1,hasilpas2;
     private Button btnproses,hitung;
     private Spinner spinbatako,campuran,spinsemen,spinpasir;
     public String pbatako,tbatako,hb,idb,hs,ids,hp,idp,berats,pc,pp;
-    float hasilm;
-    public int hasil;
+    float hasilm,luasba;
+    float totpasir;
+    float htotbatako;
+    float hargasementot;
+    public float hasil;
     private List<Batako> Batako = new ArrayList<>();
     private List<com.example.bangunankita.Model.Semen> Semen = new ArrayList<>();
     private List<com.example.bangunankita.Model.Pasir> Pasir = new ArrayList<>();
     Context mContext;
     Campuran[] campurans ={
-            new Campuran("1:3", 14.37,0.04),
-            new Campuran("1:4", 11.5,0.043),
-            new Campuran("1:5", 9.68,0.045),
-            new Campuran("1:6", 8.32,0.049),
-            new Campuran("1:8", 6.5,0.05)
+            new Campuran("1:3", 3,0.007),
+            new Campuran("1:4", 2.4, 0.0075),
+            new Campuran("1:5", 2.02,0.0079),
+            new Campuran("1:6", 1.74,0.0086),
+            new Campuran("1:8", 1.36,0.009)
+
+//            new Campuran("1:3", 14.37,0.04),
+//            new Campuran("1:4", 11.5,0.043),
+//            new Campuran("1:5", 9.68,0.045),
+//            new Campuran("1:6", 8.32,0.049),
+//            new Campuran("1:8", 6.5,0.05)
     };
 
     @Override
@@ -66,6 +76,7 @@ public class Tambahbidang extends AppCompatActivity {
         btnproses.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 String panjang1 = panjangb.getText().toString().trim();
                 String panjang2 = panjangp.getText().toString().trim();
                 String panjang3 = panjangj.getText().toString().trim();
@@ -73,14 +84,17 @@ public class Tambahbidang extends AppCompatActivity {
                 String tinggi2 = tinggip.getText().toString().trim();
                 String tinggi3 = tinggij.getText().toString().trim();
 
-                    int pb = Integer.parseInt(panjang1);
-                    int tb = Integer.parseInt(tinggi1);
-                    int pp = Integer.parseInt(panjang2);
-                    int tp = Integer.parseInt(tinggi2);
-                    int pj = Integer.parseInt(panjang3);
-                    int tj = Integer.parseInt(tinggi3);
+                    float pb = Float.parseFloat(panjang1);
+                    float tb = Float.parseFloat(tinggi1);
+                    float pp = Float.parseFloat(panjang2);
+                    float tp = Float.parseFloat(tinggi2);
+                    float pj = Float.parseFloat(panjang3);
+                    float tj = Float.parseFloat(tinggi3);
                     hasil = (pb*tb)-(pp*tp)- (pj*tj);
                     luasb.setText(String.valueOf(hasil));
+                    String luas = luasb.getText().toString().trim();
+                    luasba = Float.parseFloat(luas);
+
             }
         });
 
@@ -162,32 +176,45 @@ public class Tambahbidang extends AppCompatActivity {
         hitung.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//             hitungbatako();
+                hasilbid.setText(String.valueOf(hasil));
+                hitungbatako();
                 hitungsemen();
-//                hitungpasir();
+                hitungpasir();
+                hitungtot();
+
             }
         });
     }
 
+    private void hitungtot() {
+       float tothitung = htotbatako+hargasementot+totpasir;
+        hasilb.setText(String.valueOf(tothitung));
+    }
+
     private void hitungpasir() {
-        float ppasir = Float.parseFloat(pc);
+        float ppasir = Float.parseFloat(pp);
         float hargapas = Float.parseFloat(hp);
-        float hitpp = ppasir*hasil;
-        float pembulatanpasir = (float) Math.ceil(hitpp);
-        float totpasir = pembulatanpasir*hargapas;
+        float hitpp = ppasir*luasba;
+//        float pembulatanpasir = (float) Math.ceil(hitpp);
+        totpasir = hitpp*hargapas;
         Toast.makeText(mContext, "Gagal mengambil data"+ppasir, Toast.LENGTH_SHORT).show();
-        hasilb.setText(Float.toString(ppasir));
+        hasilpas2.setText(Float.toString(totpasir));
+        hasilpas1.setText(Float.toString(hitpp));
+        hasilpas.setText(Float.toString(hitpp));
     }
 
     private void hitungsemen() {
         float psemen = Float.parseFloat(pc);
         float beratsemen = Float.parseFloat(berats);
         float hargasemen = Float.parseFloat(hs);
-        float hitpc = psemen*hasil;
+        float hitpc = psemen*luasba;
         float totpc = hitpc/beratsemen;
-        float pembulatansemen = (float) Math.ceil(totpc);
-        float hargasementot = pembulatansemen*hargasemen;
-        hasilb.setText(Float.toString(hargasementot));
+        hargasementot = totpc*hargasemen;
+
+        hasilse.setText(Float.toString(hitpc));
+        hasilse1.setText(Float.toString(totpc));
+        hasilse2.setText(Float.toString(hargasementot));
+
 
     }
 
@@ -198,9 +225,10 @@ public class Tambahbidang extends AppCompatActivity {
         float t = Float.parseFloat(tbatako);
         float hargabatako = Float.parseFloat(hb);
         hasilm = m/(p*t)*m;
-        float tot = hasilm*hasil;
-        float htotbatako = tot*hargabatako;
-//        hasilb.setText(Float.toString(htotbatako));
+        float tot = hasilm*luasba;
+        htotbatako = tot*hargabatako;
+        hasilbat.setText(Float.toString(tot));
+        hasilbat1.setText(Float.toString(htotbatako));
     }
 
     private void initSpinnerPasir() {
@@ -222,7 +250,6 @@ public class Tambahbidang extends AppCompatActivity {
             } else {
                 Toast.makeText(mContext, "Gagal mengambil data Batako", Toast.LENGTH_SHORT).show();
             }
-
         }
 
         @Override
@@ -305,8 +332,17 @@ public class Tambahbidang extends AppCompatActivity {
         tinggip = findViewById(R.id.tpintu);
         luasb = findViewById(R.id.luasbidang);
         hitung = findViewById(R.id.hitungb);
-        hasilb = findViewById(R.id.hasilb);
         campuran = findViewById(R.id.spinner22);
+        hasilbat = findViewById(R.id.hasilbat);
+        hasilbat1 = findViewById(R.id.hasilbat1);
+        hasilpas = findViewById(R.id.hasilp2);
+        hasilpas1 =  findViewById(R.id.hasilp);
+        hasilpas2 = findViewById(R.id.hasilp1);
+        hasilse = findViewById(R.id.hasils);
+        hasilse1 = findViewById(R.id.hasils1);
+        hasilse2 = findViewById(R.id.hasils2);
+        hasilbid = findViewById(R.id.hasilbid);
+        hasilb = findViewById(R.id.total);
         Campuran_adapter campuran_adapter =
                 new Campuran_adapter(Tambahbidang.this,
                         android.R.layout.simple_spinner_item, campurans);

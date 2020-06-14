@@ -13,14 +13,23 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-
-        <activity android:name=".Perhitunganbidang"
-            android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name=".Tambahbidang"
+        <activity android:name=".Tambahurugan"></activity>
+        <activity android:name=".Tambahlantai" />
+        <activity android:name=".Tambahacian" />
+        <activity android:name=".Tambahplesteran" />
+        <activity android:name=".Perhitunganurugan" />
+        <activity android:name=".Perhitunganlantai" />
+        <activity android:name=".Perhitunganacian" />
+        <activity android:name=".Perhitunganplesteran" />
+        <activity android:name=".Panduanapl" />
+        <activity
+            android:name=".Perhitunganbidang"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Tambahbidang"
             android:label="Tambah Bidang"
             android:parentActivityName=".Perhitunganbidang"
-            android:theme="@style/Theme.AppCompat.Light.DarkActionBar"/>
-
+            android:theme="@style/Theme.AppCompat.Light.DarkActionBar" />
         <activity android:name=".MenuProyek" />
         <activity android:name=".Edit_Proyek" />
         <activity

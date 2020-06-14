@@ -60,7 +60,10 @@ public interface RequestInterface {
                                               @Query("accessToken")String accessToken,
                                               @Body HashMap<String, String> map);
 
-//        @DELETE("proyek/{id}/")
+        @DELETE("proyek/{id}/")
+        Call<ResponseModel>actionDeleteProyek(@Path("id") int id,
+                                              @Query("apiKey") String apiKey,
+                                              @Query("accessToken")String accessToken);
 
 
         //CRUD PERHITUNGAN BIDANG BANGUNAN
@@ -75,7 +78,14 @@ public interface RequestInterface {
                                               @Body HashMap<String, String> map);
 
 
-        //CRUD PERHITUNGAN Keramik
 
 
-    }
+        //CRUD PERHITUNGAN Lantai
+        @POST("perhitunganlantai/")
+        Call<ResponseModel>actionCreatelantai(@Query("apiKey") String apiKey,
+                                              @Query("accessToken")String accessToken,
+                                              @Body HashMap<String, String> map);
+
+
+
+}

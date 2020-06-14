@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
@@ -25,6 +26,7 @@ import com.example.bangunankita.Model.Proyek_model;
 import com.example.bangunankita.Model.ResponseModel;
 import com.example.bangunankita.Retrovit.ApiClient;
 import com.example.bangunankita.Retrovit.RequestInterface;
+import com.example.bangunankita.Util.Constant;
 import com.example.bangunankita.Util.RecyclerItemClickListener;
 import com.example.bangunankita.Util.SessionManager;
 import com.example.bangunankita.adapter.Proyek_adapter;
@@ -56,7 +58,7 @@ public class Dashboard extends AppCompatActivity implements Proyek_adapter.Click
     private ImageView image;
     int PengembangID;
     SessionManager sm;
-
+    Context mContext;
 
 
     @Override
@@ -70,6 +72,8 @@ public class Dashboard extends AppCompatActivity implements Proyek_adapter.Click
         edit = findViewById(R.id.editproyek);
         sm= new SessionManager(Dashboard.this);
         image = findViewById(R.id.imageView3);
+        mContext = this;
+        proyek_adapter = new Proyek_adapter(this, proyekModels);
 
         mRecyclerView = findViewById(R.id.rv_proyek);
 
@@ -87,6 +91,7 @@ public class Dashboard extends AppCompatActivity implements Proyek_adapter.Click
         sm.checkLogin();
 
 
+
         Fabadd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -101,7 +106,6 @@ public class Dashboard extends AppCompatActivity implements Proyek_adapter.Click
             public void onClick(View v) {
                 sm.logout();
                 sm.checkLogin();
-                startActivity(new Intent(Dashboard.this, Perhitunganbidang.class));
 
             }
         });
@@ -139,8 +143,7 @@ public class Dashboard extends AppCompatActivity implements Proyek_adapter.Click
                 swipeRefreshLayout.setRefreshing(false);
 //                String message = response.body().getMessage();
                 if (response.code() == 200 ) {
-
-                    proyekModels = response.body().getProyek();
+                    final List<Proyek_model> proyekModels = response.body().getProyek();
                     Integer ids = response.body().getId();
 
                     if (proyekModels == null) {
@@ -148,10 +151,10 @@ public class Dashboard extends AppCompatActivity implements Proyek_adapter.Click
                     }else{
                         datanull.setText(null);
                     }
-                    proyek_adapter = new Proyek_adapter(Dashboard.this,proyekModels);
-                    mRecyclerView.setAdapter(proyek_adapter);
+                    mRecyclerView.setAdapter(new Proyek_adapter(mContext,proyekModels));
+                    proyek_adapter.notifyDataSetChanged();
                     Log.d(TAG, "Tes" + proyek_adapter);
-
+                    initDataIntent(proyekModels);
 
                 } else if (response.code() == 422) {
                     Toast.makeText(Dashboard.this, "Something wrong!",
@@ -168,23 +171,25 @@ public class Dashboard extends AppCompatActivity implements Proyek_adapter.Click
             }
         });
 
-//        edit.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//            }
-//        });
-    }
-    private void initDataIntent(final List<Proyek_model> matkulList){
-        mRecyclerView.addOnItemTouchListener(
-                new RecyclerItemClickListener(new RecyclerItemClickListener.OnItemClickListener() {
-                    @Override public void onItemClick(View view, int position) {
-                        int id = matkulList.get(position).getId();
-                        String namadosen = matkulList.get(position).getNamaProyek();
-                        String matkul = matkulList.get(position).getLokasi();
 
-                        Intent detailMatkul = new Intent(Dashboard.this,MenuProyek.class);
-                        startActivity(detailMatkul);
+    }
+
+
+
+    private void initDataIntent(final List<Proyek_model> proyekModels){
+        mRecyclerView.addOnItemTouchListener(
+                new RecyclerItemClickListener(mContext,new RecyclerItemClickListener.OnItemClickListener() {
+                    @Override public void onItemClick(View view, int position) {
+                        int id = proyekModels.get(position).getId();
+                        String namaProyek= proyekModels.get(position).getNamaProyek();
+                        String lokasi = proyekModels.get(position).getLokasi();
+
+
+                        Intent detailproyek = new Intent(mContext, MenuProyek.class)
+                                .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        detailproyek.putExtra(Constant.KEY_ID_PROYEK, id);
+                        detailproyek.putExtra(Constant.KEY_NAMA_PROYEK, namaProyek);
+                        startActivity(detailproyek);
                     }
                 }));
     }

@@ -39,7 +39,8 @@ public class Login extends AppCompatActivity {
         signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent home=new Intent(Login.this, Register.class);
+                Intent home=new Intent(Login.this, Register.class)
+                        .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(home);
             }
         });
@@ -74,7 +75,8 @@ public class Login extends AppCompatActivity {
 
                             builder1.setMessage("Login Success"+id);
                             builder1.show();
-                            Intent dashboard=new Intent(Login.this, Dashboard.class);
+                            Intent dashboard=new Intent(Login.this, Dashboard.class)
+                                    .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);;
                             startActivity(dashboard);
 
                         }else if (response.code()== 422){
