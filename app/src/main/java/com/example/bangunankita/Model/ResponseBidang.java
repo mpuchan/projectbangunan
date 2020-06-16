@@ -11,7 +11,7 @@ public class ResponseBidang {
         private String message;
         @SerializedName("perhitunganbidang")
         @Expose
-        private List<Perhitunganbidang> perhitunganbidang = null;
+        private List<Perhitunganbidang1> perhitunganbidang = null;
 
         public String getMessage() {
             return message;
@@ -21,11 +21,11 @@ public class ResponseBidang {
             this.message = message;
         }
 
-        public List<Perhitunganbidang> getPerhitunganbidang() {
+        public List<Perhitunganbidang1> getPerhitunganbidang() {
             return perhitunganbidang;
         }
 
-        public void setPerhitunganbidang(List<Perhitunganbidang> perhitunganbidang) {
+        public void setPerhitunganbidang(List<Perhitunganbidang1> perhitunganbidang) {
             this.perhitunganbidang = perhitunganbidang;
         }
 

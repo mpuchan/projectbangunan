@@ -3,6 +3,7 @@ package com.example.bangunankita.Retrovit;
 import com.example.bangunankita.Model.Pengembang_model;
 import com.example.bangunankita.Model.Proyek_model;
 import com.example.bangunankita.Model.ResponseBatako;
+import com.example.bangunankita.Model.ResponseBidang;
 import com.example.bangunankita.Model.ResponseModel;
 import com.example.bangunankita.Model.ResponsePasir;
 import com.example.bangunankita.Model.ResponseSemen;
@@ -68,9 +69,9 @@ public interface RequestInterface {
 
         //CRUD PERHITUNGAN BIDANG BANGUNAN
         @GET("perhitunganbidang/{ProyekId}/")
-        Call<ResponseModel> getPerhitunganbidang(@Path("ProyekId") int ProyekId,
-                                      @Query("apiKey") String apiKey,
-                                      @Query("accessToken")String accessToken);
+        Call<ResponseBidang> getPerhitunganbidang(@Path("ProyekId") int ProyekId,
+                                                  @Query("apiKey") String apiKey,
+                                                  @Query("accessToken")String accessToken);
 
         @POST("perhitunganbidang/")
         Call<ResponseModel>actionCreatebidang(@Query("apiKey") String apiKey,

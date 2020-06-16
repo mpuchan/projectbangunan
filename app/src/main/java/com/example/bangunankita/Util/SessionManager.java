@@ -24,7 +24,6 @@ public class SessionManager {
         this._context = context;
         sp= _context.getSharedPreferences(SHARE_NAME,Context.MODE_PRIVATE);
         editor = sp.edit();
-
         }
         public void storeLogin(String id,String username,String nama,String accessToken){
 
@@ -44,9 +43,6 @@ public class SessionManager {
 
             return map;
     }
-
-
-
         public void checkLogin(){
         if (!this.Loggin()){
             Intent login = new Intent(_context, Login.class);

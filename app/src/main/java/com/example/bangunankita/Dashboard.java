@@ -74,23 +74,15 @@ public class Dashboard extends AppCompatActivity implements Proyek_adapter.Click
         image = findViewById(R.id.imageView3);
         mContext = this;
         proyek_adapter = new Proyek_adapter(this, proyekModels);
-
         mRecyclerView = findViewById(R.id.rv_proyek);
-
         Fabadd = findViewById(R.id.fab);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         swipeRefreshLayout = findViewById(R.id.swiperf);
-
-
-
         HashMap<String,String> map = sm.getDetailLogin();
         token=(map.get(sm.KEY_TOKEN));
         stringid=(map.get(sm.KEY_ID));
-
         name.setText(map.get(sm.KEY_NAMA));
         sm.checkLogin();
-
-
 
         Fabadd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -181,14 +173,15 @@ public class Dashboard extends AppCompatActivity implements Proyek_adapter.Click
                 new RecyclerItemClickListener(mContext,new RecyclerItemClickListener.OnItemClickListener() {
                     @Override public void onItemClick(View view, int position) {
                         int id = proyekModels.get(position).getId();
+                        String ids = String.valueOf(id);
                         String namaProyek= proyekModels.get(position).getNamaProyek();
                         String lokasi = proyekModels.get(position).getLokasi();
 
-
                         Intent detailproyek = new Intent(mContext, MenuProyek.class)
                                 .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                        detailproyek.putExtra(Constant.KEY_ID_PROYEK, id);
+                        detailproyek.putExtra(Constant.KEY_ID_PROYEK, ids);
                         detailproyek.putExtra(Constant.KEY_NAMA_PROYEK, namaProyek);
+
                         startActivity(detailproyek);
                     }
                 }));

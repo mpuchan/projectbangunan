@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.amulyakhare.textdrawable.TextDrawable;
 import com.example.bangunankita.Dashboard;
-import com.example.bangunankita.Model.Perhitunganbidang;
+import com.example.bangunankita.Model.Perhitunganbidang1;
 import com.example.bangunankita.Model.Proyek_model;
 import com.example.bangunankita.Model.ResponseModel;
 import com.example.bangunankita.R;
@@ -30,9 +30,9 @@ public class Bidang_adapter extends RecyclerView.Adapter<Bidang_adapter.ViewHold
 
 
     private Context context;
-    private List<Perhitunganbidang> bidangs;
+    private List<Perhitunganbidang1> bidangs;
 
-    public Bidang_adapter(Context context,List<Proyek_model> proyeks) {
+    public Bidang_adapter(Context context, List<Perhitunganbidang1> bidangs) {
         this.context=context;
         this.bidangs=bidangs;
     }
@@ -45,19 +45,19 @@ public class Bidang_adapter extends RecyclerView.Adapter<Bidang_adapter.ViewHold
 
     @Override
     public void onBindViewHolder(Bidang_adapter.ViewHolder viewHolder, final int i) {
-        final Perhitunganbidang BidangModel = bidangs.get(i);
+        final Perhitunganbidang1 BidangModel = bidangs.get(i);
 
-        final Integer HargaTotal =bidangs.get(i).getHargatotal();
-        final Integer Luas =bidangs.get(i).getLuasBidang();
+        final String HargaTotal = String.valueOf(bidangs.get(i).getHargatotal());
+        final String Luas = String.valueOf(bidangs.get(i).getLuasBidang());
 
         viewHolder.luas.setText(Luas);
         viewHolder.Hargatot.setText(HargaTotal);
 
 
     }
-    public interface ClickedItem{
-        void ClickedUser(Proyek_model proyekModel);
-    }
+//    public interface ClickedItem{
+//        void ClickedUser(Proyek_model proyekModel);
+//    }
     @Override
     public int getItemCount() {
         return bidangs.size();
@@ -73,8 +73,7 @@ public class Bidang_adapter extends RecyclerView.Adapter<Bidang_adapter.ViewHold
             super(view);
             Hargatot = (TextView)view.findViewById(R.id.Harga);
             luas = (TextView)view.findViewById(R.id.Luas);
-            Animation anim = AnimationUtils.loadAnimation(context, R.anim.itemproyekanim);
-            view.startAnimation(anim);
+
 
         }
     }
