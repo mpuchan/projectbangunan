@@ -74,6 +74,9 @@ public class Perhitunganbidang1 {
     @SerializedName("updatedAt")
     @Expose
     private String updatedAt;
+    @SerializedName("name")
+    @Expose
+    private String name;
 
     public Integer getId() {
         return id;
@@ -259,4 +262,13 @@ public class Perhitunganbidang1 {
         this.updatedAt = updatedAt;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String updatedAt) {
+        this.name = updatedAt;
+    }
+
 }
+

@@ -394,7 +394,7 @@
                                 android:background="?attr/selectableItemBackground">
 
                                 <ImageView
-                                    android:id="@+id/th41"
+                                    android:id="@+id/imageplester"
                                     android:layout_width="90dp"
                                     android:layout_height="90dp"
                                     android:layout_above="@+id/textView121"
@@ -437,7 +437,7 @@
                                 android:background="?attr/selectableItemBackground">
 
                                 <ImageView
-                                    android:id="@+id/th51"
+                                    android:id="@+id/imageacian"
                                     android:layout_width="90dp"
                                     android:layout_height="90dp"
                                     android:layout_above="@+id/textView181"
@@ -481,7 +481,7 @@
                                 android:background="?attr/selectableItemBackground">
 
                                 <ImageView
-                                    android:id="@+id/th61"
+                                    android:id="@+id/imagelantai"
                                     android:layout_width="90dp"
                                     android:layout_height="90dp"
                                     android:layout_above="@+id/textView011"

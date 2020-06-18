@@ -17,30 +17,78 @@
             android:orientation="vertical"
             android:padding="14dp">
 
-
-            <TextView
-                android:id="@+id/Luas"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="TextView" />
+                android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/Harga"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="TextView" />
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/textView25"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="TextView" />
+                    <ImageView
+                        android:id="@+id/picture1"
+                        android:layout_width="80dp"
+                        android:layout_height="90dp"
+                        android:paddingRight="5dp"
+                        android:paddingBottom="5dp"
+                        android:src="@drawable/icon4apl" />
 
-            <TextView
-                android:id="@+id/textView26"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="TextView" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/Luas"
+                            android:layout_width="129dp"
+                            android:layout_height="wrap_content"
+                            android:text="Nama" />
+
+                        <TextView
+                            android:id="@+id/textView23"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Total biaya" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/Harga"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Semen" />
+
+                        <TextView
+                            android:id="@+id/textView25"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Pasir" />
+
+                        <TextView
+                            android:id="@+id/textView26"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Total biaya" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -49,6 +97,14 @@
 
                 <Button
                     android:id="@+id/Edit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0"
+                    android:text="Detail"
+                    android:textColor="#40C4FF" />
+
+                <Button
+                    android:id="@+id/edit2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="0"
@@ -63,6 +119,7 @@
                     android:text="Delete"
                     android:textColor="#FC0000" />
             </LinearLayout>
+
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 </LinearLayout>

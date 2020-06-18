@@ -231,7 +231,7 @@ public class Tambahbidang extends AppCompatActivity {
         hasilbat1.setText(Float.toString(htotbatako));
     }
 
-    private void initSpinnerPasir() {
+    private void initSpinnerSemen() {
         ApiClient.getRequestInterface().getallsemen().enqueue(new Callback<ResponseSemen>() {
 
         @Override
@@ -258,7 +258,7 @@ public class Tambahbidang extends AppCompatActivity {
         }
     });
     }
-    private void initSpinnerSemen() {
+    private void initSpinnerPasir() {
         ApiClient.getRequestInterface().getallpasir().enqueue(new Callback<ResponsePasir>() {
 
             @Override

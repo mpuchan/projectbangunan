@@ -32,7 +32,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class Perhitunganbidang extends AppCompatActivity {
-private ImageView rician;
+    private ImageView rician;
     int ProyekID;
     String Ju;
     SessionManager sm;

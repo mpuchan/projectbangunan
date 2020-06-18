@@ -23,6 +23,7 @@ public class MenuProyek extends AppCompatActivity {
     String token;
     String stringid;
     String tangkapidproyek;
+    ImageView imageplester,imageacian,imagelantai;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +35,9 @@ public class MenuProyek extends AppCompatActivity {
         sm= new SessionManager(MenuProyek.this);
          mId= intent.getStringExtra(Constant.KEY_ID_PROYEK);
         mNamaproyek = intent.getStringExtra(Constant.KEY_NAMA_PROYEK);
+        imageplester = findViewById(R.id.imageplester);
+        imageacian = findViewById(R.id.imageacian);
+        imagelantai = findViewById(R.id.imagelantai);
 
         tangkapidproyek = mId;
         tvNmproyek.setText(mNamaproyek);
@@ -58,6 +62,43 @@ public class MenuProyek extends AppCompatActivity {
                 startActivity(Perhitunganbidang);
             }
         });
+        imageplester.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent Perhitunganplester = (new Intent(MenuProyek.this, Perhitunganplesteran.class)
+                        .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
+                Bundle setData = new Bundle();
+                setData.putString("idproyek",tangkapidproyek);
+                Perhitunganplester.putExtras(setData);
+
+                startActivity(Perhitunganplester);
+            }
+        });
+        imageacian.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent Perhitunganacian = (new Intent(MenuProyek.this, Perhitunganacian.class)
+                        .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
+                Bundle setData = new Bundle();
+                setData.putString("idproyek",tangkapidproyek);
+                Perhitunganacian.putExtras(setData);
+
+                startActivity(Perhitunganacian);
+            }
+        });
+        imagelantai.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent Perhitunganlantai = (new Intent(MenuProyek.this, Perhitunganlantai.class)
+                        .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
+                Bundle setData = new Bundle();
+                setData.putString("idproyek",tangkapidproyek);
+                Perhitunganlantai.putExtras(setData);
+
+                startActivity(Perhitunganlantai);
+            }
+        });
+
 
     }
 }
