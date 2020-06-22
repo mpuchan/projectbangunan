@@ -23,7 +23,7 @@ public class MenuProyek extends AppCompatActivity {
     String token;
     String stringid;
     String tangkapidproyek;
-    ImageView imageplester,imageacian,imagelantai;
+    ImageView imageplester,imageacian,imagelantai,imageurugan;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +38,7 @@ public class MenuProyek extends AppCompatActivity {
         imageplester = findViewById(R.id.imageplester);
         imageacian = findViewById(R.id.imageacian);
         imagelantai = findViewById(R.id.imagelantai);
+        imageurugan = findViewById(R.id.imageurugan);
 
         tangkapidproyek = mId;
         tvNmproyek.setText(mNamaproyek);
@@ -96,6 +97,18 @@ public class MenuProyek extends AppCompatActivity {
                 Perhitunganlantai.putExtras(setData);
 
                 startActivity(Perhitunganlantai);
+            }
+        });
+        imageurugan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent Perhitunganurugan = (new Intent(MenuProyek.this, Perhitunganurugan.class)
+                        .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
+                Bundle setData = new Bundle();
+                setData.putString("idproyek",tangkapidproyek);
+                Perhitunganurugan.putExtras(setData);
+
+                startActivity(Perhitunganurugan);
             }
         });
 

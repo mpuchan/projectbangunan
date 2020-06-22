@@ -1,15 +1,11 @@
 package com.example.bangunankita.Retrovit;
 
 import com.example.bangunankita.Model.Pengembang_model;
-import com.example.bangunankita.Model.Proyek_model;
-import com.example.bangunankita.Model.ResponseBatako;
 import com.example.bangunankita.Model.ResponseBidang;
+import com.example.bangunankita.Model.ResponseMaterial;
 import com.example.bangunankita.Model.ResponseModel;
-import com.example.bangunankita.Model.ResponsePasir;
-import com.example.bangunankita.Model.ResponseSemen;
 
 import java.util.HashMap;
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -32,11 +28,11 @@ public interface RequestInterface {
 
         //GET DATA MATERIAL
         @GET("viewsemen")
-        Call<ResponseSemen> getallsemen();
+        Call<ResponseMaterial> getallsemen();
         @GET("viewbatako")
-        Call<ResponseBatako> getallbatako();
+        Call<ResponseMaterial> getallbatako();
         @GET("viewpasir")
-        Call<ResponsePasir> getallpasir();
+        Call<ResponseMaterial> getallpasir();
 
 
         //CRUD PROYEK
@@ -74,9 +70,9 @@ public interface RequestInterface {
                                                   @Query("accessToken")String accessToken);
 
         @POST("perhitunganbidang/")
-        Call<ResponseModel>actionCreatebidang(@Query("apiKey") String apiKey,
-                                              @Query("accessToken")String accessToken,
-                                              @Body HashMap<String, String> map);
+        Call<ResponseBidang> actionCreatebidang(@Query("apiKey") String apiKey,
+                                                @Query("accessToken")String accessToken,
+                                                @Body HashMap<String, String> map);
 
 
 

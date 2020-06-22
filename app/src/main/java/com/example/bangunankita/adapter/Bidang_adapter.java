@@ -47,11 +47,17 @@ public class Bidang_adapter extends RecyclerView.Adapter<Bidang_adapter.ViewHold
     public void onBindViewHolder(Bidang_adapter.ViewHolder viewHolder, final int i) {
         final Perhitunganbidang1 BidangModel = bidangs.get(i);
 
-        final String HargaTotal = String.valueOf(bidangs.get(i).getHargatotal());
+        final String Name = String.valueOf(bidangs.get(i).getNama());
+        final String Semen = String.valueOf(bidangs.get(i).getJumlahkeperluansemen());
+        final String Pasir = String.valueOf(bidangs.get(i).getJumlahkeperluanpasir());
+        final String Batako = String.valueOf(bidangs.get(i).getJumlahkeperluanbatako());
         final String Luas = String.valueOf(bidangs.get(i).getLuasBidang());
 
-        viewHolder.luas.setText(Luas);
-        viewHolder.Hargatot.setText(HargaTotal);
+        viewHolder.Nama.setText(Name);
+        viewHolder.semen.setText(Semen);
+        viewHolder.pasir.setText(Pasir);
+        viewHolder.batako.setText(Batako);
+
 
 
     }
@@ -65,14 +71,16 @@ public class Bidang_adapter extends RecyclerView.Adapter<Bidang_adapter.ViewHold
 
 
     public class ViewHolder extends RecyclerView.ViewHolder{
-        private TextView Hargatot,luas,edit;
+        private TextView Nama,semen,pasir,batako,edit;
         private ImageView image;
 
 
         public ViewHolder(View view) {
             super(view);
-            Hargatot = (TextView)view.findViewById(R.id.Harga);
-            luas = (TextView)view.findViewById(R.id.Luas);
+            Nama = (TextView)view.findViewById(R.id.Nama);
+            semen = (TextView)view.findViewById(R.id.semen);
+            pasir = (TextView)view.findViewById(R.id.pasir);
+            batako = (TextView)view.findViewById(R.id.Batako);
 
 
         }

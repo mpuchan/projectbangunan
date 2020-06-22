@@ -13,20 +13,15 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.bangunankita.Model.Batako;
 import com.example.bangunankita.Model.Campuran;
-import com.example.bangunankita.Model.Pasir;
-import com.example.bangunankita.Model.Pengembang_model;
-import com.example.bangunankita.Model.Proyek_model;
-import com.example.bangunankita.Model.ResponseBatako;
-import com.example.bangunankita.Model.ResponsePasir;
-import com.example.bangunankita.Model.ResponseSemen;
-import com.example.bangunankita.Model.Semen;
+import com.example.bangunankita.Model.Material;
+import com.example.bangunankita.Model.ResponseMaterial;
 import com.example.bangunankita.Retrovit.ApiClient;
+import com.example.bangunankita.Util.SessionManager;
 import com.example.bangunankita.adapter.Campuran_adapter;
 
-import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import retrofit2.Call;
@@ -40,15 +35,16 @@ public class Tambahbidang extends AppCompatActivity {
             hasilse2,hasilpas,hasilpas1,hasilpas2;
     private Button btnproses,hitung;
     private Spinner spinbatako,campuran,spinsemen,spinpasir;
-    public String pbatako,tbatako,hb,idb,hs,ids,hp,idp,berats,pc,pp;
+    public String pbatako,tbatako,hb,idb,hs,ids,hp,idp,berats,pc,pp,token,metode;
     float hasilm,luasba;
     float totpasir;
     float htotbatako;
     float hargasementot;
     public float hasil;
-    private List<Batako> Batako = new ArrayList<>();
-    private List<com.example.bangunankita.Model.Semen> Semen = new ArrayList<>();
-    private List<com.example.bangunankita.Model.Pasir> Pasir = new ArrayList<>();
+    SessionManager sm;
+    private List<Material> Batako = new ArrayList<>();
+    private List<Material> Semen = new ArrayList<>();
+    private List<Material> Pasir = new ArrayList<>();
     Context mContext;
     Campuran[] campurans ={
             new Campuran("1:3", 3,0.007),
@@ -163,6 +159,7 @@ public class Tambahbidang extends AppCompatActivity {
                 Campuran obj = (Campuran) (parent.getItemAtPosition(position));
               pp = String.valueOf(obj.getPp());
               pc = String.valueOf(obj.getPc());
+              metode = String.valueOf(obj.getCampuran());
 
                 Toast.makeText(mContext, "Kamu memilih Campuran " + pc, Toast.LENGTH_SHORT).show();
             }
@@ -181,6 +178,55 @@ public class Tambahbidang extends AppCompatActivity {
                 hitungsemen();
                 hitungpasir();
                 hitungtot();
+//                String apiKey = "oa00000000app";
+//                HashMap<String, String> map = new HashMap<>();
+//                map.put("ProyekId", "3");
+//                map.put("BatakoId", idb);
+//                map.put("SemenId", ids);
+//                map.put("PasirId", idp);
+//                map.put("panjangbid", panjangb.getText().toString());
+//                map.put("tinggibid", tinggib.getText().toString());
+//                map.put("panjangpin", panjangp.getText().toString());
+//                map.put("tinggipin", tinggip.getText().toString());
+//                map.put("panjangjen", panjangj.getText().toString());
+//                map.put("tinggijen", tinggij.getText().toString());
+//                map.put("luas_bidang", luasb.getText().toString());
+//                map.put("jumlahkeperluanbatako", hasilbat.getText().toString());
+//                map.put("jumlahkeperluanpasir", hasilpas1.getText().toString());
+//                map.put("Jumlahkeperluansemen", hasilse.getText().toString());
+//                map.put("jumlahdalamsak", hasilse1.getText().toString());
+//                map.put("metode", metode);
+//                map.put("hargabatako", hasilbat1.getText().toString());
+//                map.put("hargapasir", hasilpas2.getText().toString());
+//                map.put("hargasemen", hasilse2.getText().toString());
+////                map.put("name", idpengembang.getText().toString());
+////                map.put("jenis", idpengembang.getText().toString());
+//
+//
+//                Call<ResponseBidang> call = ApiClient.getRequestInterface().actionCreatebidang(apiKey,token,map);
+//                call.enqueue(new Callback<ResponseBidang>() {
+//                    @Override
+//                    public void onResponse(Call<ResponseBidang> call, Response<ResponseBidang> response) {
+//                        if (response.code() == 200) {
+//                            Toast.makeText(Tambahbidang.this,
+//                                    "Tambah Data Perhitungan Bidang Berhasil",
+//                                    Toast.LENGTH_LONG).show();
+//                            Intent Dashboard = new Intent(Tambahbidang.this, Dashboard.class);
+//                            startActivity(Dashboard);
+//
+//                        } else if (response.code() == 422) {
+//                            Toast.makeText(Tambahbidang.this,
+//                                    "Something Wrong",
+//                                    Toast.LENGTH_LONG).show();
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onFailure(Call<ResponseBidang> call, Throwable t) {
+//                        Toast.makeText(Tambahbidang.this, t.getMessage(),
+//                                Toast.LENGTH_LONG).show();
+//                    }
+//                });
 
             }
         });
@@ -218,7 +264,6 @@ public class Tambahbidang extends AppCompatActivity {
 
     }
 
-
     private void hitungbatako() {
         float m = 100;
         float p = Float.parseFloat(pbatako);
@@ -232,12 +277,12 @@ public class Tambahbidang extends AppCompatActivity {
     }
 
     private void initSpinnerSemen() {
-        ApiClient.getRequestInterface().getallsemen().enqueue(new Callback<ResponseSemen>() {
+        ApiClient.getRequestInterface().getallsemen().enqueue(new Callback<ResponseMaterial>() {
 
         @Override
-        public void onResponse(Call<ResponseSemen> call, Response<ResponseSemen> response) {
+        public void onResponse(Call<ResponseMaterial> call, Response<ResponseMaterial> response) {
             if (response.code() == 200) {
-                Semen = response.body().getSemens();
+                Semen = response.body().getMaterials();
                 List<String> listSpinner = new ArrayList<String>();
                 for (int i = 0; i < Semen.size(); i++){
                     listSpinner.add(Semen.get(i).getNama());
@@ -253,18 +298,18 @@ public class Tambahbidang extends AppCompatActivity {
         }
 
         @Override
-        public void onFailure(Call<ResponseSemen> call, Throwable t) {
+        public void onFailure(Call<ResponseMaterial> call, Throwable t) {
             Toast.makeText(mContext, "Koneksi internet bermasalah", Toast.LENGTH_SHORT).show();
         }
     });
     }
     private void initSpinnerPasir() {
-        ApiClient.getRequestInterface().getallpasir().enqueue(new Callback<ResponsePasir>() {
+        ApiClient.getRequestInterface().getallpasir().enqueue(new Callback<ResponseMaterial>() {
 
             @Override
-            public void onResponse(Call<ResponsePasir> call, Response<ResponsePasir> response) {
+            public void onResponse(Call<ResponseMaterial> call, Response<ResponseMaterial> response) {
                 if (response.code() == 200) {
-                    Pasir = response.body().getPasirs();
+                    Pasir = response.body().getMaterials();
                     List<String> listSpinner = new ArrayList<String>();
                     for (int i = 0; i < Pasir.size(); i++){
                         listSpinner.add(Pasir.get(i).getNama());
@@ -280,19 +325,19 @@ public class Tambahbidang extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<ResponsePasir> call, Throwable t) {
+            public void onFailure(Call<ResponseMaterial> call, Throwable t) {
                 Toast.makeText(mContext, "Koneksi internet bermasalah", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
     private void initSpinnerBatako() {
-        ApiClient.getRequestInterface().getallbatako().enqueue(new Callback<ResponseBatako>() {
+        ApiClient.getRequestInterface().getallbatako().enqueue(new Callback<ResponseMaterial>() {
 
             @Override
-            public void onResponse(Call<ResponseBatako> call, Response<ResponseBatako> response) {
+            public void onResponse(Call<ResponseMaterial> call, Response<ResponseMaterial> response) {
                 if (response.code() == 200) {
-                    Batako = response.body().getBatakos();
+                    Batako = response.body().getMaterials();
 
                     List<String> listSpinner = new ArrayList<String>();
                     for (int i = 0; i < Batako.size(); i++){
@@ -311,13 +356,17 @@ public class Tambahbidang extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<ResponseBatako> call, Throwable t) {
+            public void onFailure(Call<ResponseMaterial> call, Throwable t) {
                 Toast.makeText(mContext, "Koneksi internet bermasalah", Toast.LENGTH_SHORT).show();
             }
         });
     }
     private void init() {
         mContext = this;
+        sm= new SessionManager(Tambahbidang.this);
+        HashMap<String,String> map = sm.getDetailLogin();
+        token=(map.get(sm.KEY_TOKEN));
+        sm.checkLogin();
         spinbatako = findViewById(R.id.spinbata);
         spinsemen = findViewById(R.id.spinsemen);
         spinpasir = findViewById(R.id.spinpasir);

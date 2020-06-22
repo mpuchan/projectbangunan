@@ -102,7 +102,9 @@
                             android:layout_below="@id/goldrt"
                             android:layout_marginTop="10dp"
                             android:background="#f0efef"
-                            android:orientation="horizontal" />
+                            android:orientation="horizontal"
+
+                            />
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -205,7 +207,9 @@
         android:id="@+id/textView20"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="DATA BIDANG" />
+        android:paddingLeft="10dp"
+        android:text="DATA BIDANG"
+        android:textColor="#000" />
 
     <ScrollView
         android:layout_width="match_parent"

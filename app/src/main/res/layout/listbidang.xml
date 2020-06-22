@@ -2,13 +2,13 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/user_layout"
         android:layout_width="match_parent"
         android:layout_height="156dp"
-        app:cardBackgroundColor="#dcdde1"
+        app:cardBackgroundColor="#ffff"
         app:cardCornerRadius="12dp">
 
         <LinearLayout
@@ -33,7 +33,7 @@
                         android:layout_height="90dp"
                         android:paddingRight="5dp"
                         android:paddingBottom="5dp"
-                        android:src="@drawable/icon4apl" />
+                        android:src="@drawable/batakopnd" />
 
 
                 </LinearLayout>
@@ -49,16 +49,11 @@
                         android:orientation="horizontal">
 
                         <TextView
-                            android:id="@+id/Luas"
+                            android:id="@+id/Nama"
                             android:layout_width="129dp"
                             android:layout_height="wrap_content"
-                            android:text="Nama" />
-
-                        <TextView
-                            android:id="@+id/textView23"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Total biaya" />
+                            android:text="Nama"
+                            android:textColor="#292929" />
 
                     </LinearLayout>
 
@@ -67,28 +62,103 @@
                         android:layout_height="match_parent"
                         android:orientation="vertical">
 
-                        <TextView
-                            android:id="@+id/Harga"
-                            android:layout_width="match_parent"
+                        <LinearLayout
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Semen" />
+                            android:orientation="horizontal">
 
-                        <TextView
-                            android:id="@+id/textView25"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Pasir" />
+                            <ImageView
+                                android:id="@+id/imageView6"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_weight="0"
+                                app:srcCompat="@drawable/ikon_batako" />
 
-                        <TextView
-                            android:id="@+id/textView26"
-                            android:layout_width="match_parent"
+                            <TextView
+                                android:id="@+id/textView18"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="0"
+                                android:text="Batako : "
+                                android:textColor="#FF292929" />
+
+                            <TextView
+                                android:id="@+id/Batako"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Batako"
+                                android:textColor="#FF292929" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Total biaya" />
+                            android:orientation="horizontal">
+
+                            <ImageView
+                                android:id="@+id/imageView2"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_weight="0"
+                                app:srcCompat="@drawable/ikon_pasir" />
+
+                            <TextView
+                                android:id="@+id/textView3"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="0"
+                                android:text="Pasir : "
+                                android:textColor="#FF292929" />
+
+                            <TextView
+                                android:id="@+id/pasir"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Pasir"
+                                android:textColor="#FF292929" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <ImageView
+                                android:id="@+id/imageView7"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_weight="1"
+                                app:srcCompat="@drawable/ikon_semen" />
+
+                            <TextView
+                                android:id="@+id/textView23"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Semen : "
+                                android:textColor="#FF292929" />
+
+                            <TextView
+                                android:id="@+id/semen"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Semen"
+                                android:textColor="#FF292929" />
+                        </LinearLayout>
+
                     </LinearLayout>
 
                 </LinearLayout>
 
             </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_weight="0"
+                android:background="#7E7E7E"
+                android:orientation="vertical"></LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -100,6 +170,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="0"
+                    android:background="#FFFFFF"
                     android:text="Detail"
                     android:textColor="#40C4FF" />
 
@@ -108,6 +179,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="0"
+                    android:background="#ffffff"
                     android:text="Edit"
                     android:textColor="#66B30B" />
 
@@ -116,8 +188,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="0"
+                    android:background="#ffffff"
                     android:text="Delete"
                     android:textColor="#FC0000" />
+
             </LinearLayout>
 
         </LinearLayout>

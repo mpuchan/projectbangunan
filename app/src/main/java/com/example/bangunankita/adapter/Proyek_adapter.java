@@ -27,7 +27,6 @@ import static java.util.stream.IntStream.builder;
 
 public class Proyek_adapter extends RecyclerView.Adapter<Proyek_adapter.ViewHolder> {
 
-
     private Context context;
     private List<Proyek_model> proyeks;
     private ClickedItem clickedItem;
@@ -76,6 +75,7 @@ public class Proyek_adapter extends RecyclerView.Adapter<Proyek_adapter.ViewHold
         viewHolder.image.setImageDrawable(drawable);
         viewHolder.nama_proyek.setText(nama_proyek);
         viewHolder.lokasi_proyek.setText(lokasi);
+//        viewHolder.tanggal.setText(tanggal);
         viewHolder.edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -94,7 +94,7 @@ public class Proyek_adapter extends RecyclerView.Adapter<Proyek_adapter.ViewHold
 
 
     public class ViewHolder extends RecyclerView.ViewHolder{
-        private TextView nama_proyek,lokasi_proyek,edit;
+        private TextView nama_proyek,lokasi_proyek,edit,tanggal;
         private ImageView image;
 
 
@@ -102,6 +102,7 @@ public class Proyek_adapter extends RecyclerView.Adapter<Proyek_adapter.ViewHold
             super(view);
             nama_proyek = (TextView)view.findViewById(R.id.nameproyek);
             lokasi_proyek = (TextView)view.findViewById(R.id.lokasiproyek);
+            tanggal = view.findViewById(R.id.tanggal);
             image = view.findViewById(R.id.picture1);
             edit = view.findViewById(R.id.editproyek);
             Animation anim = AnimationUtils.loadAnimation(context, R.anim.itemproyekanim);

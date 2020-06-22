@@ -15,14 +15,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.bangunankita.Model.Campuran;
+import com.example.bangunankita.Model.Material;
 import com.example.bangunankita.Model.Perhitunganbidang1;
 import com.example.bangunankita.Model.ResponseBidang;
-import com.example.bangunankita.Model.ResponsePasir;
-import com.example.bangunankita.Model.ResponseSemen;
-import com.example.bangunankita.Model.Semen;
+import com.example.bangunankita.Model.ResponseMaterial;
 import com.example.bangunankita.Retrovit.ApiClient;
 import com.example.bangunankita.Util.SessionManager;
-import com.example.bangunankita.adapter.Bidang_adapter;
 import com.example.bangunankita.adapter.Campuran_adapter;
 
 import java.util.ArrayList;
@@ -46,8 +44,8 @@ public class Tambahplesteran extends AppCompatActivity {
 
     String mId,Ju;
     public String hs,ids,hp,idp,berats,pc,pp;
-    private List<com.example.bangunankita.Model.Semen> Semen = new ArrayList<>();
-    private List<com.example.bangunankita.Model.Pasir> Pasir = new ArrayList<>();
+    private List<Material> Semen = new ArrayList<>();
+    private List<Material> Pasir = new ArrayList<>();
     private List<Perhitunganbidang1> BidangModel = new ArrayList<>();
     Campuran[] campurans ={
             new Campuran("1:1", 15.504,0.016),
@@ -255,7 +253,7 @@ public class Tambahplesteran extends AppCompatActivity {
                     BidangModel = response.body().getPerhitunganbidang();
                     List<String> listSpinner = new ArrayList<String>();
                     for (int i = 0; i < BidangModel.size(); i++){
-                        listSpinner.add(String.valueOf(BidangModel.get(i).getName()));
+                        listSpinner.add(String.valueOf(BidangModel.get(i).getNama()));
                     }
                     ArrayAdapter<String> adapter = new ArrayAdapter<String>(mContext,
                             android.R.layout.simple_spinner_item, listSpinner);
@@ -279,12 +277,12 @@ public class Tambahplesteran extends AppCompatActivity {
 
 
     private void initSpinnerSemen() {
-        ApiClient.getRequestInterface().getallsemen().enqueue(new Callback<ResponseSemen>() {
+        ApiClient.getRequestInterface().getallsemen().enqueue(new Callback<ResponseMaterial>() {
 
             @Override
-            public void onResponse(Call<ResponseSemen> call, Response<ResponseSemen> response) {
+            public void onResponse(Call<ResponseMaterial> call, Response<ResponseMaterial> response) {
                 if (response.code() == 200) {
-                    Semen = response.body().getSemens();
+                    Semen = response.body().getMaterials();
                     List<String> listSpinner = new ArrayList<String>();
                     for (int i = 0; i < Semen.size(); i++){
                         listSpinner.add(Semen.get(i).getNama());
@@ -300,18 +298,18 @@ public class Tambahplesteran extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<ResponseSemen> call, Throwable t) {
+            public void onFailure(Call<ResponseMaterial> call, Throwable t) {
                 Toast.makeText(mContext, "Koneksi internet bermasalah", Toast.LENGTH_SHORT).show();
             }
         });
     }
     private void initSpinnerPasir() {
-        ApiClient.getRequestInterface().getallpasir().enqueue(new Callback<ResponsePasir>() {
+        ApiClient.getRequestInterface().getallpasir().enqueue(new Callback<ResponseMaterial>() {
 
             @Override
-            public void onResponse(Call<ResponsePasir> call, Response<ResponsePasir> response) {
+            public void onResponse(Call<ResponseMaterial> call, Response<ResponseMaterial> response) {
                 if (response.code() == 200) {
-                    Pasir = response.body().getPasirs();
+                    Pasir = response.body().getMaterials();
                     List<String> listSpinner = new ArrayList<String>();
                     for (int i = 0; i < Pasir.size(); i++) {
                         listSpinner.add(Pasir.get(i).getNama());
@@ -327,7 +325,7 @@ public class Tambahplesteran extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<ResponsePasir> call, Throwable t) {
+            public void onFailure(Call<ResponseMaterial> call, Throwable t) {
                 Toast.makeText(mContext, "Koneksi internet bermasalah", Toast.LENGTH_SHORT).show();
             }
         });

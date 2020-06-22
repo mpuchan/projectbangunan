@@ -14,11 +14,10 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.bangunankita.Model.Campuran;
+import com.example.bangunankita.Model.Material;
 import com.example.bangunankita.Model.Perhitunganbidang1;
 import com.example.bangunankita.Model.ResponseBidang;
-import com.example.bangunankita.Model.ResponseSemen;
-import com.example.bangunankita.Model.Semen;
+import com.example.bangunankita.Model.ResponseMaterial;
 import com.example.bangunankita.Retrovit.ApiClient;
 import com.example.bangunankita.Util.SessionManager;
 
@@ -43,7 +42,7 @@ public class Tambahacian extends AppCompatActivity {
     int ProyekID;
     public String hs,ids,hp,idp,berats,pc,pp;
     private List<Perhitunganbidang1> BidangModel = new ArrayList<>();
-    private List<com.example.bangunankita.Model.Semen> Semen = new ArrayList<>();
+    private List<Material> Semen = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -143,12 +142,12 @@ public class Tambahacian extends AppCompatActivity {
 
 
     private void initSpinnerSemen() {
-        ApiClient.getRequestInterface().getallsemen().enqueue(new Callback<ResponseSemen>() {
+        ApiClient.getRequestInterface().getallsemen().enqueue(new Callback<ResponseMaterial>() {
 
             @Override
-            public void onResponse(Call<ResponseSemen> call, Response<ResponseSemen> response) {
+            public void onResponse(Call<ResponseMaterial> call, Response<ResponseMaterial> response) {
                 if (response.code() == 200) {
-                    Semen = response.body().getSemens();
+                    Semen = response.body().getMaterials();
                     List<String> listSpinner = new ArrayList<String>();
                     for (int i = 0; i < Semen.size(); i++){
                         listSpinner.add(Semen.get(i).getNama());
@@ -164,7 +163,7 @@ public class Tambahacian extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<ResponseSemen> call, Throwable t) {
+            public void onFailure(Call<ResponseMaterial> call, Throwable t) {
                 Toast.makeText(mContext, "Koneksi internet bermasalah", Toast.LENGTH_SHORT).show();
             }
         });
@@ -199,7 +198,7 @@ public class Tambahacian extends AppCompatActivity {
                         BidangModel = response.body().getPerhitunganbidang();
                         List<String> listSpinner = new ArrayList<String>();
                         for (int i = 0; i < BidangModel.size(); i++){
-                            listSpinner.add(String.valueOf(BidangModel.get(i).getName()));
+                            listSpinner.add(String.valueOf(BidangModel.get(i).getNama()));
                         }
                         ArrayAdapter<String> adapter = new ArrayAdapter<String>(mContext,
                                 android.R.layout.simple_spinner_item, listSpinner);
