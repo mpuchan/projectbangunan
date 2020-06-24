@@ -26,8 +26,6 @@ import com.example.bangunankita.Model.Proyek_model;
 import com.example.bangunankita.Model.ResponseModel;
 import com.example.bangunankita.Retrovit.ApiClient;
 import com.example.bangunankita.Retrovit.RequestInterface;
-import com.example.bangunankita.Util.Constant;
-import com.example.bangunankita.Util.RecyclerItemClickListener;
 import com.example.bangunankita.Util.SessionManager;
 import com.example.bangunankita.adapter.Proyek_adapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -41,7 +39,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class Dashboard extends AppCompatActivity implements Proyek_adapter.ClickedItem {
+public class Dashboard extends AppCompatActivity {
 
     private Proyek_adapter proyek_adapter;
     private List<Proyek_model> proyekModels = new ArrayList<>();
@@ -90,9 +88,6 @@ public class Dashboard extends AppCompatActivity implements Proyek_adapter.Click
                 startActivity(new Intent(Dashboard.this, Add_Proyek.class));
             }
         });
-
-        proyek_adapter = new Proyek_adapter(this::ClickedUser);
-
         image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -119,7 +114,6 @@ public class Dashboard extends AppCompatActivity implements Proyek_adapter.Click
         getProyek();
 
     }
-
     private void getProyek() {
         String apiKey = "oa00000000app";
         if (!TextUtils.isEmpty(stringid) && TextUtils.isDigitsOnly(stringid)) {
@@ -146,14 +140,12 @@ public class Dashboard extends AppCompatActivity implements Proyek_adapter.Click
                     mRecyclerView.setAdapter(new Proyek_adapter(mContext,proyekModels));
                     proyek_adapter.notifyDataSetChanged();
                     Log.d(TAG, "Tes" + proyek_adapter);
-                    initDataIntent(proyekModels);
 
                 } else if (response.code() == 422) {
                     Toast.makeText(Dashboard.this, "Something wrong!",
                             Toast.LENGTH_SHORT).show();
                 }
             }
-
             @Override
             public void onFailure(Call<ResponseModel> call, Throwable t) {
                 swipeRefreshLayout.setRefreshing(false);
@@ -163,28 +155,6 @@ public class Dashboard extends AppCompatActivity implements Proyek_adapter.Click
             }
         });
 
-
-    }
-
-
-
-    private void initDataIntent(final List<Proyek_model> proyekModels){
-        mRecyclerView.addOnItemTouchListener(
-                new RecyclerItemClickListener(mContext,new RecyclerItemClickListener.OnItemClickListener() {
-                    @Override public void onItemClick(View view, int position) {
-                        int id = proyekModels.get(position).getId();
-                        String ids = String.valueOf(id);
-                        String namaProyek= proyekModels.get(position).getNamaProyek();
-                        String lokasi = proyekModels.get(position).getLokasi();
-
-                        Intent detailproyek = new Intent(mContext, MenuProyek.class)
-                                .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                        detailproyek.putExtra(Constant.KEY_ID_PROYEK, ids);
-                        detailproyek.putExtra(Constant.KEY_NAMA_PROYEK, namaProyek);
-
-                        startActivity(detailproyek);
-                    }
-                }));
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -206,9 +176,5 @@ public class Dashboard extends AppCompatActivity implements Proyek_adapter.Click
 
     }
 
-    @Override
-    public void ClickedUser(Proyek_model proyekModel) {
-        startActivity(new Intent(this,Edit_Proyek.class).putExtra("data", (Parcelable) proyekModel));
 
-    }
 }

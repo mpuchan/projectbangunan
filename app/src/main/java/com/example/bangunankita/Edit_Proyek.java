@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewAnimationUtils;
@@ -41,75 +42,66 @@ public class Edit_Proyek extends AppCompatActivity {
     private Button tambah,cancel;
     private String token;
     private String apiKey;
+    String mId,nama_proyek,lokasi_;
     SessionManager sm;
+    int IdProyek;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit__proyek);
-        et_tanggal = (EditText) findViewById(R.id.tanggal);
-        namaproyek = (EditText) findViewById(R.id.nama);
-        lokasi = findViewById(R.id.lokasi);
-        tambah = findViewById(R.id.add_proyek);
-        sm= new SessionManager(Edit_Proyek.this);
-
-        dateFormatter = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
-        background = findViewById(R.id.background);
-        idpengembang = findViewById(R.id.idt);
-        et_tanggal.setFocusableInTouchMode(false);
-        et_tanggal.setFocusable(false);
-        HashMap<String,String> map = sm.getDetailLogin();
+        init();
         et_tanggal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 showDateDialog();
             }
         });
-//        idpengembang=(map.get(sm.KEY_TOKEN));
-        idpengembang.setText(map.get(sm.KEY_ID));
-        token=(map.get(sm.KEY_TOKEN));
-        apiKey = "oa00000000app";
+        lokasi.setText(lokasi_);
+        namaproyek.setText(nama_proyek);
 
-//        tambah.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                HashMap<String, String> map = new HashMap<>();
-//
-//                map.put("nama_proyek", namaproyek.getText().toString());
-//                map.put("lokasi", lokasi.getText().toString());
-//                map.put("tanggal", et_tanggal.getText().toString());
-//                map.put("PengembangId", idpengembang.getText().toString());
-//
-//
-//                Call<ResponseModel> call = ApiClient.getRequestInterface().actionCreateProyek(apiKey,token,map);
-//                call.enqueue(new Callback<ResponseModel>() {
-//                    @Override
-//                    public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
-//                        if (response.code() == 200) {
-//                            Toast.makeText(Add_Proyek.this,
-//                                    "Tambah Data Proyek Berhasil",
-//                                    Toast.LENGTH_LONG).show();
-//                            Intent Dashboard = new Intent(Add_Proyek.this, Dashboard.class);
-//                            startActivity(Dashboard);
-//
-//                        } else if (response.code() == 422) {
-//                            Toast.makeText(Add_Proyek.this,
-//                                    "Something Wrong",
-//                                    Toast.LENGTH_LONG).show();
-//                        }
-//                    }
-//
-//                    @Override
-//                    public void onFailure(Call<ResponseModel> call, Throwable t) {
-//                        Toast.makeText(Add_Proyek.this, t.getMessage(),
-//                                Toast.LENGTH_LONG).show();
-//                    }
-//                });
-//
-//            }
-//        });
+        tambah.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!TextUtils.isEmpty(mId) && TextUtils.isDigitsOnly(mId)) {
+                    IdProyek = Integer.parseInt(mId);
+                } else {
+                    IdProyek =0;
+                }
+                HashMap<String, String> map = new HashMap<>();
+
+                map.put("nama_proyek", namaproyek.getText().toString());
+                map.put("lokasi", lokasi.getText().toString());
+                map.put("tanggal", et_tanggal.getText().toString());
+                map.put("PengembangId", idpengembang.getText().toString());
 
 
+                Call<Void> call = ApiClient.getRequestInterface().actionPutProyek(IdProyek,apiKey,token,map);
+                call.enqueue(new Callback<Void>() {
+                    @Override
+                    public void onResponse(Call<Void> call, Response<Void> response) {
+                        if (response.code() == 201) {
+                            Toast.makeText(Edit_Proyek.this,
+                                    "Edit Data Proyek Berhasil",
+                                    Toast.LENGTH_LONG).show();
+                            Intent Dashboard = new Intent(Edit_Proyek.this, Dashboard.class);
+                            startActivity(Dashboard);
 
+                        } else if (response.code() == 422) {
+                            Toast.makeText(Edit_Proyek.this,
+                                    "Something Wrong",
+                                    Toast.LENGTH_LONG).show();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<Void> call, Throwable t) {
+                        Toast.makeText(Edit_Proyek.this, t.getMessage(),
+                                Toast.LENGTH_LONG).show();
+                    }
+                });
+
+            }
+        });
 
         if (savedInstanceState == null) {
             background.setVisibility(View.INVISIBLE);
@@ -214,5 +206,34 @@ public class Edit_Proyek extends AppCompatActivity {
         else {
             super.onBackPressed();
         }
+    }
+    private void init() {
+        //Edit Text//
+        et_tanggal = (EditText) findViewById(R.id.tanggal);
+        namaproyek = (EditText) findViewById(R.id.nama);
+        background = findViewById(R.id.background);
+        idpengembang = findViewById(R.id.idt);
+        lokasi = findViewById(R.id.lokasi);
+        //Button//
+        tambah = findViewById(R.id.add_proyek);
+        //Session login//
+        sm= new SessionManager(Edit_Proyek.this);
+        HashMap<String,String> map = sm.getDetailLogin();
+        idpengembang.setText(map.get(sm.KEY_ID));
+        token=(map.get(sm.KEY_TOKEN));
+        apiKey = "oa00000000app";
+
+        //Getting Intent Data//
+        Bundle bundle = getIntent().getExtras();
+        mId = bundle.getString("idproyek");
+        nama_proyek = bundle.getString("namaproyek");
+        lokasi_= bundle.getString("lokasi");
+
+//        Toast.makeText(Edit_Proyek.this, "Proyek Id"+mId,
+//                Toast.LENGTH_SHORT).show();
+        //Date//
+        dateFormatter = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
+        et_tanggal.setFocusableInTouchMode(false);
+        et_tanggal.setFocusable(false);
     }
 }

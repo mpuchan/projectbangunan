@@ -1,9 +1,13 @@
 package com.example.bangunankita;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -29,13 +33,13 @@ import retrofit2.Response;
 
 public class Tambahurugan extends AppCompatActivity {
     Spinner spindinding,spinurugan;
-    EditText panjang,tinggi,lebar,hargaurugan,vol;
+    EditText panjang,tinggi,lebar,hargaurugan,vol,nama;
     TextView hasilpas,hasilpas1,hasilpas2,hasilb;
     Button prosesbtn,hitung;
-    float hasil,volumeurugan,totpasir,hargasementot;
+    float hasil,volumeurugan,totpasir,hargasementot,pembulatanurugan;
     Context mContext;
     SessionManager sm;
-    String token,nama,p,t;
+    String token,nama1,p,t;
     String mId,Ju;
     int ProyekID;
     public String hs,ids,hp,idp,berats,pc,pp;
@@ -45,32 +49,7 @@ public class Tambahurugan extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tambahurugan);
-        mContext = this;
-        prosesbtn = findViewById(R.id.prosesbtn);
-        spinurugan = findViewById(R.id.spinurug);
-        panjang = findViewById(R.id.panjangurugan);
-        tinggi = findViewById(R.id.tinggiurugan);
-        lebar = findViewById(R.id.lebarurugan);
-        hargaurugan = findViewById(R.id.hargaurug);
-        hitung = findViewById(R.id.hitungb);
-        vol = findViewById(R.id.volume);
-        hasilpas = findViewById(R.id.hasilurugan);
-        hasilpas1 = findViewById(R.id.hasilpasirtruk);
-        hasilpas2 = findViewById(R.id.hasilhargap);
-        sm= new SessionManager(Tambahurugan.this);
-        HashMap<String,String> map = sm.getDetailLogin();
-        token=(map.get(sm.KEY_TOKEN));
-        sm.checkLogin();
-        Bundle bundle = getIntent().getExtras();
-        if (bundle != null)
-        {
-            mId = bundle.getString("idproyek1");
-            Ju = mId;
-        }else{
-            mId = "0";
-        }
-        Toast.makeText(Tambahurugan.this, "Proyek Id"+mId,
-                Toast.LENGTH_SHORT).show();
+        init();
         initSpinnerPasir();
         prosesbtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -123,6 +102,7 @@ public class Tambahurugan extends AppCompatActivity {
         float hargapas = Float.parseFloat(hp);
         float hitpp = kepadatan*volumeurugan;
 //        float pembulatanpasir = (float) Math.ceil(hitpp);
+
         float pembulatanurugan = (float) Math.ceil(hitpp);
         float urugandalamtruk = pembulatanurugan/7f;
         float pembulatanurugantruk = (float) Math.ceil(urugandalamtruk);
@@ -159,6 +139,88 @@ public class Tambahurugan extends AppCompatActivity {
             }
         });
     }
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_mainsavebidang,menu);
+        MenuItem item = menu.findItem(R.id.app_bar_savedata);
+        item.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                String apiKey = "oa00000000app";
+                HashMap<String, String> map = new HashMap<>();
+                map.put("ProyekId", mId);
+                map.put("nama", nama.getText().toString());
+                map.put("jenis_pengerjaan", "jenis");
+                map.put("panjang", panjang.getText().toString());
+                map.put("lebar", lebar.getText().toString());
+                map.put("tinggi", tinggi.getText().toString());
+                map.put("volume", String.valueOf(volumeurugan));
+                map.put("volumejadi", String.valueOf(pembulatanurugan));
+                map.put("nama_pasir", "hasilse1.getText().toString()");
+                map.put("Jumlahkeperluanpasir", hasilpas1.getText().toString());
+                map.put("jumlahdalamtruk", hasilpas1.getText().toString());
+                map.put("hargapasir", hasilpas2.getText().toString());
+                map.put("hargatotal", hasilpas2.getText().toString());
+                Call<Void> call = ApiClient.getRequestInterface().actionCreateurugan(apiKey,token,map);
+                call.enqueue(new Callback<Void>() {
+                    @Override
+                    public void onResponse(Call<Void> call, Response<Void> response) {
+                        if (response.code() == 200) {
+                            Intent Perhitunganurugan = new Intent(Tambahurugan.this, Perhitunganbidang.class);
+                            startActivity(Perhitunganurugan);
+                            Toast.makeText(Tambahurugan.this,
+                                    "Tambah Data Perhitungan Plesteran Berhasil",
+                                    Toast.LENGTH_LONG).show();
 
+                        } else if (response.code() == 422) {
+                            Toast.makeText(Tambahurugan.this,
+                                    "Something Wrong",
+                                    Toast.LENGTH_LONG).show();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<Void> call, Throwable t) {
+                        Toast.makeText(Tambahurugan.this, t.getMessage(),
+                                Toast.LENGTH_LONG).show();
+                    }
+                });
+                return false;
+            }
+        });
+        return super.onCreateOptionsMenu(menu);
+
+    }
+    private void init() {
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        mContext = this;
+        prosesbtn = findViewById(R.id.prosesbtn);
+        spinurugan = findViewById(R.id.spinurug);
+        panjang = findViewById(R.id.panjangurugan);
+        tinggi = findViewById(R.id.tinggiurugan);
+        lebar = findViewById(R.id.lebarurugan);
+        hargaurugan = findViewById(R.id.hargaurug);
+        hitung = findViewById(R.id.hitungb);
+        vol = findViewById(R.id.volume);
+        hasilpas = findViewById(R.id.hasilurugan);
+        hasilpas1 = findViewById(R.id.hasilpasirtruk);
+        hasilpas2 = findViewById(R.id.hasilhargap);
+        nama = findViewById(R.id.nama_pengerjaan);
+        sm= new SessionManager(Tambahurugan.this);
+        HashMap<String,String> map = sm.getDetailLogin();
+        token=(map.get(sm.KEY_TOKEN));
+        sm.checkLogin();
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null)
+        {
+            mId = bundle.getString("idproyek1");
+            Ju = mId;
+        }else{
+            mId = "0";
+        }
+        Toast.makeText(Tambahurugan.this, "Proyek Id"+mId,
+                Toast.LENGTH_SHORT).show();
+
+    }
 
 }

@@ -7,10 +7,18 @@
         <item name="android:statusBarColor">@color/bg_screen4r</item>
         <item name="android:textColor">@color/white_default</item>
     </style>
+    <style name="AppTheme.NoActionBarperhitungan">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:statusBarColor">@color/bg_screen4r</item>
+        <item name="android:textColor">@color/colorAccent2</item>
+    </style>
     <style name="AppTheme.darks">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
         <item name="android:statusBarColor">@color/colorAccent2</item>
     </style>
+
 </resources>

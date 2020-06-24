@@ -166,7 +166,7 @@
                 android:orientation="horizontal">
 
                 <Button
-                    android:id="@+id/Edit"
+                    android:id="@+id/detailbidang"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="0"
@@ -175,7 +175,7 @@
                     android:textColor="#40C4FF" />
 
                 <Button
-                    android:id="@+id/edit2"
+                    android:id="@+id/editbidang"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="0"
@@ -184,7 +184,7 @@
                     android:textColor="#66B30B" />
 
                 <Button
-                    android:id="@+id/Delete"
+                    android:id="@+id/Deletebidang"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="0"

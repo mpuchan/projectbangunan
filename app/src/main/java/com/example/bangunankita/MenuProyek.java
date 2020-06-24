@@ -9,7 +9,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.bangunankita.Util.Constant;
 import com.example.bangunankita.Util.SessionManager;
 
 import java.util.HashMap;
@@ -33,8 +32,10 @@ public class MenuProyek extends AppCompatActivity {
         bidang = findViewById(R.id.bidang);
         Intent intent = getIntent();
         sm= new SessionManager(MenuProyek.this);
-         mId= intent.getStringExtra(Constant.KEY_ID_PROYEK);
-        mNamaproyek = intent.getStringExtra(Constant.KEY_NAMA_PROYEK);
+//         mId= intent.getStringExtra(Constant.KEY_ID_PROYEK);
+        Bundle bundle = getIntent().getExtras();
+        mId = bundle.getString("idproyek");
+        mNamaproyek = bundle.getString("namaproyek");
         imageplester = findViewById(R.id.imageplester);
         imageacian = findViewById(R.id.imageacian);
         imagelantai = findViewById(R.id.imagelantai);

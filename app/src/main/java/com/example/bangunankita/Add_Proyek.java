@@ -82,10 +82,10 @@ public class Add_Proyek extends AppCompatActivity {
                 map.put("PengembangId", idpengembang.getText().toString());
 
 
-                Call<ResponseModel> call = ApiClient.getRequestInterface().actionCreateProyek(apiKey,token,map);
-                call.enqueue(new Callback<ResponseModel>() {
+                Call<Void> call = ApiClient.getRequestInterface().actionCreateProyek(apiKey,token,map);
+                call.enqueue(new Callback<Void>() {
                     @Override
-                    public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
+                    public void onResponse(Call<Void> call, Response<Void> response) {
                         if (response.code() == 200) {
                             Toast.makeText(Add_Proyek.this,
                                     "Tambah Data Proyek Berhasil",
@@ -101,7 +101,7 @@ public class Add_Proyek extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onFailure(Call<ResponseModel> call, Throwable t) {
+                    public void onFailure(Call<Void> call, Throwable t) {
                         Toast.makeText(Add_Proyek.this, t.getMessage(),
                                 Toast.LENGTH_LONG).show();
                     }

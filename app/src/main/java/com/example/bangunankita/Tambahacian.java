@@ -1,10 +1,14 @@
 package com.example.bangunankita;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -34,10 +38,10 @@ public class Tambahacian extends AppCompatActivity {
     EditText panjang,tinggi,sisi,hargasemen,luas;
     TextView hasilse,hasilse1,hasilse2,hasilb;
     Button prosesbtn,hitung;
-    float hasil,luasba,totpasir,hargasementot;
+    float hasil,luasba,totpasir,hargasementot,psemen;
     Context mContext;
     SessionManager sm;
-    String token,nama,p,t;
+    String token,nama,p,t,namapengerjaan,namasemen1;
     String mId,Ju;
     int ProyekID;
     public String hs,ids,hp,idp,berats,pc,pp;
@@ -47,6 +51,8 @@ public class Tambahacian extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tambahacian);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
         mContext = this;
         spinsemen = findViewById(R.id.spinsemen);
         spindinding = findViewById(R.id.spindinding);
@@ -58,7 +64,7 @@ public class Tambahacian extends AppCompatActivity {
         hasilse = findViewById(R.id.hasilsemen);
         hasilse1 = findViewById(R.id.hasilsemensak);
         hasilse2 = findViewById(R.id.hasilsemen2);
-        hasilb = findViewById(R.id.hasilb);
+        hasilb = findViewById(R.id.totalbiaya);
         prosesbtn = findViewById(R.id.prosesbtn);
         hitung = findViewById(R.id.hitungb);
 
@@ -91,13 +97,13 @@ public class Tambahacian extends AppCompatActivity {
 
                 hasil = pp*tp*sisi;
                 luas.setText(String.valueOf(hasil));
-                String luas1 = luas.getText().toString().trim();
-                luasba = Float.parseFloat(luas1);
             }
         });
         hitung.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String luas1 = luas.getText().toString().trim();
+                luasba = Float.parseFloat(luas1);
                 hitungsemen();
             }
         });
@@ -107,6 +113,7 @@ public class Tambahacian extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String selectedName = parent.getItemAtPosition(position).toString();
+                namapengerjaan = String.valueOf(BidangModel.get(position).getNama());
                 p = String.valueOf(BidangModel.get(position).getPanjangbid());
                 t = String.valueOf(BidangModel.get(position).getTinggibid());
                 panjang.setText(p);
@@ -128,6 +135,7 @@ public class Tambahacian extends AppCompatActivity {
                 berats = String.valueOf(Semen.get(position).getBerat());
                 hs = String.valueOf(Semen.get(position).getHarga());
                 ids = String.valueOf(Semen.get(position).getId());
+                namasemen1= String.valueOf(Semen.get(position).getNama());
                 hargasemen.setText(hs);
 
 //                Toast.makeText(mContext, "Kamu memilih Semen " + selectedName, Toast.LENGTH_SHORT).show();
@@ -169,7 +177,7 @@ public class Tambahacian extends AppCompatActivity {
         });
     }
     private void hitungsemen() {
-        float psemen = 3.25f;
+        psemen = 3.25f;
         float beratsemen = Float.parseFloat(berats);
         float hargasemen = Float.parseFloat(hs);
         float hitpc = psemen*luasba;
@@ -217,6 +225,58 @@ public class Tambahacian extends AppCompatActivity {
 
                 }
             });
+
+    }
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_mainsavebidang,menu);
+        MenuItem item = menu.findItem(R.id.app_bar_savedata);
+        item.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                String apiKey = "oa00000000app";
+                HashMap<String, String> map = new HashMap<>();
+                map.put("ProyekId", mId);
+                map.put("nama", namapengerjaan);
+                map.put("jenis_pengerjaan", "bangunan");
+                map.put("panjangdin", panjang.getText().toString());
+                map.put("tinggidin", tinggi.getText().toString());
+                map.put("sisi", sisi.getText().toString());
+                map.put("luas", luas.getText().toString());
+                map.put("nama_semen", namasemen1);
+                map.put("Jumlahkeperluansemen", hasilse.getText().toString());
+                map.put("jumlahdalamsak", hasilse1.getText().toString());
+                map.put("metode", String.valueOf(psemen));
+                map.put("hargasemen", hasilse2.getText().toString());
+                map.put("hargatotal", hasilse2.getText().toString());
+                Call<Void> call = ApiClient.getRequestInterface().actionCreateacian(apiKey,token,map);
+                call.enqueue(new Callback<Void>() {
+                    @Override
+                    public void onResponse(Call<Void> call, Response<Void> response) {
+                        if (response.code() == 200) {
+                            Intent Perhitunganbidang = new Intent(Tambahacian.this, Perhitunganbidang.class);
+                            startActivity(Perhitunganbidang);
+                            Toast.makeText(Tambahacian.this,
+                                    "Tambah Data Perhitungan Bidang Berhasil",
+                                    Toast.LENGTH_LONG).show();
+
+
+                        } else if (response.code() == 422) {
+                            Toast.makeText(Tambahacian.this,
+                                    "Something Wrong",
+                                    Toast.LENGTH_LONG).show();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<Void> call, Throwable t) {
+                        Toast.makeText(Tambahacian.this, t.getMessage(),
+                                Toast.LENGTH_LONG).show();
+                    }
+                });
+                return false;
+            }
+        });
+        return super.onCreateOptionsMenu(menu);
 
     }
 }

@@ -1,19 +1,26 @@
 package com.example.bangunankita.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.amulyakhare.textdrawable.TextDrawable;
 import com.example.bangunankita.Dashboard;
+import com.example.bangunankita.Edit_Proyek;
+import com.example.bangunankita.MenuProyek;
 import com.example.bangunankita.Model.Proyek_model;
 import com.example.bangunankita.Model.ResponseModel;
 import com.example.bangunankita.R;
@@ -29,7 +36,6 @@ public class Proyek_adapter extends RecyclerView.Adapter<Proyek_adapter.ViewHold
 
     private Context context;
     private List<Proyek_model> proyeks;
-    private ClickedItem clickedItem;
     public String[] mColors = {
             "#39add1", // light blue
             "#3079ab", // dark blue
@@ -45,10 +51,7 @@ public class Proyek_adapter extends RecyclerView.Adapter<Proyek_adapter.ViewHold
             "#f092b0", // pink
             "#b7c0c7"  // light gray
     };
-    public Proyek_adapter(ClickedItem clickedItem){
-        this.clickedItem =clickedItem;
 
-    }
     public Proyek_adapter(Context context,List<Proyek_model> proyeks) {
         this.context=context;
         this.proyeks=proyeks;
@@ -63,6 +66,7 @@ public class Proyek_adapter extends RecyclerView.Adapter<Proyek_adapter.ViewHold
     @Override
     public void onBindViewHolder(Proyek_adapter.ViewHolder viewHolder, final int i) {
         final Proyek_model proyekModel = proyeks.get(i);
+        final String id_proyek= String.valueOf(proyeks.get(i).getId());
         final String nama_proyek=proyeks.get(i).getNamaProyek();
         final String lokasi =proyeks.get(i).getLokasi();
         final String tanggal =proyeks.get(i).getTanggal();
@@ -76,16 +80,35 @@ public class Proyek_adapter extends RecyclerView.Adapter<Proyek_adapter.ViewHold
         viewHolder.nama_proyek.setText(nama_proyek);
         viewHolder.lokasi_proyek.setText(lokasi);
 //        viewHolder.tanggal.setText(tanggal);
+
         viewHolder.edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                clickedItem.ClickedUser(proyekModel);
+                Intent edit = new Intent(context, Edit_Proyek.class)
+                        .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                Bundle setData = new Bundle();
+                setData.putString("idproyek",id_proyek);
+                setData.putString("namaproyek",nama_proyek);
+                setData.putString("lokasi",lokasi);
+                edit.putExtras(setData);
+                context.startActivity(edit);
+
+            }
+        });
+        viewHolder.list.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent detail = new Intent(context, MenuProyek.class)
+                        .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                Bundle setData = new Bundle();
+                setData.putString("idproyek",id_proyek);
+                setData.putString("namaproyek",nama_proyek);
+                setData.putString("lokasi",lokasi);
+                detail.putExtras(setData);
+                context.startActivity(detail);
             }
         });
 
-    }
-    public interface ClickedItem{
-        void ClickedUser(Proyek_model proyekModel);
     }
     @Override
     public int getItemCount() {
@@ -96,6 +119,7 @@ public class Proyek_adapter extends RecyclerView.Adapter<Proyek_adapter.ViewHold
     public class ViewHolder extends RecyclerView.ViewHolder{
         private TextView nama_proyek,lokasi_proyek,edit,tanggal;
         private ImageView image;
+        private CardView list;
 
 
         public ViewHolder(View view) {
@@ -105,6 +129,7 @@ public class Proyek_adapter extends RecyclerView.Adapter<Proyek_adapter.ViewHold
             tanggal = view.findViewById(R.id.tanggal);
             image = view.findViewById(R.id.picture1);
             edit = view.findViewById(R.id.editproyek);
+            list = view.findViewById(R.id.user_layout);
             Animation anim = AnimationUtils.loadAnimation(context, R.anim.itemproyekanim);
             view.startAnimation(anim);
 

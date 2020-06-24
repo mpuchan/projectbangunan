@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,7 +19,6 @@ import com.example.bangunankita.Model.Proyek_model;
 import com.example.bangunankita.Model.ResponseBidang;
 import com.example.bangunankita.Model.ResponseModel;
 import com.example.bangunankita.Retrovit.ApiClient;
-import com.example.bangunankita.Util.Constant;
 import com.example.bangunankita.Util.SessionManager;
 import com.example.bangunankita.adapter.Bidang_adapter;
 import com.example.bangunankita.adapter.Proyek_adapter;
@@ -43,13 +43,14 @@ public class Perhitunganbidang extends AppCompatActivity {
     private RecyclerView mRecyclerView;
     Context mContext;
     String mId;
+    Dialog detaildialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_perhitunganbidang);
         rician = findViewById(R.id.rician);
         sm= new SessionManager(Perhitunganbidang.this);
-
+        detaildialog = new Dialog(this);
         mRecyclerView = findViewById(R.id.rv_bidang);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         HashMap<String,String> map = sm.getDetailLogin();
@@ -71,8 +72,13 @@ public class Perhitunganbidang extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
+                Intent tambahbidang = (new Intent(Perhitunganbidang.this, Tambahbidang.class)
+                        .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
+                Bundle setData = new Bundle();
+                setData.putString("idproyek1",mId);
+                tambahbidang.putExtras(setData);
 
-                startActivity(new Intent(Perhitunganbidang.this, Tambahbidang.class));
+                startActivity(tambahbidang);
 
             }
         });

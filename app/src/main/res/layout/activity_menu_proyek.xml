@@ -45,13 +45,17 @@
                 <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true">
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginBottom="-47dp">
 
                     <androidx.cardview.widget.CardView
                         android:id="@+id/car4"
                         android:layout_width="match_parent"
-                        android:layout_height="140dp"
-                        android:layout_margin="11dp"
+                        android:layout_height="200dp"
+                        android:layout_marginStart="11dp"
+                        android:layout_marginTop="11dp"
+                        android:layout_marginEnd="11dp"
+                        android:layout_marginBottom="11dp"
                         android:background="#fff"
                         app:cardCornerRadius="10dp"
                         app:cardElevation="5dp">
@@ -102,26 +106,24 @@
 
                                 <RelativeLayout
                                     android:layout_width="match_parent"
-                                    android:layout_height="70dp"
+                                    android:layout_height="100dp"
                                     android:layout_weight="0.50"
                                     android:background="?attr/selectableItemBackground"
                                     android:gravity="center">
 
-                                    <ImageView
-                                        android:id="@+id/gold"
-                                        android:layout_width="40dp"
-                                        android:layout_height="40dp"
-                                        android:layout_centerHorizontal="true"
-                                        android:src="@drawable/icon4apl" />
-
-                                    <TextView
+                                    <androidx.core.widget.NestedScrollView
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:layout_below="@id/gold"
-                                        android:gravity="center"
-                                        android:text="Luas Tanah"
-                                        android:textColor="#000"
-                                        android:textSize="12dp" />
+                                        android:fillViewport="true">
+
+                                        <LinearLayout
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:orientation="vertical">
+                                        <include layout="@layout/rinciankebutuhan"
+                                            ></include>
+                                        </LinearLayout>
+                                    </androidx.core.widget.NestedScrollView>
 
                                 </RelativeLayout>
 
@@ -131,31 +133,12 @@
                                     android:layout_marginRight="0dp"
                                     android:layout_weight="0.50"
                                     android:background="?attr/selectableItemBackground"
-                                    android:gravity="center">
-
-                                    <ImageView
-                                        android:id="@+id/elixir"
-                                        android:layout_width="40dp"
-                                        android:layout_height="40dp"
-                                        android:layout_centerHorizontal="true"
-                                        android:src="@drawable/icon4apl" />
-
-                                    <TextView
-
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:layout_below="@id/elixir"
-                                        android:gravity="center"
-                                        android:text="Luas Bangunan"
-                                        android:textColor="#000"
-                                        android:textSize="12dp" />
-
-                                </RelativeLayout>
+                                    android:gravity="center" />
 
                                 <RelativeLayout
-                                    android:layout_width="match_parent"
+                                    android:layout_width="wrap_content"
                                     android:layout_height="70dp"
-                                    android:layout_marginRight="25dp"
+                                    android:layout_marginRight="105dp"
                                     android:layout_weight="0.50"
                                     android:background="?attr/selectableItemBackground"
                                     android:gravity="center">
@@ -190,7 +173,7 @@
 
             <ScrollView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content">
 
                 <LinearLayout
                     android:layout_width="fill_parent"

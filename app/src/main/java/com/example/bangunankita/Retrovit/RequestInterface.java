@@ -1,9 +1,12 @@
 package com.example.bangunankita.Retrovit;
 
 import com.example.bangunankita.Model.Pengembang_model;
+import com.example.bangunankita.Model.ResponseAcian;
 import com.example.bangunankita.Model.ResponseBidang;
 import com.example.bangunankita.Model.ResponseMaterial;
 import com.example.bangunankita.Model.ResponseModel;
+import com.example.bangunankita.Model.ResponsePlesteran;
+import com.example.bangunankita.Model.ResponseUrugan;
 
 import java.util.HashMap;
 
@@ -43,11 +46,11 @@ public interface RequestInterface {
                                             @Query("accessToken")String accessToken);
 
         @POST("proyek/")
-        Call<ResponseModel>actionCreateProyek(@Query("apiKey") String apiKey,
+        Call<Void>actionCreateProyek(@Query("apiKey") String apiKey,
                                               @Query("accessToken")String accessToken,
                                               @Body HashMap<String, String> map);
         @PUT("proyek/{id}")
-        Call<ResponseModel>actionPutProyek(@Path("id") int id,
+        Call<Void>actionPutProyek(@Path("id") int id,
                                               @Query("apiKey") String apiKey,
                                               @Query("accessToken")String accessToken,
                                               @Body HashMap<String, String> map);
@@ -70,19 +73,53 @@ public interface RequestInterface {
                                                   @Query("accessToken")String accessToken);
 
         @POST("perhitunganbidang/")
-        Call<ResponseBidang> actionCreatebidang(@Query("apiKey") String apiKey,
+        Call<Void> actionCreatebidang(@Query("apiKey") String apiKey,
                                                 @Query("accessToken")String accessToken,
                                                 @Body HashMap<String, String> map);
+        @DELETE("perhitunganbidang/")
 
+        //CRUD PERHITUNGAN PLESTERAN BANGUNAN
+        @GET("perhitunganplesteran/{ProyekId}/")
+        Call<ResponsePlesteran> getPerhitunganplesteran(@Path("ProyekId") int ProyekId,
+                                                     @Query("apiKey") String apiKey,
+                                                     @Query("accessToken")String accessToken);
 
+        @POST("perhitunganplesteran/")
+        Call<Void> actionCreateplesteran(@Query("apiKey") String apiKey,
+                                      @Query("accessToken")String accessToken,
+                                      @Body HashMap<String, String> map);
+
+        //CRUD PERHITUNGAN URUGAN BANGUNAN
+        @GET("perhitunganurugan/{ProyekId}/")
+        Call<ResponseUrugan> getPerhitunganurugan(@Path("ProyekId") int ProyekId,
+                                                  @Query("apiKey") String apiKey,
+                                                  @Query("accessToken")String accessToken);
+
+        @POST("perhitunganurugan/")
+        Call<Void> actionCreateurugan(@Query("apiKey") String apiKey,
+                                         @Query("accessToken")String accessToken,
+                                         @Body HashMap<String, String> map);
+
+        //CRUD PERHITUNGAN ACIAN BANGUNAN
+        @GET("perhitunganacian/{ProyekId}/")
+        Call<ResponseAcian> getPerhitunganacian(@Path("ProyekId") int ProyekId,
+                                                    @Query("apiKey") String apiKey,
+                                                    @Query("accessToken")String accessToken);
+
+        @POST("perhitunganacian/")
+        Call<Void> actionCreateacian(@Query("apiKey") String apiKey,
+                                         @Query("accessToken")String accessToken,
+                                         @Body HashMap<String, String> map);
 
 
         //CRUD PERHITUNGAN Lantai
+        @GET("perhitunganlantai/{ProyekId}/")
+        Call<ResponseModel> getPerhitunganlantai(@Path("ProyekId") int ProyekId,
+                                                @Query("apiKey") String apiKey,
+                                                @Query("accessToken")String accessToken);
         @POST("perhitunganlantai/")
         Call<ResponseModel>actionCreatelantai(@Query("apiKey") String apiKey,
                                               @Query("accessToken")String accessToken,
                                               @Body HashMap<String, String> map);
-
-
 
 }
