@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".Perhitunganplesteran">
+    tools:context=".Perhitunganplafond">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -19,14 +19,14 @@
 
 
             <ImageView
-                android:id="@+id/bgplester"
+                android:id="@+id/greeting_img"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:scaleType="fitXY"
                 app:srcCompat="@drawable/masangbatako" />
 
             <TextView
-                android:id="@+id/textplester"
+                android:id="@+id/greeting_text"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginTop="70dp"
@@ -41,14 +41,14 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/textplester1"
+                android:id="@+id/greeting_text2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="40dp"
                 android:background="#B4B16609"
                 android:fontFamily="monospace"
                 android:gravity="center"
-                android:text="Perhitungan Plesteran Bangunan"
+                android:text="Perhitungan Plafon"
                 android:textColor="#FDFDFD"
                 android:textSize="20dp"
                 android:textStyle="bold" />
@@ -85,7 +85,7 @@
                             android:textStyle="bold" />
 
                         <TextView
-                            android:id="@+id/totalplester"
+                            android:id="@+id/goldrt"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentRight="true"
@@ -99,10 +99,12 @@
                             android:id="@+id/garis"
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
-                            android:layout_below="@id/totalplester"
+                            android:layout_below="@id/goldrt"
                             android:layout_marginTop="10dp"
                             android:background="#f0efef"
-                            android:orientation="horizontal" />
+                            android:orientation="horizontal"
+
+                            />
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -119,7 +121,7 @@
                                 android:gravity="center">
 
                                 <ImageView
-                                    android:id="@+id/rincian"
+                                    android:id="@+id/gold"
                                     android:layout_width="40dp"
                                     android:layout_height="40dp"
                                     android:layout_centerHorizontal="true"
@@ -128,9 +130,9 @@
                                 <TextView
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:layout_below="@id/rincian"
+                                    android:layout_below="@id/gold"
                                     android:gravity="center"
-                                    android:text="Rincian Data Plesteran"
+                                    android:text="Rincian Data Bidang"
                                     android:textColor="#000"
                                     android:textSize="12dp" />
 
@@ -145,7 +147,7 @@
                                 android:gravity="center">
 
                                 <ImageView
-                                    android:id="@+id/panduanplester"
+                                    android:id="@+id/elixir"
                                     android:layout_width="40dp"
                                     android:layout_height="40dp"
                                     android:layout_centerHorizontal="true"
@@ -155,7 +157,7 @@
 
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:layout_below="@id/panduanplester"
+                                    android:layout_below="@id/elixir"
                                     android:gravity="center"
                                     android:text="Panduan Aplikasi"
                                     android:textColor="#000"
@@ -172,7 +174,7 @@
                                 android:gravity="center">
 
                                 <ImageView
-                                    android:id="@+id/tambahplester"
+                                    android:id="@+id/rician"
                                     android:layout_width="40dp"
                                     android:layout_height="40dp"
                                     android:layout_centerHorizontal="true"
@@ -181,7 +183,7 @@
                                 <TextView
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:layout_below="@id/tambahplester"
+                                    android:layout_below="@id/rician"
                                     android:gravity="center"
                                     android:text="Tambah bidang"
                                     android:textColor="#000"
@@ -205,7 +207,9 @@
         android:id="@+id/textView20"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="DATA PLESTERAN" />
+        android:paddingLeft="10dp"
+        android:text="DATA PLAFON"
+        android:textColor="#000" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -216,7 +220,7 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <include layout="@layout/contenplesteran" />
+            <include layout="@layout/contentplafon" />
         </LinearLayout>
 
     </ScrollView>

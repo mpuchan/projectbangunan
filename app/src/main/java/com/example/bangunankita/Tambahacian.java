@@ -253,8 +253,8 @@ public class Tambahacian extends AppCompatActivity {
                     @Override
                     public void onResponse(Call<Void> call, Response<Void> response) {
                         if (response.code() == 200) {
-                            Intent Perhitunganbidang = new Intent(Tambahacian.this, Perhitunganbidang.class);
-                            startActivity(Perhitunganbidang);
+                            Intent Perhitunganacian = new Intent(Tambahacian.this, Perhitunganacian.class);
+                            startActivity(Perhitunganacian);
                             Toast.makeText(Tambahacian.this,
                                     "Tambah Data Perhitungan Bidang Berhasil",
                                     Toast.LENGTH_LONG).show();

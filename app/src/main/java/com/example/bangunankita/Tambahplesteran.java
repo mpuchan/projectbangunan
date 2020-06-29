@@ -341,7 +341,7 @@ public class Tambahplesteran extends AppCompatActivity {
                     @Override
                     public void onResponse(Call<Void> call, Response<Void> response) {
                         if (response.code() == 200) {
-                            Intent Perhitunganplesteran = new Intent(Tambahplesteran.this, Perhitunganbidang.class);
+                            Intent Perhitunganplesteran = new Intent(Tambahplesteran.this, Perhitunganplesteran.class);
                             startActivity(Perhitunganplesteran);
                             Toast.makeText(Tambahplesteran.this,
                                     "Tambah Data Perhitungan Plesteran Berhasil",

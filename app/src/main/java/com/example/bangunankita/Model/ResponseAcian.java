@@ -7,7 +7,7 @@ public class ResponseAcian {
         @SerializedName("message")
         @Expose
         private String message;
-        @SerializedName("perhitunganacian1")
+        @SerializedName("perhitunganacian")
         @Expose
         private List<Perhitunganacian1> perhitunganacian1 = null;
 

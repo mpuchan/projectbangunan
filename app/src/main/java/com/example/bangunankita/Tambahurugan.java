@@ -165,7 +165,7 @@ public class Tambahurugan extends AppCompatActivity {
                     @Override
                     public void onResponse(Call<Void> call, Response<Void> response) {
                         if (response.code() == 200) {
-                            Intent Perhitunganurugan = new Intent(Tambahurugan.this, Perhitunganbidang.class);
+                            Intent Perhitunganurugan = new Intent(Tambahurugan.this, Perhitunganurugan.class);
                             startActivity(Perhitunganurugan);
                             Toast.makeText(Tambahurugan.this,
                                     "Tambah Data Perhitungan Plesteran Berhasil",

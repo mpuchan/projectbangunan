@@ -61,7 +61,7 @@ public interface RequestInterface {
                                               @Body HashMap<String, String> map);
 
         @DELETE("proyek/{id}/")
-        Call<ResponseModel>actionDeleteProyek(@Path("id") int id,
+        Call<Void>actionDeleteProyek(@Path("id") int id,
                                               @Query("apiKey") String apiKey,
                                               @Query("accessToken")String accessToken);
 
@@ -76,7 +76,10 @@ public interface RequestInterface {
         Call<Void> actionCreatebidang(@Query("apiKey") String apiKey,
                                                 @Query("accessToken")String accessToken,
                                                 @Body HashMap<String, String> map);
-        @DELETE("perhitunganbidang/")
+        @DELETE("perhitunganbidang/{id}/")
+        Call<ResponseBidang>actionDeletePerhitunganbidang(@Path("id") int id,
+                                              @Query("apiKey") String apiKey,
+                                              @Query("accessToken")String accessToken);
 
         //CRUD PERHITUNGAN PLESTERAN BANGUNAN
         @GET("perhitunganplesteran/{ProyekId}/")

@@ -50,7 +50,6 @@ public class Perhitunganbidang extends AppCompatActivity {
         setContentView(R.layout.activity_perhitunganbidang);
         rician = findViewById(R.id.rician);
         sm= new SessionManager(Perhitunganbidang.this);
-        detaildialog = new Dialog(this);
         mRecyclerView = findViewById(R.id.rv_bidang);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         HashMap<String,String> map = sm.getDetailLogin();

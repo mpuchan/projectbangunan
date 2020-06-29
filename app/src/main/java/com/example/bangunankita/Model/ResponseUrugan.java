@@ -11,7 +11,7 @@ public class ResponseUrugan {
     private String message;
     @SerializedName("perhitunganurugan")
     @Expose
-    private List<Perhitunganurugan1> perhitunganurugan = null;
+    private List<Perhitunganurugan1> perhitunganurugan1 = null;
 
     public String getMessage() {
         return message;
@@ -22,10 +22,10 @@ public class ResponseUrugan {
     }
 
     public List<Perhitunganurugan1> getPerhitunganurugan() {
-        return perhitunganurugan;
+        return perhitunganurugan1;
     }
 
     public void setPerhitunganurugan(List<Perhitunganurugan1> perhitunganurugan) {
-        this.perhitunganurugan = perhitunganurugan;
+        this.perhitunganurugan1 = perhitunganurugan;
     }
 }

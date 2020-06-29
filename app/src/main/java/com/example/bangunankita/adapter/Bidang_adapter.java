@@ -19,6 +19,7 @@ import com.example.bangunankita.Editbidang;
 import com.example.bangunankita.Model.Perhitunganbidang1;
 import com.example.bangunankita.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -55,7 +56,11 @@ public class Bidang_adapter extends RecyclerView.Adapter<Bidang_adapter.ViewHold
         final String Hargapasir = String.valueOf(bidangs.get(i).getHargapasir());
         final String Hargasemen = String.valueOf(bidangs.get(i).getHargasemen());
         final String Totalbiaya = String.valueOf(bidangs.get(i).getHargatotal());
+        float sum;
+        Double price = bidangs.get(i).getHargatotal();
+        for (int j =0; j<price; j++){
 
+    }
 
 
         final String Semen = String.valueOf(bidangs.get(i).getJumlahkeperluansemen());
@@ -154,8 +159,16 @@ public class Bidang_adapter extends RecyclerView.Adapter<Bidang_adapter.ViewHold
     @Override
     public int getItemCount() {
         return bidangs.size();
-    }
 
+    }
+    public double getTotal(ArrayList<Perhitunganbidang1> list){
+
+        double total=0.0;
+        for(int i=0;i<list.size();i++){
+            total=total+Double.parseDouble(String.valueOf(list.get(i).getHargatotal()));
+        }
+        return total;
+    }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
         private TextView Nama,semen,pasir,batako,edit;
@@ -172,13 +185,6 @@ public class Bidang_adapter extends RecyclerView.Adapter<Bidang_adapter.ViewHold
             editbidang = view.findViewById(R.id.editbidang);
             deletebidang = view.findViewById(R.id.Deletebidang);
             detailbidang = view.findViewById(R.id.detailbidang);
-
-            
-
-
         }
     }
-
-
-
 }

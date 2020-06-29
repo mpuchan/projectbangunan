@@ -13,11 +13,17 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Editbidang"></activity>
+        <activity android:name=".Perhitunganplafond"></activity>
+        <activity android:name=".Panduanacian" />
+        <activity android:name=".Editlantai" />
+        <activity android:name=".Editacian" />
+        <activity android:name=".Editurugan" />
+        <activity android:name=".Editplesteran" />
+        <activity android:name=".Editbidang" />
         <activity
             android:name=".Tambahurugan"
             android:label="Tambah Urugan"
-            android:theme="@style/AppTheme.NoActionBarperhitungan"></activity>
+            android:theme="@style/AppTheme.NoActionBarperhitungan" />
         <activity
             android:name=".Tambahlantai"
             android:label="Tambah Lantai"

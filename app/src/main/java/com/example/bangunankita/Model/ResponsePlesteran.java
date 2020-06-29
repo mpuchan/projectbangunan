@@ -9,7 +9,7 @@ public class ResponsePlesteran {
     @SerializedName("message")
 @Expose
 private String message;
-    @SerializedName("perhitunganplesteran1")
+    @SerializedName("perhitunganplesteran")
     @Expose
     private List<Perhitunganplesteran1> perhitunganplesteran1 = null;
 
@@ -21,11 +21,11 @@ private String message;
         this.message = message;
     }
 
-    public List<Perhitunganplesteran1> getPerhitunganplesteran1() {
+    public List<Perhitunganplesteran1> getPerhitunganplesteran() {
         return perhitunganplesteran1;
     }
 
-    public void setPerhitunganplesteran1(List<Perhitunganplesteran1> perhitunganplesteran) {
+    public void setPerhitunganplesteran(List<Perhitunganplesteran1> perhitunganplesteran) {
         this.perhitunganplesteran1 = perhitunganplesteran;
     }
 

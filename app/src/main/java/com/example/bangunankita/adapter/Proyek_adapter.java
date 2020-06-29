@@ -1,8 +1,10 @@
 package com.example.bangunankita.adapter;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,12 +24,21 @@ import com.example.bangunankita.Dashboard;
 import com.example.bangunankita.Edit_Proyek;
 import com.example.bangunankita.MenuProyek;
 import com.example.bangunankita.Model.Proyek_model;
+import com.example.bangunankita.Model.ResponseBidang;
 import com.example.bangunankita.Model.ResponseModel;
+import com.example.bangunankita.Perhitunganbidang;
 import com.example.bangunankita.R;
+import com.example.bangunankita.Retrovit.ApiClient;
+import com.example.bangunankita.Util.SessionManager;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import static java.util.stream.IntStream.builder;
 
@@ -108,6 +119,68 @@ public class Proyek_adapter extends RecyclerView.Adapter<Proyek_adapter.ViewHold
                 context.startActivity(detail);
             }
         });
+        viewHolder.delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Dialog deletedialog = new Dialog(context);
+                deletedialog.setContentView(R.layout.delete_dialog);
+                TextView deletemessage = deletedialog.findViewById(R.id.textdelete);
+                TextView silang = deletedialog.findViewById(R.id.silang);
+                Button btndelete = deletedialog.findViewById(R.id.buttonhapus);
+                Button btncancel = deletedialog.findViewById(R.id.buttoncancel);
+                deletemessage.setText("Yakin ingin menghapus data " +nama_proyek);
+                int ProyekID = Integer.parseInt(id_proyek);
+                String apiKey = "oa00000000app";
+                SessionManager sm;
+                sm= new SessionManager(context);
+                HashMap<String,String> map = sm.getDetailLogin();
+                String token=(map.get(sm.KEY_TOKEN));
+                btndelete.setOnClickListener(new View.OnClickListener() {
+
+                    @Override
+                    public void onClick(View v) {
+                        Call<Void> call = ApiClient.getRequestInterface().actionDeleteProyek(ProyekID,apiKey,token);
+                        call.enqueue(new Callback<Void>() {
+                            @Override
+                            public void onResponse(Call<Void> call, Response<Void> response) {
+//                swipeRefreshLayout.setRefreshing(false);
+//                String message = response.body().getMessage();
+                                if (response.code() == 200 ) {
+
+                                    Toast.makeText(context, "Sukses hapus!",
+                                            Toast.LENGTH_SHORT).show();
+//                    if (proyekModels == null) {
+////                        datanull.setText("Data Proyek Masih Kosong");
+//                    }else{
+////                        datanull.setText(null);
+//
+
+                                } else if (response.code() == 422) {
+                                    Toast.makeText(context, "Something wrong!",
+                                            Toast.LENGTH_SHORT).show();
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<Void> call, Throwable t) {
+//                swipeRefreshLayout.setRefreshing(false);
+                                Toast.makeText(context, "Oops! Something went wrong!" + t.getMessage(),
+                                        Toast.LENGTH_SHORT).show();
+
+                            }
+                        });
+                    }
+                });
+                btncancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                    }
+                });
+                deletedialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                deletedialog.show();
+            }
+        });
 
     }
     @Override
@@ -117,10 +190,10 @@ public class Proyek_adapter extends RecyclerView.Adapter<Proyek_adapter.ViewHold
 
 
     public class ViewHolder extends RecyclerView.ViewHolder{
-        private TextView nama_proyek,lokasi_proyek,edit,tanggal;
+        private TextView nama_proyek,lokasi_proyek,edit,tanggal,delete;
         private ImageView image;
         private CardView list;
-
+        Dialog deletedialog;
 
         public ViewHolder(View view) {
             super(view);
@@ -129,6 +202,7 @@ public class Proyek_adapter extends RecyclerView.Adapter<Proyek_adapter.ViewHold
             tanggal = view.findViewById(R.id.tanggal);
             image = view.findViewById(R.id.picture1);
             edit = view.findViewById(R.id.editproyek);
+            delete = view.findViewById(R.id.hapusproyek);
             list = view.findViewById(R.id.user_layout);
             Animation anim = AnimationUtils.loadAnimation(context, R.anim.itemproyekanim);
             view.startAnimation(anim);
