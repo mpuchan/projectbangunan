@@ -12,16 +12,24 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.bangunankita.Editacian;
 import com.example.bangunankita.Model.Perhitunganacian1;
 import com.example.bangunankita.R;
+import com.example.bangunankita.Retrovit.ApiClient;
+import com.example.bangunankita.Util.SessionManager;
 
+import java.util.HashMap;
 import java.util.List;
 
-public class Acian_adapter  extends RecyclerView.Adapter<Acian_adapter.ViewHolder>{
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
+public class Acian_adapter  extends RecyclerView.Adapter<Acian_adapter.ViewHolder>{
 
     private Context context;
     private List<Perhitunganacian1> acians;
@@ -40,6 +48,8 @@ public class Acian_adapter  extends RecyclerView.Adapter<Acian_adapter.ViewHolde
     @Override
     public void onBindViewHolder(Acian_adapter.ViewHolder viewHolder, final int i) {
         final Perhitunganacian1 AcianModel = acians.get(i);
+        final String Id = String.valueOf(acians.get(i).getId());
+        final String Idproyek = String.valueOf(acians.get(i).getProyekId());
         final String Name = String.valueOf(acians.get(i).getNama());
         final String jenis = String.valueOf(acians.get(i).getJenisPengerjaan());
         final String Panjangdin = String.valueOf(acians.get(i).getPanjangdin());
@@ -50,7 +60,9 @@ public class Acian_adapter  extends RecyclerView.Adapter<Acian_adapter.ViewHolde
         final String Hargasemen = String.valueOf(acians.get(i).getHargasemen());
         final String Totalbiaya = String.valueOf(acians.get(i).getHargatotal());
         final String Semen = String.valueOf(acians.get(i).getJumlahkeperluansemen());
+        final String Hargasementotal = String.valueOf(acians.get(i).getHargasementotal());
         final String Luas = String.valueOf(acians.get(i).getLuas());
+        final String Namasemen = String.valueOf(acians.get(i).getNamaSemen());
 
         viewHolder.Nama.setText(Name);
         viewHolder.semen.setText(Semen);
@@ -61,6 +73,8 @@ public class Acian_adapter  extends RecyclerView.Adapter<Acian_adapter.ViewHolde
                 Intent editacian = new Intent(context, Editacian.class)
                         .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                 Bundle setData = new Bundle();
+                setData.putString("id", Id);
+                setData.putString("ProyekId", Idproyek);
                 setData.putString("nama", Name);
                 setData.putString("jenis_pengerjaan", "bangunan");
                 setData.putString("panjangdin", Panjangdin);
@@ -70,39 +84,43 @@ public class Acian_adapter  extends RecyclerView.Adapter<Acian_adapter.ViewHolde
                 setData.putString("Jumlahkeperluansemen", Semen);
                 setData.putString("jumlahdalamsak", Jumlahdalamsak);
                 setData.putString("metode", Metode);
+                setData.putString("nama_semen",Namasemen);
                 setData.putString("hargasemen", Hargasemen);
+                setData.putString("hargasementotal", Hargasementotal);
                 setData.putString("totalbiaya", Totalbiaya);
                 setData.putString("jenispe", jenis);
                 editacian.putExtras(setData);
                 context.startActivity(editacian);
-
             }
         });
-//        viewHolder.detailacian.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Dialog detaildialog = new Dialog(context);
-//                detaildialog.setContentView(R.layout.detail_acian);
-//                TextView nama = detaildialog.findViewById(R.id.nama);
-//                TextView luasacian = detaildialog.findViewById(R.id.luasacian);
-//                TextView Batako1 = detaildialog.findViewById(R.id.Batako);
-//                TextView Semen1 = detaildialog.findViewById(R.id.semen1);
-//                TextView Pasir1 = detaildialog.findViewById(R.id.pasir);
-//                TextView totalbiaya = detaildialog.findViewById(R.id.totalbiaya);
-//                nama.setText(Name);
-//                luasacian.setText("Panjang "+Panjangbid+"m "+",Tinggi "+Tinggibid+"m "+"" +
-//                        ",Panjang panel pintu "+Panjangpin+"m "+",Tinggi panel pintu "+Tinggipin+
-//                        ",Panjang panel jendela "+Panjangjen+"m "+",Tinggi panel jendela "+Tinggijen+"m "+
-//                        ",Luas Acian "+Luas+"m ");
-//                Batako1.setText("Jumlah "+Batako+"buah"+",Harga Rp."+Hargabatako);
-//                Semen1.setText("Berat "+Semen+"kg"+",Harga Rp."+Hargasemen);
-//                Pasir1.setText("Jumlah "+Pasir+"m3"+",Harga Rp."+Hargapasir);
-//                totalbiaya.setText(",Harga Rp."+Totalbiaya);
-//
-//                detaildialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-//                detaildialog.show();
-//            }
-//        });
+        viewHolder.detailacian.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Dialog detaildialog = new Dialog(context);
+                detaildialog.setContentView(R.layout.detail_acian);
+                TextView nama = detaildialog.findViewById(R.id.nama);
+                TextView luasacian = detaildialog.findViewById(R.id.luasacian);
+                TextView Semen1 = detaildialog.findViewById(R.id.semen1);
+                TextView totalbiaya = detaildialog.findViewById(R.id.totalbiaya);
+                TextView namasemen = detaildialog.findViewById(R.id.namasemen);
+                TextView hargatotalsemen = detaildialog.findViewById(R.id.semen1);
+                TextView sathargas = detaildialog.findViewById(R.id.hargas);
+                nama.setText(Name);
+                luasacian.setText("Panjang "+Panjangdin+"m "+",Tinggi "+Tinggidin+"m "+"Luas Acian "+Luas+"m ");
+                String resulthargas = null;
+                resulthargas = Hargasemen.replace(".0","");
+                String resulthargastotal = null;
+                resulthargastotal = Hargasementotal.replace(".0","");
+                hargatotalsemen.setText("Rp."+resulthargastotal);
+                namasemen.setText(Namasemen);
+                Semen1.setText(Semen+"kg");
+                sathargas.setText("Rp."+resulthargas);
+                totalbiaya.setText("Rp."+Totalbiaya);
+
+                detaildialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                detaildialog.show();
+            }
+        });
         viewHolder.deleteacian.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -113,17 +131,46 @@ public class Acian_adapter  extends RecyclerView.Adapter<Acian_adapter.ViewHolde
                 Button btndelete = deletedialog.findViewById(R.id.buttonhapus);
                 Button btncancel = deletedialog.findViewById(R.id.buttoncancel);
                 deletemessage.setText("Yakin ingin menghapus data acian " +Name);
+                int ID = Integer.parseInt(Id);
+                String apiKey = "oa00000000app";
+                SessionManager sm;
+                sm= new SessionManager(context);
+                HashMap<String,String> map = sm.getDetailLogin();
+                String token=(map.get(sm.KEY_TOKEN));
 
                 btndelete.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        Call<Void> call = ApiClient.getRequestInterface().actionDeletePerhitunganacian(ID,apiKey,token);
+                        call.enqueue(new Callback<Void>() {
+                            @Override
+                            public void onResponse(Call<Void> call, Response<Void> response) {
+                                if (response.code() == 200 ) {
+                                    deletedialog.hide();
+                                    Toast.makeText(context, "Sukses hapus!",
+                                            Toast.LENGTH_SHORT).show();
 
+                                } else if (response.code() == 422) {
+                                    Toast.makeText(context, "Something wrong!",
+                                            Toast.LENGTH_SHORT).show();
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<Void> call, Throwable t) {
+//                swipeRefreshLayout.setRefreshing(false);
+                                Toast.makeText(context, "Oops! Something went wrong!" + t.getMessage(),
+                                        Toast.LENGTH_SHORT).show();
+
+                            }
+                        });
                     }
                 });
+
                 btncancel.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
+                        deletedialog.hide();
                     }
                 });
                 deletedialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));

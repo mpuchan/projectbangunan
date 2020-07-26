@@ -18,7 +18,7 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="290dp"
+                android:layout_height="201dp"
                 android:layout_gravity="center">
 
 
@@ -33,7 +33,7 @@
                     android:id="@+id/namaproyek"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="70dp"
+                    android:layout_marginTop="60dp"
                     android:background="#B4B16609"
                     android:fontFamily="monospace"
                     android:gravity="center"
@@ -42,132 +42,37 @@
                     android:textSize="20dp"
                     android:textStyle="bold" />
 
+                <TextView
+                    android:id="@+id/luastanah"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="87dp"
+                    android:background="#D5E20000"
+                    android:paddingLeft="30dp"
+                    android:text="TextView"
+                    android:textAlignment="textStart"
+                    android:textColor="#F5F1F1"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/luasbangunan"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="110dp"
+                    android:background="#D5E20000"
+                    android:paddingLeft="30dp"
+                    android:text="TextView"
+                    android:textAlignment="viewStart"
+                    android:textColor="#FFFFFF"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
                 <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
-                    android:layout_marginBottom="-47dp">
-
-                    <androidx.cardview.widget.CardView
-                        android:id="@+id/car4"
-                        android:layout_width="match_parent"
-                        android:layout_height="200dp"
-                        android:layout_marginStart="11dp"
-                        android:layout_marginTop="11dp"
-                        android:layout_marginEnd="11dp"
-                        android:layout_marginBottom="11dp"
-                        android:background="#fff"
-                        app:cardCornerRadius="10dp"
-                        app:cardElevation="5dp">
-
-
-                        <RelativeLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"
-                            android:gravity="center">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="15dp"
-                                android:layout_marginTop="5dp"
-                                android:text="Total Biaya"
-                                android:textColor="#000"
-                                android:textSize="16sp"
-                                android:textStyle="bold" />
-
-                            <TextView
-                                android:id="@+id/goldrt"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_alignParentRight="true"
-                                android:layout_marginTop="5dp"
-                                android:layout_marginRight="35dp"
-                                android:text="0"
-                                android:textColor="#000"
-                                android:textSize="16sp" />
-
-                            <LinearLayout
-                                android:id="@+id/garis"
-                                android:layout_width="match_parent"
-                                android:layout_height="1dp"
-                                android:layout_below="@id/goldrt"
-                                android:layout_marginTop="10dp"
-                                android:background="#f0efef"
-                                android:orientation="horizontal" />
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_below="@id/garis"
-                                android:layout_marginTop="10dp"
-                                android:orientation="horizontal">
-
-                                <RelativeLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="100dp"
-                                    android:layout_weight="0.50"
-                                    android:background="?attr/selectableItemBackground"
-                                    android:gravity="center">
-
-                                    <androidx.core.widget.NestedScrollView
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:fillViewport="true">
-
-                                        <LinearLayout
-                                            android:layout_width="match_parent"
-                                            android:layout_height="wrap_content"
-                                            android:orientation="vertical">
-                                        <include layout="@layout/rinciankebutuhan"
-                                            ></include>
-                                        </LinearLayout>
-                                    </androidx.core.widget.NestedScrollView>
-
-                                </RelativeLayout>
-
-                                <RelativeLayout
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="70dp"
-                                    android:layout_marginRight="0dp"
-                                    android:layout_weight="0.50"
-                                    android:background="?attr/selectableItemBackground"
-                                    android:gravity="center" />
-
-                                <RelativeLayout
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="70dp"
-                                    android:layout_marginRight="105dp"
-                                    android:layout_weight="0.50"
-                                    android:background="?attr/selectableItemBackground"
-                                    android:gravity="center">
-
-                                    <ImageView
-                                        android:id="@+id/rician"
-                                        android:layout_width="40dp"
-                                        android:layout_height="40dp"
-                                        android:layout_centerHorizontal="true"
-                                        android:src="@drawable/icon4apl" />
-
-                                    <TextView
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:layout_below="@id/rician"
-                                        android:gravity="center"
-                                        android:text="Rincian Biaya"
-                                        android:textColor="#000"
-                                        android:textSize="12dp" />
-
-                                </RelativeLayout>
-
-                            </LinearLayout>
-
-                        </RelativeLayout>
-
-                    </androidx.cardview.widget.CardView>
-
-                </RelativeLayout>
+                    android:layout_marginBottom="-47dp" />
 
             </RelativeLayout>
 
@@ -245,7 +150,7 @@
                                     android:layout_marginBottom="5dp"
                                     android:padding="10dp"
                                     android:scaleType="fitCenter"
-                                    android:src="@drawable/batako1" />
+                                    android:src="@drawable/pondasiw" />
 
                                 <TextView
                                     android:id="@+id/textpondasi"
@@ -289,7 +194,7 @@
                                     android:layout_marginBottom="5dp"
                                     android:padding="10dp"
                                     android:scaleType="fitCenter"
-                                    android:src="@drawable/icon4apl" />
+                                    android:src="@drawable/urug" />
 
                                 <TextView
                                     android:id="@+id/texturugan"
@@ -332,7 +237,7 @@
                                     android:layout_marginBottom="5dp"
                                     android:padding="10dp"
                                     android:scaleType="fitCenter"
-                                    android:src="@drawable/batako1" />
+                                    android:src="@drawable/batakopnd" />
 
                                 <TextView
                                     android:id="@+id/textbidang"
@@ -385,7 +290,7 @@
                                     android:layout_marginBottom="5dp"
                                     android:padding="10dp"
                                     android:scaleType="fitCenter"
-                                    android:src="@drawable/batako1" />
+                                    android:src="@drawable/beton" />
 
                                 <TextView
                                     android:id="@+id/textbeton"
@@ -429,7 +334,7 @@
                                     android:layout_marginBottom="5dp"
                                     android:padding="10dp"
                                     android:scaleType="fitCenter"
-                                    android:src="@drawable/icon4apl" />
+                                    android:src="@drawable/atapw" />
 
                                 <TextView
                                     android:id="@+id/textatap"
@@ -472,7 +377,7 @@
                                     android:layout_marginBottom="5dp"
                                     android:padding="10dp"
                                     android:scaleType="fitCenter"
-                                    android:src="@drawable/batako1" />
+                                    android:src="@drawable/plesteran" />
 
                                 <TextView
                                     android:id="@+id/textplesteran"
@@ -525,7 +430,7 @@
                                     android:layout_marginBottom="5dp"
                                     android:padding="10dp"
                                     android:scaleType="fitCenter"
-                                    android:src="@drawable/batako1" />
+                                    android:src="@drawable/acian" />
 
                                 <TextView
                                     android:id="@+id/textacian"
@@ -569,7 +474,7 @@
                                     android:layout_marginBottom="5dp"
                                     android:padding="10dp"
                                     android:scaleType="fitCenter"
-                                    android:src="@drawable/icon4apl" />
+                                    android:src="@drawable/cat" />
 
                                 <TextView
                                     android:id="@+id/textcatan"
@@ -612,7 +517,7 @@
                                     android:layout_marginBottom="5dp"
                                     android:padding="10dp"
                                     android:scaleType="fitCenter"
-                                    android:src="@drawable/batako1" />
+                                    android:src="@drawable/lantai" />
 
                                 <TextView
                                     android:id="@+id/textlantai"
@@ -642,17 +547,17 @@
 
                         <androidx.cardview.widget.CardView
                             android:id="@+id/home_mRide"
-                            android:layout_width="0dp"
+                            android:layout_width="110dp"
                             android:layout_height="100dp"
                             android:layout_margin="10dp"
                             android:layout_marginLeft="5dp"
-                            android:layout_weight="0.33"
+                            android:layout_weight="0"
                             android:clickable="true"
                             app:cardCornerRadius="10dp"
                             app:cardElevation="5dp">
 
                             <RelativeLayout
-                                android:layout_width="match_parent"
+                                android:layout_width="111dp"
                                 android:layout_height="match_parent"
                                 android:background="?attr/selectableItemBackground">
 
@@ -665,7 +570,7 @@
                                     android:layout_marginBottom="5dp"
                                     android:padding="10dp"
                                     android:scaleType="fitCenter"
-                                    android:src="@drawable/batako1" />
+                                    android:src="@drawable/plafon" />
 
                                 <TextView
                                     android:id="@+id/textplfond"

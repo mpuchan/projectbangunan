@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".Perhitunganbeton">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="290dp"
+            android:layout_gravity="center">
+
+
+            <ImageView
+                android:id="@+id/greeting_img"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:scaleType="fitXY"
+                app:srcCompat="@drawable/masangbatako" />
+
+            <TextView
+                android:id="@+id/greeting_text"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="70dp"
+                android:background="#B4B11709"
+                android:fontFamily="monospace"
+                android:gravity="center"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:text="Meliputi perhitungan kebutuhan material besi,semen,pasir,batu,papan,kawat,dan paku dalam proses pembuatan beton bangunan"
+                android:textColor="#FDFDFD"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/greeting_text2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:background="#B4B16609"
+                android:fontFamily="monospace"
+                android:gravity="center"
+                android:text="Perhitungan Beton Bangunan"
+                android:textColor="#FDFDFD"
+                android:textSize="20dp"
+                android:textStyle="bold" />
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true">
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/car4"
+                    android:layout_width="match_parent"
+                    android:layout_height="140dp"
+                    android:layout_margin="11dp"
+                    android:background="#fff"
+                    app:cardCornerRadius="10dp"
+                    app:cardElevation="5dp">
+
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:gravity="center">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="15dp"
+                            android:layout_marginTop="5dp"
+                            android:text="Total Biaya"
+                            android:textColor="#000"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/totalharga"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginRight="35dp"
+                            android:text="0"
+                            android:textColor="#000"
+                            android:textSize="16sp" />
+
+                        <LinearLayout
+                            android:id="@+id/garis"
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_below="@id/totalharga"
+                            android:layout_marginTop="10dp"
+                            android:background="#f0efef"
+                            android:orientation="horizontal"
+
+                            />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/garis"
+                            android:layout_marginTop="10dp"
+                            android:orientation="horizontal">
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="70dp"
+                                android:layout_weight="0.50"
+                                android:background="?attr/selectableItemBackground"
+                                android:gravity="center">
+
+                                <ImageView
+                                    android:id="@+id/print"
+                                    android:layout_width="40dp"
+                                    android:layout_height="40dp"
+                                    android:layout_centerHorizontal="true"
+                                    android:src="@drawable/iconrincian" />
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_below="@id/print"
+                                    android:gravity="center"
+                                    android:text="Rincian Data Beton"
+                                    android:textColor="#000"
+                                    android:textSize="12dp" />
+
+                            </RelativeLayout>
+
+                            <RelativeLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="70dp"
+                                android:layout_marginRight="0dp"
+                                android:layout_weight="0.50"
+                                android:background="?attr/selectableItemBackground"
+                                android:gravity="center">
+
+                                <ImageView
+                                    android:id="@+id/panduan"
+                                    android:layout_width="40dp"
+                                    android:layout_height="40dp"
+                                    android:layout_centerHorizontal="true"
+                                    android:src="@drawable/iconpanduan" />
+
+                                <TextView
+
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_below="@id/panduan"
+                                    android:gravity="center"
+                                    android:text="Panduan Aplikasi"
+                                    android:textColor="#000"
+                                    android:textSize="12dp" />
+
+                            </RelativeLayout>
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="70dp"
+                                android:layout_marginRight="25dp"
+                                android:layout_weight="0.50"
+                                android:background="?attr/selectableItemBackground"
+                                android:gravity="center">
+
+                                <ImageView
+                                    android:id="@+id/tambahbeton"
+                                    android:layout_width="40dp"
+                                    android:layout_height="40dp"
+                                    android:layout_centerHorizontal="true"
+                                    android:src="@drawable/support" />
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_below="@id/tambahbeton"
+                                    android:gravity="center"
+                                    android:text="Tambah Beton"
+                                    android:textColor="#000"
+                                    android:textSize="12dp" />
+
+                            </RelativeLayout>
+
+                        </LinearLayout>
+
+                    </RelativeLayout>
+
+                </androidx.cardview.widget.CardView>
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/textView20"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
+            android:text="DATA BETON"
+            android:textColor="#000" />
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <include layout="@layout/contentbeton" />
+        </LinearLayout>
+
+    </ScrollView>
+</LinearLayout>
+
+

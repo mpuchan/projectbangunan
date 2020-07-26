@@ -35,13 +35,16 @@ public class Perhitunganacian1 {
         private Double jumlahkeperluansemen;
         @SerializedName("jumlahdalamsak")
         @Expose
-        private Integer jumlahdalamsak;
+        private Double jumlahdalamsak;
         @SerializedName("metode")
         @Expose
         private String metode;
         @SerializedName("hargasemen")
         @Expose
         private Double hargasemen;
+        @SerializedName("hargasementotal")
+        @Expose
+        private Double hargasementotal;
         @SerializedName("hargatotal")
         @Expose
         private Double hargatotal;
@@ -132,11 +135,11 @@ public class Perhitunganacian1 {
             this.jumlahkeperluansemen = jumlahkeperluansemen;
         }
 
-        public Integer getJumlahdalamsak() {
+        public Double getJumlahdalamsak() {
             return jumlahdalamsak;
         }
 
-        public void setJumlahdalamsak(Integer jumlahdalamsak) {
+        public void setJumlahdalamsak(Double jumlahdalamsak) {
             this.jumlahdalamsak = jumlahdalamsak;
         }
 
@@ -155,6 +158,13 @@ public class Perhitunganacian1 {
         public void setHargasemen(Double hargasemen) {
             this.hargasemen = hargasemen;
         }
+        public Double getHargasementotal() {
+        return hargasementotal;
+    }
+
+        public void setHargasementotal(Double hargasementotal) {
+        this.hargasementotal = hargasementotal;
+    }
 
         public Double getHargatotal() {
             return hargatotal;

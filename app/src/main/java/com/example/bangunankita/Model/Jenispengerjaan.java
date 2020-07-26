@@ -11,7 +11,7 @@ public class Jenispengerjaan {
         return jenispengerjaan;
     }
 
-    public void setCampuran(String jenispengerjaan) {
+    public void setJenispengerjaan(String jenispengerjaan) {
         this.jenispengerjaan = jenispengerjaan;
     }
 }

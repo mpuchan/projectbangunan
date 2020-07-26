@@ -80,6 +80,8 @@ public class Add_Proyek extends AppCompatActivity {
                 map.put("lokasi", lokasi.getText().toString());
                 map.put("tanggal", et_tanggal.getText().toString());
                 map.put("PengembangId", idpengembang.getText().toString());
+                map.put("luasbangunan", et_tanggal.getText().toString());
+                map.put("luastanah", idpengembang.getText().toString());
 
 
                 Call<Void> call = ApiClient.getRequestInterface().actionCreateProyek(apiKey,token,map);
@@ -109,9 +111,6 @@ public class Add_Proyek extends AppCompatActivity {
 
             }
         });
-
-
-
 
         if (savedInstanceState == null) {
             background.setVisibility(View.INVISIBLE);

@@ -64,12 +64,21 @@ public class Perhitunganbidang1 {
     @SerializedName("hargabatako")
     @Expose
     private Double hargabatako;
+    @SerializedName("hargabatakototal")
+    @Expose
+    private Double hargabatakototal;
     @SerializedName("hargapasir")
     @Expose
     private Double hargapasir;
+    @SerializedName("hargapasirtotal")
+    @Expose
+    private Double hargapasirtotal;
     @SerializedName("hargasemen")
     @Expose
     private Double hargasemen;
+    @SerializedName("hargasementotal")
+    @Expose
+    private Double hargasementotal;
     @SerializedName("hargatotal")
     @Expose
     private Double hargatotal;
@@ -240,6 +249,13 @@ public class Perhitunganbidang1 {
         this.hargabatako = hargabatako;
     }
 
+    public Double getHargabatakototal() {
+        return hargabatakototal;
+    }
+
+    public void setHargabatakototal(Double hargabatakototal) {
+        this.hargabatakototal = hargabatakototal;
+    }
     public Double getHargapasir() {
         return hargapasir;
     }
@@ -248,12 +264,27 @@ public class Perhitunganbidang1 {
         this.hargapasir = hargapasir;
     }
 
+    public Double getHargapasirtotal() {
+        return hargapasirtotal;
+    }
+
+    public void setHargapasirtotal(Double hargapasirtotal) {
+        this.hargapasirtotal = hargapasirtotal;
+    }
+
     public Double getHargasemen() {
         return hargasemen;
     }
 
     public void setHargasemen(Double hargasemen) {
         this.hargasemen = hargasemen;
+    }
+    public Double getHargasementotal() {
+        return hargasementotal;
+    }
+
+    public void setHargasementotal(Double hargasementotal) {
+        this.hargasementotal = hargasementotal;
     }
 
     public Double getHargatotal() {

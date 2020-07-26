@@ -29,7 +29,7 @@
             android:id="@+id/hasilvol"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="20000"
+            android:text=""
             android:textAlignment="textStart"
             android:textColor="#FA575656" />
 
@@ -62,7 +62,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="300"
+            android:text=""
             android:textAlignment="textStart"
             android:textColor="#FA575656" />
 
@@ -89,7 +89,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:paddingLeft="5dp"
-            android:text="200"
+            android:text=""
             android:textAlignment="textStart"
             android:textColor="#FA575656" />
 
@@ -116,7 +116,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="300"
+            android:text=""
             android:textAlignment="textStart"
             android:textColor="#FA575656" />
 
@@ -138,7 +138,7 @@
             android:id="@+id/hasilsemen"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="300"
+            android:text=""
             android:textAlignment="textStart"
             android:textColor="#FA575656" />
 
@@ -166,7 +166,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:paddingLeft="5dp"
-            android:text="300"
+            android:text=""
             android:textAlignment="textStart"
             android:textColor="#FA575656" />
 
@@ -193,7 +193,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="300"
+            android:text=""
             android:textColor="#FA575656" />
 
     </LinearLayout>
@@ -228,7 +228,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="3000000"
+            android:text=""
             android:textAlignment="textStart"
             android:textColor="#FA575656" />
 

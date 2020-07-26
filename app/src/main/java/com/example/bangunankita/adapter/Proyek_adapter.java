@@ -12,6 +12,8 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -43,10 +45,11 @@ import retrofit2.Response;
 import static java.util.stream.IntStream.builder;
 
 
-public class Proyek_adapter extends RecyclerView.Adapter<Proyek_adapter.ViewHolder> {
+public class Proyek_adapter extends RecyclerView.Adapter<Proyek_adapter.ViewHolder> implements Filterable {
 
     private Context context;
     private List<Proyek_model> proyeks;
+    private List<Proyek_model> proyeks1;
     public String[] mColors = {
             "#39add1", // light blue
             "#3079ab", // dark blue
@@ -66,6 +69,7 @@ public class Proyek_adapter extends RecyclerView.Adapter<Proyek_adapter.ViewHold
     public Proyek_adapter(Context context,List<Proyek_model> proyeks) {
         this.context=context;
         this.proyeks=proyeks;
+        proyeks1 =new ArrayList<>(proyeks);
     }
 
     @Override
@@ -79,6 +83,8 @@ public class Proyek_adapter extends RecyclerView.Adapter<Proyek_adapter.ViewHold
         final Proyek_model proyekModel = proyeks.get(i);
         final String id_proyek= String.valueOf(proyeks.get(i).getId());
         final String nama_proyek=proyeks.get(i).getNamaProyek();
+        final String luastanah = String.valueOf(proyeks.get(i).getLuas_tanah());
+        final String luasbangunan = String.valueOf(proyeks.get(i).getLuas_bangunan());
         final String lokasi =proyeks.get(i).getLokasi();
         final String tanggal =proyeks.get(i).getTanggal();
 
@@ -100,6 +106,8 @@ public class Proyek_adapter extends RecyclerView.Adapter<Proyek_adapter.ViewHold
                 Bundle setData = new Bundle();
                 setData.putString("idproyek",id_proyek);
                 setData.putString("namaproyek",nama_proyek);
+                setData.putString("luastanah",luastanah);
+                setData.putString("luasbangunan",luasbangunan);
                 setData.putString("lokasi",lokasi);
                 edit.putExtras(setData);
                 context.startActivity(edit);
@@ -115,6 +123,8 @@ public class Proyek_adapter extends RecyclerView.Adapter<Proyek_adapter.ViewHold
                 setData.putString("idproyek",id_proyek);
                 setData.putString("namaproyek",nama_proyek);
                 setData.putString("lokasi",lokasi);
+                setData.putString("luastanah",luastanah);
+                setData.putString("luasbangunan",luasbangunan);
                 detail.putExtras(setData);
                 context.startActivity(detail);
             }
@@ -146,7 +156,7 @@ public class Proyek_adapter extends RecyclerView.Adapter<Proyek_adapter.ViewHold
 //                swipeRefreshLayout.setRefreshing(false);
 //                String message = response.body().getMessage();
                                 if (response.code() == 200 ) {
-
+                                    deletedialog.hide();
                                     Toast.makeText(context, "Sukses hapus!",
                                             Toast.LENGTH_SHORT).show();
 //                    if (proyekModels == null) {
@@ -174,7 +184,7 @@ public class Proyek_adapter extends RecyclerView.Adapter<Proyek_adapter.ViewHold
                 btncancel.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
+                        deletedialog.hide();
                     }
                 });
                 deletedialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -188,6 +198,37 @@ public class Proyek_adapter extends RecyclerView.Adapter<Proyek_adapter.ViewHold
         return proyeks.size();
     }
 
+    @Override
+    public Filter getFilter() {
+        return proyekfilter;
+    }
+private Filter proyekfilter = new Filter() {
+    @Override
+    protected FilterResults performFiltering(CharSequence constraint) {
+        List<Proyek_model> filterproyek = new ArrayList<>();
+        if (constraint == null || constraint.length() == 0){
+            filterproyek.addAll(proyeks1);
+
+        }else {
+            String filternpattern = constraint.toString().toLowerCase().trim();
+            for (Proyek_model proyek: proyeks1 ){
+                if (proyek.getNamaProyek().toLowerCase().contains((filternpattern))){
+                    filterproyek.add(proyek);
+                }
+            }
+        }
+        FilterResults results = new FilterResults();
+        results.values = filterproyek;
+        return results;
+    }
+
+    @Override
+    protected void publishResults(CharSequence constraint, FilterResults results) {
+        proyeks.clear();
+        proyeks.addAll((List)results.values);
+        notifyDataSetChanged();
+    }
+};
 
     public class ViewHolder extends RecyclerView.ViewHolder{
         private TextView nama_proyek,lokasi_proyek,edit,tanggal,delete;

@@ -3,6 +3,7 @@ package com.example.bangunankita;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.content.Context;
 import android.content.Intent;
@@ -13,6 +14,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.bangunankita.Model.Perhitunganbidang1;
@@ -24,7 +26,9 @@ import com.example.bangunankita.Util.SessionManager;
 import com.example.bangunankita.adapter.Acian_adapter;
 import com.example.bangunankita.adapter.Bidang_adapter;
 import com.example.bangunankita.adapter.Plesteran_adapter;
+import com.github.andreilisun.swipedismissdialog.SwipeDismissDialog;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -32,6 +36,8 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import static maes.tech.intentanim.CustomIntent.customType;
 
 public class Perhitunganplesteran extends AppCompatActivity {
     ImageView imageples;
@@ -42,13 +48,19 @@ public class Perhitunganplesteran extends AppCompatActivity {
     private Plesteran_adapter plesteran_adapter;
     private List<Perhitunganplesteran1> PlesteranModel = new ArrayList<>();
     private RecyclerView mRecyclerView;
+    TextView totalplester;
+    int totalPrice = 0;
+    SwipeRefreshLayout swipeRefreshLayout;
+    SwipeDismissDialog swipeDismissDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_perhitunganplesteran);
         imageples = findViewById(R.id.tambahplester);
         sm= new SessionManager(Perhitunganplesteran.this);
+        swipeRefreshLayout = findViewById(R.id.swiperf);
         mRecyclerView = findViewById(R.id.rv_plesteran);
+        totalplester = findViewById(R.id.totalplester);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         HashMap<String,String> map = sm.getDetailLogin();
         token=(map.get(sm.KEY_TOKEN));
@@ -63,6 +75,16 @@ public class Perhitunganplesteran extends AppCompatActivity {
         Ju = mId;
         mContext = this;
         getperhitunganplesteran();
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                swipeRefreshLayout.setRefreshing(true);
+                finish();
+                startActivity(getIntent());
+                customType(Perhitunganplesteran.this,"fadein-to-fadeout");
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
         imageples.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -97,11 +119,13 @@ public class Perhitunganplesteran extends AppCompatActivity {
                 if (response.code() == 200 ) {
                     PlesteranModel = response.body().getPerhitunganplesteran();
 
-//                    if (proyekModels == null) {
-////                        datanull.setText("Data Proyek Masih Kosong");
-//                    }else{
-////                        datanull.setText(null);
-//                    }
+                    for (int i = 0; i<PlesteranModel.size(); i++) {
+                        totalPrice += PlesteranModel.get(i).getHargatotal();
+                    }
+                    DecimalFormat formatter = new DecimalFormat("#,###.##");
+                    String totalbiaya = formatter.format(totalPrice);
+                    totalplester.setText("Rp."+totalbiaya);
+
                     plesteran_adapter = new Plesteran_adapter(Perhitunganplesteran.this, PlesteranModel);
                     mRecyclerView.setAdapter(plesteran_adapter);
 

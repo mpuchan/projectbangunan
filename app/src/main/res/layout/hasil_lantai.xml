@@ -29,7 +29,7 @@
             android:id="@+id/hasilbid"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="20000"
+            android:text=""
             android:textAlignment="textStart"
             android:textColor="#FA575656" />
 
@@ -61,7 +61,7 @@
             android:id="@+id/hasils"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="300"
+            android:text=""
             android:textAlignment="textStart"
             android:textColor="#FA575656" />
 
@@ -89,7 +89,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:paddingLeft="5dp"
-            android:text="300"
+            android:text=""
             android:textAlignment="textStart"
             android:textColor="#FA575656" />
 
@@ -116,7 +116,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="300"
+            android:text=""
             android:textColor="#FA575656" />
 
     </LinearLayout>
@@ -138,7 +138,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="300"
+            android:text=""
             android:textAlignment="textStart"
             android:textColor="#FA575656" />
 
@@ -165,7 +165,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:paddingLeft="5dp"
-            android:text="200"
+            android:text=""
             android:textAlignment="textStart"
             android:textColor="#FA575656" />
 
@@ -192,7 +192,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="300"
+            android:text=""
             android:textAlignment="textStart"
             android:textColor="#FA575656" />
 
@@ -211,10 +211,10 @@
             android:textColor="#FA575656" />
 
         <TextView
-            android:id="@+id/hasilbat"
+            android:id="@+id/hasilker"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="300"
+            android:text=""
             android:textColor="#FA575656" />
 
         <TextView
@@ -224,6 +224,30 @@
             android:layout_weight="1"
             android:paddingLeft="5dp"
             android:text="bh"
+            android:textColor="#FA575656" />
+        <TextView
+            android:id="@+id/hasilbd12"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingLeft="5dp"
+            android:text="atau"
+            android:textColor="#FA575656" />
+        <TextView
+            android:id="@+id/hasilker2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingLeft="5dp"
+            android:text=""
+            android:textColor="#FA575656" />
+        <TextView
+            android:id="@+id/hasilkerd2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingLeft="5dp"
+            android:text="dus"
             android:textColor="#FA575656" />
 
         <TextView
@@ -236,11 +260,11 @@
             android:textColor="#FA575656" />
 
         <TextView
-            android:id="@+id/hasilbat1"
+            android:id="@+id/hasilker1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="300"
+            android:text=""
             android:textColor="#FA575656" />
 
     </LinearLayout>
@@ -261,7 +285,7 @@
             android:id="@+id/hasilnat"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="300"
+            android:text=""
             android:textColor="#FA575656" />
 
         <TextView
@@ -287,7 +311,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="0"
-            android:text="300"
+            android:text=""
             android:textColor="#FA575656" />
 
     </LinearLayout>
@@ -317,7 +341,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="3000000"
+            android:text=""
             android:textAlignment="textStart"
             android:textColor="#FA575656" />
 

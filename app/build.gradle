@@ -5,7 +5,7 @@ android {
     buildToolsVersion "29.0.2"
     defaultConfig {
         applicationId "com.example.bangunankita"
-        minSdkVersion 22
+        minSdkVersion 21
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
@@ -43,4 +43,13 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
     implementation 'com.squareup.okhttp3:logging-interceptor:4.5.0'
     implementation 'com.github.RocketChat:textdrawable:1.0.2'
+    implementation fileTree(dir: 'libs', include: ['*.aar', '*.jar'], exclude: [])
+    implementation 'com.github.andreilisun:swipedismissdialog:0.1'
+    implementation files('libs\\poi-3.15.jar')
+    implementation files('libs\\poi-ooxml-3.15.jar')
+    implementation files('libs\\poi-ooxml-schemas-3.15.jar')
+    implementation 'com.github.hajiyevelnur92:intentanimation:1.0'
+    implementation 'de.hdodenhof:circleimageview:2.2.0'
+    implementation 'com.github.bumptech.glide:glide:4.7.1'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.7.1'
 }

@@ -1,52 +1,69 @@
 package com.example.bangunankita.adapter;
 
+import android.app.Dialog;
+import android.content.Context;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
+
 import androidx.recyclerview.widget.RecyclerView;
 
-public class Pondasi_adapter  {
-    //    extends RecyclerView.Adapter<Pondasi_adapter.ViewHolder>
-//    private Context context;
-//    private List<Perhitunganpondasi1> pondasis;
-//
-//    public Pondasi_adapter(Context context, List<Perhitunganpondasi1> pondasis) {
-//        this.context=context;
-//        this.pondasis=pondasis;
-//    }
-//
-//    @Override
-//    public Pondasi_adapter.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-//        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.listpondasi, viewGroup, false);
-//        return new Pondasi_adapter.ViewHolder(view);
-//    }
-//
-//    @Override
-//    public void onBindViewHolder(Pondasi_adapter.ViewHolder viewHolder, final int i) {
-//        final Perhitunganpondasi1 PondasiModel = pondasis.get(i);
-//        final String Name = String.valueOf(pondasis.get(i).getNama());
-//        final String Panjangbid = String.valueOf(pondasis.get(i).getPanjangbid());
-//        final String Tinggibid = String.valueOf(pondasis.get(i).getTinggibid());
-//        final String Panjangjen = String.valueOf(pondasis.get(i).getPanjangjen());
-//        final String Tinggijen = String.valueOf(pondasis.get(i).getTinggijen());
-//        final String Panjangpin = String.valueOf(pondasis.get(i).getPanjangpin());
-//        final String Tinggipin = String.valueOf(pondasis.get(i).getTinggipin());
-//        final String Jumlahdalamsak = String.valueOf(pondasis.get(i).getJumlahdalamsak());
-//        final String Metode = String.valueOf(pondasis.get(i).getMetode());
-//        final String Hargabatako = String.valueOf(pondasis.get(i).getHargabatako());
-//        final String Hargapasir = String.valueOf(pondasis.get(i).getHargapasir());
-//        final String Hargasemen = String.valueOf(pondasis.get(i).getHargasemen());
-//        final String Totalbiaya = String.valueOf(pondasis.get(i).getHargatotal());
-//
-//
-//
-//        final String Semen = String.valueOf(pondasis.get(i).getJumlahkeperluansemen());
-//        final String Pasir = String.valueOf(pondasis.get(i).getJumlahkeperluanpasir());
-//        final String Batako = String.valueOf(pondasis.get(i).getJumlahkeperluanbatako());
-//        final String Luas = String.valueOf(pondasis.get(i).getLuasPondasi());
-//
-//        viewHolder.Nama.setText(Name);
-//        viewHolder.semen.setText(Semen);
-//        viewHolder.pasir.setText(Pasir);
-//        viewHolder.batako.setText(Batako);
-//
+import com.example.bangunankita.Model.Perhitunganpondasi1;
+import com.example.bangunankita.R;
+
+import java.util.List;
+
+public class Pondasi_adapter extends RecyclerView.Adapter<Pondasi_adapter.ViewHolder>  {
+
+    private Context context;
+    private List<Perhitunganpondasi1> pondasis;
+
+    public Pondasi_adapter(Context context, List<Perhitunganpondasi1> pondasis) {
+        this.context=context;
+        this.pondasis=pondasis;
+    }
+
+    @Override
+    public Pondasi_adapter.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.listpondasi, viewGroup, false);
+        return new Pondasi_adapter.ViewHolder(view);
+    }
+
+    @Override
+    public void onBindViewHolder(Pondasi_adapter.ViewHolder viewHolder, final int i) {
+        final Perhitunganpondasi1 PondasiModel = pondasis.get(i);
+        final String Nama = String.valueOf(pondasis.get(i).getNama());
+        final String a = String.valueOf(pondasis.get(i).getA());
+        final String b = String.valueOf(pondasis.get(i).getB());
+        final String t = String.valueOf(pondasis.get(i).getT());
+        final String p = String.valueOf(pondasis.get(i).getP());
+        final String luas = String.valueOf(pondasis.get(i).getLuas());
+        final String Namasemen= String.valueOf(pondasis.get(i).getNamasemen());
+        final String Namabatu= String.valueOf(pondasis.get(i).getNamabatu());
+        final String Namapasir = String.valueOf(pondasis.get(i).getNamapasir());
+        final String Jumlahbatu = String.valueOf(pondasis.get(i).getJumlahbatu());
+        final String Jumlahbatutruk= String.valueOf(pondasis.get(i).getJumlahbatutruk());
+        final String Jumlahpasir = String.valueOf(pondasis.get(i).getJumlahpasir());
+        final String Jumlahsemen = String.valueOf(pondasis.get(i).getJumlahsemen());
+        final String Jumlahsemendalamsak = String.valueOf(pondasis.get(i).getJumlahsemendalamsak());
+        final String Hargabatukali = String.valueOf(pondasis.get(i).getHargabatukali());
+        final String Hargabatutotal= String.valueOf(pondasis.get(i).getHargabatutotal());
+        final String Hargapasir = String.valueOf(pondasis.get(i).getHargapasir());
+        final String Hargapasirtotal = String.valueOf(pondasis.get(i).getHargapasirtotal());
+        final String Hargasemen = String.valueOf(pondasis.get(i).getHargasemen());
+        final String Hargasementotal= String.valueOf(pondasis.get(i).getHargasementotal());
+        final String Hargatotal = String.valueOf(pondasis.get(i).getHargatotal());
+
+
+
+        viewHolder.Nama.setText(Nama);
+//        viewHolder.semen.setText(Namasemen);
+//        viewHolder.pasir.setText(Namapasir);
+//        viewHolder.batako.setText(Namabatu);
+
 //        viewHolder.editpondasi.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View view) {
@@ -128,35 +145,35 @@ public class Pondasi_adapter  {
 //            }
 //        });
 //
-//    }
+    }
 //
-//    @Override
-//    public int getItemCount() {
-//        return pondasis.size();
-//    }
-//
-//
-//    public class ViewHolder extends RecyclerView.ViewHolder{
-//        private TextView Nama,semen,pasir,batako,edit;
-//        private ImageView image;
-//        private Button editpondasi,deletepondasi,detailpondasi;
-//        Dialog deletedialog;
-//
-//        public ViewHolder(View view) {
-//            super(view);
-//            Nama = (TextView)view.findViewById(R.id.Nama);
+    @Override
+    public int getItemCount() {
+        return pondasis.size();
+    }
+
+
+    public class ViewHolder extends RecyclerView.ViewHolder{
+        private TextView Nama,semen,pasir,batako,edit;
+        private ImageView image;
+        private Button editpondasi,deletepondasi,detailpondasi;
+        Dialog deletedialog;
+
+        public ViewHolder(View view) {
+            super(view);
+            Nama = (TextView)view.findViewById(R.id.Nama1);
 //            semen = (TextView)view.findViewById(R.id.semen);
 //            pasir = (TextView)view.findViewById(R.id.pasir);
 //            batako = (TextView)view.findViewById(R.id.Batako);
 //            editpondasi = view.findViewById(R.id.editpondasi);
 //            deletepondasi = view.findViewById(R.id.Deletepondasi);
 //            detailpondasi = view.findViewById(R.id.detailpondasi);
-//
-//
-//
-//
-//        }
-//    }
+
+
+
+
+        }
+    }
 
 
 

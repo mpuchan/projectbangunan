@@ -35,7 +35,7 @@
                 android:gravity="center"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
-                android:text="Meliputi perhitungan kebutuhan material batako semen dan pasir dalam proses pembuatan bangunan"
+                android:text="Meliputi perhitungan kebutuhan material semen dan pasir dalam proses plesteran pada dinding bangunan"
                 android:textColor="#FDFDFD"
                 android:textSize="12sp"
                 android:textStyle="bold" />
@@ -123,7 +123,7 @@
                                     android:layout_width="40dp"
                                     android:layout_height="40dp"
                                     android:layout_centerHorizontal="true"
-                                    android:src="@drawable/icon4apl" />
+                                    android:src="@drawable/iconrincian" />
 
                                 <TextView
                                     android:layout_width="match_parent"
@@ -149,7 +149,7 @@
                                     android:layout_width="40dp"
                                     android:layout_height="40dp"
                                     android:layout_centerHorizontal="true"
-                                    android:src="@drawable/icon4apl" />
+                                    android:src="@drawable/iconpanduan" />
 
                                 <TextView
 

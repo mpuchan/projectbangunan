@@ -35,7 +35,7 @@
                 android:gravity="center"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
-                android:text="Meliputi perhitungan kebutuhan material batako semen dan pasir dalam proses pembuatan bangunan"
+                android:text="Meliputi perhitungan kebutuhan material kayu, triplek/gypsum, dan paku dalam proses pembuatan plafon atap bangunan"
                 android:textColor="#FDFDFD"
                 android:textSize="12sp"
                 android:textStyle="bold" />
@@ -85,7 +85,7 @@
                             android:textStyle="bold" />
 
                         <TextView
-                            android:id="@+id/goldrt"
+                            android:id="@+id/totalseluruh"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentRight="true"
@@ -99,7 +99,7 @@
                             android:id="@+id/garis"
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
-                            android:layout_below="@id/goldrt"
+                            android:layout_below="@id/totalseluruh"
                             android:layout_marginTop="10dp"
                             android:background="#f0efef"
                             android:orientation="horizontal"
@@ -125,7 +125,7 @@
                                     android:layout_width="40dp"
                                     android:layout_height="40dp"
                                     android:layout_centerHorizontal="true"
-                                    android:src="@drawable/icon4apl" />
+                                    android:src="@drawable/iconrincian" />
 
                                 <TextView
                                     android:layout_width="match_parent"
@@ -151,7 +151,7 @@
                                     android:layout_width="40dp"
                                     android:layout_height="40dp"
                                     android:layout_centerHorizontal="true"
-                                    android:src="@drawable/icon4apl" />
+                                    android:src="@drawable/iconpanduan" />
 
                                 <TextView
 
@@ -174,7 +174,7 @@
                                 android:gravity="center">
 
                                 <ImageView
-                                    android:id="@+id/rician"
+                                    android:id="@+id/tambahplafon"
                                     android:layout_width="40dp"
                                     android:layout_height="40dp"
                                     android:layout_centerHorizontal="true"
@@ -183,7 +183,7 @@
                                 <TextView
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:layout_below="@id/rician"
+                                    android:layout_below="@id/tambahplafon"
                                     android:gravity="center"
                                     android:text="Tambah bidang"
                                     android:textColor="#000"

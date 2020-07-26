@@ -85,7 +85,7 @@
                             android:textStyle="bold" />
 
                         <TextView
-                            android:id="@+id/goldrt"
+                            android:id="@+id/totalharga"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentRight="true"
@@ -99,7 +99,7 @@
                             android:id="@+id/garis"
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
-                            android:layout_below="@id/goldrt"
+                            android:layout_below="@id/totalharga"
                             android:layout_marginTop="10dp"
                             android:background="#f0efef"
                             android:orientation="horizontal"
@@ -121,16 +121,16 @@
                                 android:gravity="center">
 
                                 <ImageView
-                                    android:id="@+id/gold"
+                                    android:id="@+id/print"
                                     android:layout_width="40dp"
                                     android:layout_height="40dp"
                                     android:layout_centerHorizontal="true"
-                                    android:src="@drawable/icon4apl" />
+                                    android:src="@drawable/iconrincian" />
 
                                 <TextView
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:layout_below="@id/gold"
+                                    android:layout_below="@id/print"
                                     android:gravity="center"
                                     android:text="Rincian Data Bidang"
                                     android:textColor="#000"
@@ -147,17 +147,17 @@
                                 android:gravity="center">
 
                                 <ImageView
-                                    android:id="@+id/elixir"
+                                    android:id="@+id/panduan"
                                     android:layout_width="40dp"
                                     android:layout_height="40dp"
                                     android:layout_centerHorizontal="true"
-                                    android:src="@drawable/icon4apl" />
+                                    android:src="@drawable/iconpanduan" />
 
                                 <TextView
 
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:layout_below="@id/elixir"
+                                    android:layout_below="@id/panduan"
                                     android:gravity="center"
                                     android:text="Panduan Aplikasi"
                                     android:textColor="#000"
@@ -202,14 +202,17 @@
         </RelativeLayout>
 
     </LinearLayout>
-
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
     <TextView
         android:id="@+id/textView20"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingLeft="10dp"
         android:text="DATA BIDANG"
         android:textColor="#000" />
+</LinearLayout>
 
     <ScrollView
         android:layout_width="match_parent"

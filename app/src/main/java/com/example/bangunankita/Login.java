@@ -3,11 +3,15 @@ package com.example.bangunankita;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.bangunankita.Model.Pengembang_model;
@@ -28,6 +32,7 @@ public class Login extends AppCompatActivity {
     private Button login;
     private EditText email;
     private EditText password;
+    private TextView forgot;
     private SessionManager sm;
 
     @Override
@@ -35,6 +40,8 @@ public class Login extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         sm = new SessionManager(Login.this);
+        Dialog resetpassdialog = new Dialog(Login.this);
+        resetpassdialog.setContentView(R.layout.resetpassdialog);
         init();
         signup.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -48,7 +55,9 @@ public class Login extends AppCompatActivity {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                    if(email.getText().toString().length() == 0){
+                        email.setError("data email harus diisi");
+                    }
                 HashMap<String, String> map = new HashMap<>();
 
                 map.put("username",email.getText().toString());
@@ -68,12 +77,15 @@ public class Login extends AppCompatActivity {
 
                             AlertDialog.Builder builder1 = new AlertDialog.Builder(Login.this);
                             String nama= result.getNama();
+                            Integer status =result.getStatus();
+                            String statusk= String.valueOf(status);
+                            String Image = result.getPicture();
                             Integer id = result.getId();
                             String idk = String.valueOf(id);
                             String accessToken = result.getAccessToken();
-                            sm.storeLogin(idk,result.getUsername(),nama,accessToken);
+                            sm.storeLogin(idk,result.getUsername(),nama,accessToken,statusk,Image);
 
-                            builder1.setMessage("Login Success"+id);
+                            builder1.setMessage("Login Success"+statusk);
                             builder1.show();
                             Intent dashboard=new Intent(Login.this, Dashboard.class)
                                     .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);;
@@ -95,7 +107,36 @@ public class Login extends AppCompatActivity {
 
             }
         });
+            forgot.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Button confirm = resetpassdialog.findViewById(R.id.keluar);
+                    EditText email= resetpassdialog.findViewById(R.id.confirmemail);
+                    confirm.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Call<Void> call = ApiClient.getRequestInterface().actionresetPass(email.getText().toString());
+                            call.enqueue(new Callback<Void>() {
+                                @Override
+                                public void onResponse(Call<Void> call, Response<Void> response) {
+                                    if (response.code() == 201) {
+                                        resetpassdialog.hide();
+                                    } else if (response.code() == 422) {
+                                        resetpassdialog.show();
+                                    }
+                                }
 
+                                @Override
+                                public void onFailure(Call<Void> call, Throwable t) {
+                                    resetpassdialog.hide();
+                                }
+                            });
+                        }
+                    });
+                    resetpassdialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                    resetpassdialog.show();
+                }
+            });
 
     }
 
@@ -106,6 +147,7 @@ public class Login extends AppCompatActivity {
         // BUTTON
         signup = findViewById(R.id.signUp);
         login = findViewById(R.id.login);
+        forgot = findViewById(R.id.forgot);
 
     }
 }

@@ -53,9 +53,15 @@ public class Perhitunganplesteran1 {
     @SerializedName("hargapasir")
     @Expose
     private Double hargapasir;
+    @SerializedName("hargapasirtotal")
+    @Expose
+    private Double hargapasirtotal;
     @SerializedName("hargasemen")
     @Expose
     private Double hargasemen;
+    @SerializedName("hargasementotal")
+    @Expose
+    private Double hargasementotal;
     @SerializedName("hargatotal")
     @Expose
     private Double hargatotal;
@@ -192,6 +198,23 @@ public class Perhitunganplesteran1 {
 
     public void setHargapasir(Double hargapasir) {
         this.hargapasir = hargapasir;
+    }
+
+
+    public Double getHargapasirtotal() {
+        return hargapasirtotal;
+    }
+
+    public void setHargapasirtotal(Double hargapasirtotal) {
+        this.hargapasirtotal = hargapasirtotal;
+    }
+
+    public Double getHargasementotal() {
+        return hargasementotal;
+    }
+
+    public void setHargasementotal(Double hargasementotal) {
+        this.hargasementotal = hargasementotal;
     }
 
     public Double getHargasemen() {

@@ -1,0 +1,603 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Tambahbeton">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/AppTheme.NoActionBarperhitungan">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="@color/bg_screen4r"
+                app:popupTheme="@style/AppTheme.darks"
+                app:titleTextColor="#FFFFFF" />
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="621dp"
+            android:layout_margin="@dimen/margin_default"
+            android:layout_weight="1"
+            android:background="@android:color/white"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="@dimen/margin_short">
+
+            <androidx.core.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="0"
+                android:fillViewport="true">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Theme.AppCompat.Light.DarkActionBar"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/nama_pengerjaan"
+                            android:layout_width="351dp"
+                            android:layout_height="wrap_content"
+                            android:hint="Nama Pengerjaan"
+                            android:inputType="text"
+                            android:paddingBottom="16dp" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <TextView
+                        android:id="@+id/textView4"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0"
+                        android:text="masukan panjang beton"
+                        android:textColor="#FA575656" />
+
+                    <TextView
+                        android:id="@+id/textView7"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0"
+                        android:text="Isikan dalam satuan meter*"
+                        android:textColor="#FA575656" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            style="@style/Theme.AppCompat.Light.DarkActionBar"
+                            android:layout_width="126dp"
+                            android:layout_height="wrap_content">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/panjangb"
+                                android:layout_width="113dp"
+                                android:layout_height="45dp"
+                                android:hint="Panjang"
+                                android:inputType="numberDecimal"
+                                android:paddingBottom="16dp" />
+
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/textView24"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="0"
+                                android:text="Jenis pengerjaan" />
+
+                            <Spinner
+                                android:id="@+id/spinjenis"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="0" />
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0"
+                        android:orientation="horizontal">
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            style="@style/Theme.AppCompat.Light.DarkActionBar"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/textView152"
+                            android:layout_width="270dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Pilih papan"
+                            android:textColor="#FA575656" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <Spinner
+                                android:id="@+id/spinpapan"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:textColor="#FA575656" />
+
+                            <TextView
+                                android:id="@+id/textView1dd6"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:textColor="#FA575656" />
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                style="@style/Theme.AppCompat.Light.DarkActionBar"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1">
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/hpapan"
+                                    android:layout_width="215dp"
+                                    android:layout_height="wrap_content"
+                                    android:enabled="true"
+                                    android:hint="Rp."
+                                    android:inputType="text"
+                                    android:paddingBottom="16dp" />
+
+                            </com.google.android.material.textfield.TextInputLayout>
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/textView12"
+                            android:layout_width="270dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Pilih paku"
+                            android:textColor="#FA575656" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <Spinner
+                                android:id="@+id/spinpaku"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1" />
+
+                            <TextView
+                                android:id="@+id/textView13"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:textColor="#FA575656" />
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                style="@style/Theme.AppCompat.Light.DarkActionBar"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1">
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/hpaku"
+                                    android:layout_width="215dp"
+                                    android:layout_height="wrap_content"
+                                    android:hint="Rp."
+                                    android:inputType="text"
+                                    android:paddingBottom="16dp" />
+
+                            </com.google.android.material.textfield.TextInputLayout>
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/textView21"
+                            android:layout_width="270dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Pilih besi"
+                            android:textColor="#FA575656" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <Spinner
+                                android:id="@+id/spinbesi"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1" />
+
+                            <TextView
+                                android:id="@+id/textView22"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:textColor="#FA575656" />
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                style="@style/Theme.AppCompat.Light.DarkActionBar"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1">
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/hbesi"
+                                    android:layout_width="215dp"
+                                    android:layout_height="wrap_content"
+                                    android:hint="Rp."
+                                    android:inputType="text"
+                                    android:paddingBottom="16dp" />
+
+                            </com.google.android.material.textfield.TextInputLayout>
+                        </LinearLayout>
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/textView15asa"
+                            android:layout_width="270dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Pilih besi untuk begel"
+                            android:textColor="#FA575656" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <Spinner
+                                android:id="@+id/spinbegel"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:textColor="#FA575656" />
+
+                            <TextView
+                                android:id="@+id/texstView16"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:textColor="#FA575656" />
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                style="@style/Theme.AppCompat.Light.DarkActionBar"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1">
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/hbegel"
+                                    android:layout_width="215dp"
+                                    android:layout_height="wrap_content"
+                                    android:enabled="true"
+                                    android:hint="Rp."
+                                    android:inputType="text"
+                                    android:paddingBottom="16dp" />
+
+                            </com.google.android.material.textfield.TextInputLayout>
+                        </LinearLayout>
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/texweqwtView15"
+                            android:layout_width="270dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Pilih kawat"
+                            android:textColor="#FA575656" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <Spinner
+                                android:id="@+id/spinkawat"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:textColor="#FA575656" />
+
+                            <TextView
+                                android:id="@+id/textVdew16"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:textColor="#FA575656" />
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                style="@style/Theme.AppCompat.Light.DarkActionBar"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1">
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/hkawat"
+                                    android:layout_width="215dp"
+                                    android:layout_height="wrap_content"
+                                    android:enabled="true"
+                                    android:hint="Rp."
+                                    android:inputType="text"
+                                    android:paddingBottom="16dp" />
+
+                            </com.google.android.material.textfield.TextInputLayout>
+                        </LinearLayout>
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/textView1aa5"
+                            android:layout_width="270dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Pilih pasir"
+                            android:textColor="#FA575656" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <Spinner
+                                android:id="@+id/spinpasir"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:textColor="#FA575656" />
+
+                            <TextView
+                                android:id="@+id/textVewdwiew1dd6"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:textColor="#FA575656" />
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                style="@style/Theme.AppCompat.Light.DarkActionBar"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1">
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/hpasir"
+                                    android:layout_width="215dp"
+                                    android:layout_height="wrap_content"
+                                    android:enabled="true"
+                                    android:hint="Rp."
+                                    android:inputType="text"
+                                    android:paddingBottom="16dp" />
+
+                            </com.google.android.material.textfield.TextInputLayout>
+                        </LinearLayout>
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/texwwtView15"
+                            android:layout_width="270dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Pilih semen"
+                            android:textColor="#FA575656" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <Spinner
+                                android:id="@+id/spinsemen"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:textColor="#FA575656" />
+
+                            <TextView
+                                android:id="@+id/textViewed16"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:textColor="#FA575656" />
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                style="@style/Theme.AppCompat.Light.DarkActionBar"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1">
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/hsemen"
+                                    android:layout_width="215dp"
+                                    android:layout_height="wrap_content"
+                                    android:enabled="true"
+                                    android:hint="Rp."
+                                    android:inputType="text"
+                                    android:paddingBottom="16dp" />
+
+                            </com.google.android.material.textfield.TextInputLayout>
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/textView15"
+                            android:layout_width="270dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Pilih batu"
+                            android:textColor="#FA575656" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <Spinner
+                                android:id="@+id/spinbatu"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:textColor="#FA575656" />
+
+                            <TextView
+                                android:id="@+id/textView16"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:textColor="#FA575656" />
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                style="@style/Theme.AppCompat.Light.DarkActionBar"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1">
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/hbatu"
+                                    android:layout_width="215dp"
+                                    android:layout_height="wrap_content"
+                                    android:enabled="true"
+                                    android:hint="Rp."
+                                    android:inputType="text"
+                                    android:paddingBottom="16dp" />
+
+                            </com.google.android.material.textfield.TextInputLayout>
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:weightSum="2">
+
+                        <TextView
+                            android:id="@+id/textView19"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1" />
+
+                        <Button
+                            android:id="@+id/hitungb"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/margin_short"
+                            android:layout_weight="1"
+                            android:background="@drawable/cornered_button"
+                            android:text="Hitung"
+                            android:textColor="@android:color/white" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:paddingTop="10dp">
+
+                        <include layout="@layout/hasil_beton" />
+
+
+                    </LinearLayout>
+                </LinearLayout>
+            </androidx.core.widget.NestedScrollView>
+        </LinearLayout>
+    </LinearLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

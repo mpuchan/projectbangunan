@@ -34,7 +34,7 @@ import retrofit2.Response;
 
 public class Edit_Proyek extends AppCompatActivity {
     private View background;
-    private EditText et_tanggal;
+    private EditText et_tanggal,luastanah,luasbangunan;
     private SimpleDateFormat dateFormatter;
     private DatePickerDialog datePickerDialog;
     private EditText namaproyek,lokasi;
@@ -72,6 +72,8 @@ public class Edit_Proyek extends AppCompatActivity {
                 map.put("nama_proyek", namaproyek.getText().toString());
                 map.put("lokasi", lokasi.getText().toString());
                 map.put("tanggal", et_tanggal.getText().toString());
+                map.put("luas_bangunan", luasbangunan.getText().toString());
+                map.put("luas_tanah", luastanah.getText().toString());
                 map.put("PengembangId", idpengembang.getText().toString());
 
 
@@ -212,6 +214,8 @@ public class Edit_Proyek extends AppCompatActivity {
         et_tanggal = (EditText) findViewById(R.id.tanggal);
         namaproyek = (EditText) findViewById(R.id.nama);
         background = findViewById(R.id.background);
+        luastanah = findViewById(R.id.luastanah);
+        luasbangunan = findViewById(R.id.luasbangunan);
         idpengembang = findViewById(R.id.idt);
         lokasi = findViewById(R.id.lokasi);
         //Button//

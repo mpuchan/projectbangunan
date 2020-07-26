@@ -16,13 +16,14 @@ import java.util.HashMap;
 public class MenuProyek extends AppCompatActivity {
     String mId;
     String mNamaproyek;
-    TextView tvNmproyek;
-    ImageView bidang;
+    TextView tvNmproyek,luastanah,luasbangunan;
+    ImageView bidang,print;
     SessionManager sm;
-    String token;
+    String token,luasbangunan1,luastanah1;
     String stringid;
     String tangkapidproyek;
-    ImageView imageplester,imageacian,imagelantai,imageurugan;
+    ImageView imageplester,imageacian,imagelantai,imageurugan,imagepengecatan,
+            imagepondasi,imageplafon,imagebeton,imageatap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,14 +37,24 @@ public class MenuProyek extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         mId = bundle.getString("idproyek");
         mNamaproyek = bundle.getString("namaproyek");
+        luastanah1 = bundle.getString("luastanah");
+        luasbangunan1 = bundle.getString("luasbangunan");
         imageplester = findViewById(R.id.imageplester);
         imageacian = findViewById(R.id.imageacian);
         imagelantai = findViewById(R.id.imagelantai);
         imageurugan = findViewById(R.id.imageurugan);
+        imagepengecatan = findViewById(R.id.imagepengecatan);
+        imagepondasi = findViewById(R.id.pondasi);
+        imageplafon = findViewById(R.id.plafond);
+        imagebeton = findViewById(R.id.imagebeton);
+        imageatap = findViewById(R.id.imageatap);
+        luasbangunan = findViewById(R.id.luasbangunan);
+        luastanah = findViewById(R.id.luastanah);
 
         tangkapidproyek = mId;
         tvNmproyek.setText(mNamaproyek);
-
+        luasbangunan.setText("Luas Bangunan "+luasbangunan1+"m2");
+        luastanah.setText("Luas Tanah "+luastanah1+"m2");
 
         HashMap<String,String> map = sm.getDetailLogin();
         token=(map.get(sm.KEY_TOKEN));
@@ -74,6 +85,7 @@ public class MenuProyek extends AppCompatActivity {
                 Perhitunganplester.putExtras(setData);
 
                 startActivity(Perhitunganplester);
+
             }
         });
         imageacian.setOnClickListener(new View.OnClickListener() {
@@ -110,6 +122,66 @@ public class MenuProyek extends AppCompatActivity {
                 Perhitunganurugan.putExtras(setData);
 
                 startActivity(Perhitunganurugan);
+            }
+        });
+        imagepengecatan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent Perhitunganpengecatan = (new Intent(MenuProyek.this, Perhitunganpengecatan.class)
+                        .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
+                Bundle setData = new Bundle();
+                setData.putString("idproyek",tangkapidproyek);
+                Perhitunganpengecatan.putExtras(setData);
+
+                startActivity(Perhitunganpengecatan);
+            }
+        });
+        imageplafon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent Perhitunganplafon = (new Intent(MenuProyek.this, Perhitunganplafond.class)
+                        .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
+                Bundle setData = new Bundle();
+                setData.putString("idproyek",tangkapidproyek);
+                Perhitunganplafon.putExtras(setData);
+
+                startActivity(Perhitunganplafon);
+            }
+        });
+        imagepondasi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent Perhitunganpondasi = (new Intent(MenuProyek.this, PerhitunganPondasi.class)
+                        .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
+                Bundle setData = new Bundle();
+                setData.putString("idproyek",tangkapidproyek);
+                Perhitunganpondasi.putExtras(setData);
+
+                startActivity(Perhitunganpondasi);
+            }
+        });
+        imagebeton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent Perhitunganbeton = (new Intent(MenuProyek.this, Perhitunganbeton.class)
+                        .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
+                Bundle setData = new Bundle();
+                setData.putString("idproyek",tangkapidproyek);
+                Perhitunganbeton.putExtras(setData);
+
+                startActivity(Perhitunganbeton);
+            }
+        });
+        imageatap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent Perhitunganatap = (new Intent(MenuProyek.this, Perhitunganatap.class)
+                        .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
+                Bundle setData = new Bundle();
+                setData.putString("idproyek",tangkapidproyek);
+                Perhitunganatap.putExtras(setData);
+
+                startActivity(Perhitunganatap);
             }
         });
 

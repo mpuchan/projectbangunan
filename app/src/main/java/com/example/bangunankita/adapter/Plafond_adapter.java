@@ -1,52 +1,63 @@
 package com.example.bangunankita.adapter;
 
+import android.app.Dialog;
+import android.content.Context;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
+
 import androidx.recyclerview.widget.RecyclerView;
 
-public class Plafond_adapter  {
-    //    extends RecyclerView.Adapter<Plafond_adapter.ViewHolder>
-//    private Context context;
-//    private List<Perhitunganplafond1> plafonds;
+import com.example.bangunankita.Model.Perhitunganplafon1;
+import com.example.bangunankita.R;
+
+import java.util.List;
+
+public class Plafond_adapter extends RecyclerView.Adapter<Plafond_adapter.ViewHolder> {
+
+    private Context context;
+    private List<Perhitunganplafon1> plafonds;
+
+    public Plafond_adapter(Context context, List<Perhitunganplafon1> plafonds) {
+        this.context=context;
+        this.plafonds=plafonds;
+    }
+
+    @Override
+    public Plafond_adapter.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.listplafon, viewGroup, false);
+        return new Plafond_adapter.ViewHolder(view);
+    }
+
+    @Override
+    public void onBindViewHolder(Plafond_adapter.ViewHolder viewHolder, final int i) {
+        final Perhitunganplafon1 PlafondModel = plafonds.get(i);
+        final String Name = String.valueOf(plafonds.get(i).getNama());
+        final String Panjang = String.valueOf(plafonds.get(i).getPanjang());
+        final String Lebar = String.valueOf(plafonds.get(i).getLebar());
+        final String Luas = String.valueOf(plafonds.get(i).getLuas());
+        final String Namatriplek = String.valueOf(plafonds.get(i).getNamatriplek());
+        final String Namapaku = String.valueOf(plafonds.get(i).getNamapaku());
+        final String Namareng = String.valueOf(plafonds.get(i).getNamareng());
+        final String HargaPaku = String.valueOf(plafonds.get(i).getHargapaku());
+        final String HargaTriplek = String.valueOf(plafonds.get(i).getHargatriplek());
+        final String HargaReng = String.valueOf(plafonds.get(i).getHargareng());
+        final String Jumlahreng = String.valueOf(plafonds.get(i).getJumlahreng());
+        final String Jumlahrengbatang = String.valueOf(plafonds.get(i).getJumlahrengbatang());
+        final String Jumlahtriplek = String.valueOf(plafonds.get(i).getJumlahtriplek());
+        final String Jumlahtripleklembar = String.valueOf(plafonds.get(i).getJumlahtripleklembar());
+        final String Jumlahpaku= String.valueOf(plafonds.get(i).getJumlahpaku());
+        final String Hargatotpaku = String.valueOf(plafonds.get(i).getHargatotalpaku());
+        final String Hargatotreng = String.valueOf(plafonds.get(i).getHargatotalreng());
+        final String Hargatottriplek = String.valueOf(plafonds.get(i).getHargatotaltriplek());
+        final String Totalbiaya = String.valueOf(plafonds.get(i).getHargatotal());
+
+        viewHolder.Nama.setText(Name);
 //
-//    public Plafond_adapter(Context context, List<Perhitunganplafond1> plafonds) {
-//        this.context=context;
-//        this.plafonds=plafonds;
-//    }
-//
-//    @Override
-//    public Plafond_adapter.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-//        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.listplafond, viewGroup, false);
-//        return new Plafond_adapter.ViewHolder(view);
-//    }
-//
-//    @Override
-//    public void onBindViewHolder(Plafond_adapter.ViewHolder viewHolder, final int i) {
-//        final Perhitunganplafond1 PlafondModel = plafonds.get(i);
-//        final String Name = String.valueOf(plafonds.get(i).getNama());
-//        final String Panjangbid = String.valueOf(plafonds.get(i).getPanjangbid());
-//        final String Tinggibid = String.valueOf(plafonds.get(i).getTinggibid());
-//        final String Panjangjen = String.valueOf(plafonds.get(i).getPanjangjen());
-//        final String Tinggijen = String.valueOf(plafonds.get(i).getTinggijen());
-//        final String Panjangpin = String.valueOf(plafonds.get(i).getPanjangpin());
-//        final String Tinggipin = String.valueOf(plafonds.get(i).getTinggipin());
-//        final String Jumlahdalamsak = String.valueOf(plafonds.get(i).getJumlahdalamsak());
-//        final String Metode = String.valueOf(plafonds.get(i).getMetode());
-//        final String Hargabatako = String.valueOf(plafonds.get(i).getHargabatako());
-//        final String Hargapasir = String.valueOf(plafonds.get(i).getHargapasir());
-//        final String Hargasemen = String.valueOf(plafonds.get(i).getHargasemen());
-//        final String Totalbiaya = String.valueOf(plafonds.get(i).getHargatotal());
-//
-//
-//
-//        final String Semen = String.valueOf(plafonds.get(i).getJumlahkeperluansemen());
-//        final String Pasir = String.valueOf(plafonds.get(i).getJumlahkeperluanpasir());
-//        final String Batako = String.valueOf(plafonds.get(i).getJumlahkeperluanbatako());
-//        final String Luas = String.valueOf(plafonds.get(i).getLuasPlafond());
-//
-//        viewHolder.Nama.setText(Name);
-//        viewHolder.semen.setText(Semen);
-//        viewHolder.pasir.setText(Pasir);
-//        viewHolder.batako.setText(Batako);
-//
+
 //        viewHolder.editplafond.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View view) {
@@ -128,35 +139,33 @@ public class Plafond_adapter  {
 //            }
 //        });
 //
-//    }
+    }
+
+    @Override
+    public int getItemCount() {
+        return plafonds.size();
+    }
+
+
+    public class ViewHolder extends RecyclerView.ViewHolder{
+        private TextView Nama,edit;
+        private ImageView image;
+        private Button editplafond,deleteplafond,detailplafond;
+        Dialog deletedialog;
+
+        public ViewHolder(View view) {
+            super(view);
+            Nama = (TextView)view.findViewById(R.id.Nama1);
 //
-//    @Override
-//    public int getItemCount() {
-//        return plafonds.size();
-//    }
-//
-//
-//    public class ViewHolder extends RecyclerView.ViewHolder{
-//        private TextView Nama,semen,pasir,batako,edit;
-//        private ImageView image;
-//        private Button editplafond,deleteplafond,detailplafond;
-//        Dialog deletedialog;
-//
-//        public ViewHolder(View view) {
-//            super(view);
-//            Nama = (TextView)view.findViewById(R.id.Nama);
-//            semen = (TextView)view.findViewById(R.id.semen);
-//            pasir = (TextView)view.findViewById(R.id.pasir);
-//            batako = (TextView)view.findViewById(R.id.Batako);
 //            editplafond = view.findViewById(R.id.editplafond);
 //            deleteplafond = view.findViewById(R.id.Deleteplafond);
 //            detailplafond = view.findViewById(R.id.detailplafond);
-//
-//
-//
-//
-//        }
-//    }
+
+
+
+
+        }
+    }
 
 
 

@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/textView10"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="#FFAB40"
+        android:text="Jumlah Material yang Dibutuhkan Beserta Perkiraan Biayanya:"
+        android:textAlignment="center"
+        android:textColor="#FFFFFF"
+        android:textSize="15sp"
+        android:textStyle="bold" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="12dp">
+
+        <TextView
+            android:layout_width="125dp"
+            android:layout_height="wrap_content"
+            android:text="Luas plafond anda : "
+            android:textColor="#FA575656" />
+
+        <TextView
+            android:id="@+id/luasplafon1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textAlignment="textStart"
+            android:textColor="#FA575656" />
+
+        <TextView
+            android:id="@+id/hasilb6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingLeft="5dp"
+            android:text="m2"
+            android:textAlignment="textStart"
+            android:textColor="#FA575656" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="5dp">
+
+        <TextView
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Triplek/Gypsum : "
+            android:textColor="#FA575656" />
+
+        <TextView
+            android:id="@+id/hasiltriplek"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textAlignment="textStart"
+            android:textColor="#FA575656" />
+
+        <TextView
+            android:id="@+id/hasilb4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingLeft="5dp"
+            android:text="lembar,"
+            android:textColor="#FA575656" />
+
+        <TextView
+            android:id="@+id/hasilb13"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingLeft="5dp"
+            android:text="dibulatkan "
+            android:textColor="#FA575656" />
+
+        <TextView
+            android:id="@+id/hasiltriplek1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingLeft="5dp"
+            android:text=""
+            android:textAlignment="textStart"
+            android:textColor="#FA575656" />
+
+        <TextView
+            android:id="@+id/hasilb14"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingLeft="5dp"
+            android:text="lembar,"
+            android:textColor="#FA575656" />
+
+        <TextView
+            android:id="@+id/hasilb16"
+            android:layout_width="31dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Rp."
+            android:textAlignment="textEnd"
+            android:textColor="#FA575656" />
+
+        <TextView
+            android:id="@+id/hasiltriplek2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text=""
+            android:textColor="#FA575656" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="5dp">
+
+        <TextView
+            android:id="@+id/hasilb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Paku :  "
+            android:textColor="#FA575656" />
+
+        <TextView
+            android:id="@+id/hasilpaku"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text=""
+            android:textAlignment="textStart"
+            android:textColor="#FA575656" />
+
+        <TextView
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="5dp"
+            android:text="kg, "
+            android:textColor="#FA575656" />
+
+        <TextView
+            android:id="@+id/hasilb9"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingLeft="10dp"
+            android:text="Rp."
+            android:textColor="#FA575656" />
+
+        <TextView
+            android:id="@+id/hasilpaku1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text=""
+            android:textAlignment="textStart"
+            android:textColor="#FA575656" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="5dp">
+
+        <TextView
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Reng : "
+            android:textColor="#FA575656" />
+
+        <TextView
+            android:id="@+id/hasilreng"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textColor="#FA575656" />
+
+        <TextView
+            android:id="@+id/hasilb5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingLeft="5dp"
+            android:text="m"
+            android:textColor="#FA575656" />
+        <TextView
+            android:id="@+id/hasilbd12"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingLeft="5dp"
+            android:text="atau"
+            android:textColor="#FA575656" />
+        <TextView
+            android:id="@+id/hasilreng1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingLeft="5dp"
+            android:text=""
+            android:textColor="#FA575656" />
+        <TextView
+            android:id="@+id/hasilkerd2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingLeft="5dp"
+            android:text="batang"
+            android:textColor="#FA575656" />
+
+        <TextView
+            android:id="@+id/hasilb18"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingLeft="5dp"
+            android:text="Rp."
+            android:textColor="#FA575656" />
+
+        <TextView
+            android:id="@+id/hasilreng2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text=""
+            android:textColor="#FA575656" />
+
+    </LinearLayout>
+
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="5dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Total Biaya : "
+            android:textColor="#FA575656" />
+
+        <TextView
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="5dp"
+            android:text="Rp."
+            android:textAlignment="textStart"
+            android:textColor="#FA575656" />
+
+        <TextView
+            android:id="@+id/total"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text=""
+            android:textAlignment="textStart"
+            android:textColor="#FA575656" />
+
+    </LinearLayout>
+
+</LinearLayout>

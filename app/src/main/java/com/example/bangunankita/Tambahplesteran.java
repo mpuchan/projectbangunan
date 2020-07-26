@@ -1,9 +1,11 @@
 package com.example.bangunankita;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -19,6 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.bangunankita.Model.Campuran;
+import com.example.bangunankita.Model.Jenispengerjaan;
 import com.example.bangunankita.Model.Material;
 import com.example.bangunankita.Model.Perhitunganbidang1;
 import com.example.bangunankita.Model.ResponseBidang;
@@ -26,6 +29,7 @@ import com.example.bangunankita.Model.ResponseMaterial;
 import com.example.bangunankita.Retrovit.ApiClient;
 import com.example.bangunankita.Util.SessionManager;
 import com.example.bangunankita.adapter.Campuran_adapter;
+import com.example.bangunankita.adapter.Jenispengerjaan_adapter;
 
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
@@ -38,30 +42,39 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class Tambahplesteran extends AppCompatActivity {
-    Spinner spindinding,spinsemen,spinpasir,campuran;
+    Spinner spindinding,spinsemen,spinpasir,campuran,spinjenis;
     EditText panjang,tinggi,tebal,sisi,hargasemen,hargapasir,volume;
-    TextView hasilpas,hasilpas1,hasilpas2,hasilse,hasilse1,hasilse2,hasilb;
+    TextView hasilpas,hasilpas1,hasilpas2,hasilse,hasilse1,hasilse2,hasilb,hasilvol;
     Button prosesbtn,hitung;
     float hasil,luasba,totpasir,hargasementot;
+
     Context mContext;
     SessionManager sm;
-    String token,nama,p,t,namadinding,jenis,metode;
+    String token,nama,p,t,namadinding,jenis,namasemen,namapasir,metode;
     int ProyekID;
-
+    private  int numberpasir,numbersemen,numbertotal;
+    private String totpasir1,totsemen1,tothargatot;
     String mId,Ju;
     public String hs,ids,hp,idp,berats,pc,pp;
     private List<Material> Semen = new ArrayList<>();
     private List<Material> Pasir = new ArrayList<>();
     private List<Perhitunganbidang1> BidangModel = new ArrayList<>();
     Campuran[] campurans ={
-            new Campuran("1:1", 15.504,0.016),
-            new Campuran("1:2", 10.224, 0.020),
-            new Campuran("1:3", 7.776,0.023),
-            new Campuran("1:4", 6.240,0.024),
-            new Campuran("1:5", 5.184,0.026),
-            new Campuran("1:6", 4.416,0.027),
-            new Campuran("1:7", 3.936,0.028),
-            new Campuran("1:8", 3.456,0.029)
+            new Campuran("1:1", 15.504,0.016,0.0),
+            new Campuran("1:2", 10.224, 0.020,0.0),
+            new Campuran("1:3", 7.776,0.023,0.0),
+            new Campuran("1:4", 6.240,0.024,0.0),
+            new Campuran("1:5", 5.184,0.026,0.0),
+            new Campuran("1:6", 4.416,0.027,0.0),
+            new Campuran("1:7", 3.936,0.028,0.0),
+            new Campuran("1:8", 3.456,0.029,0.0)
+    };
+    Jenispengerjaan[] jenispengerjaans  ={
+            new Jenispengerjaan("Bangunan rumah"),
+            new Jenispengerjaan("Tembok pagar"),
+            new Jenispengerjaan("Sekat kamar mandi"),
+            new Jenispengerjaan("Sekat kamar"),
+            new Jenispengerjaan("Lainnya"),
     };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +92,20 @@ public class Tambahplesteran extends AppCompatActivity {
                 String tebal1 = tebal.getText().toString().trim();
                 String sisi1 = sisi.getText().toString().trim();
 
+                if (panjang.getText().toString().length() == 0) {
+                    panjang.setError("Data ini harus diisi");
+                    panjang1 = "0";
+                }else if (tinggi.getText().toString().length() == 0) {
+                    tinggi.setError("Data ini harus diisi");
+                    tinggi1 = "0";
+                }else if (sisi.getText().toString().length() == 0) {
+                    sisi.setError("Data ini harus diisi");
+                    sisi1 = "0";
+                } else if (tebal.getText().toString().length() == 0) {
+                    tebal.setError("field ini harus diisi!");
+                    tebal1 = "0";
+                }
+
                 float pp = Float.parseFloat(panjang1);
                 float tp = Float.parseFloat(tinggi1);
                 float tebal = Float.parseFloat(tebal1);
@@ -90,16 +117,7 @@ public class Tambahplesteran extends AppCompatActivity {
             }
         });
 
-        hitung.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String luas = volume.getText().toString().trim();
-                luasba = Float.parseFloat(luas);
-                hitungsemen();
-                hitungpasir();
-                hitungtot();
-            }
-        });
+
         spindinding.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
 
             @Override
@@ -126,6 +144,7 @@ public class Tambahplesteran extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String selectedName = parent.getItemAtPosition(position).toString();
                 berats = String.valueOf(Semen.get(position).getBerat());
+                namasemen = String.valueOf(Semen.get(position).getNama());
                 hs = String.valueOf(Semen.get(position).getHarga());
                 ids = String.valueOf(Semen.get(position).getId());
                 hargasemen.setText(hs);
@@ -145,6 +164,7 @@ public class Tambahplesteran extends AppCompatActivity {
                 String selectedName = parent.getItemAtPosition(position).toString();
                 hp = String.valueOf(Pasir.get(position).getHarga());
                 idp = String.valueOf(Pasir.get(position).getId());
+                namapasir = String.valueOf(Pasir.get(position).getNama());
 
                 hargapasir.setText(hp);
 
@@ -173,11 +193,42 @@ public class Tambahplesteran extends AppCompatActivity {
 
             }
         });
+        spinjenis.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
+
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                Jenispengerjaan je = (Jenispengerjaan) (parent.getItemAtPosition(position));
+                jenis = String.valueOf(je.getJenispengerjaan());
+
+//                Toast.makeText(mContext, "Kamu memilih Campuran " + pc, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+        hitung.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String luas = volume.getText().toString().trim();
+                luasba = Float.parseFloat(luas);
+                hasilvol.setText(luas);
+                hitungsemen();
+                hitungpasir();
+                hitungtot();
+            }
+        });
     }
 
     private void hitungtot() {
-        float tothitung = hargasementot+totpasir;
-        hasilb.setText(String.valueOf(tothitung));
+        float tothitung = numberpasir+numbersemen;
+        DecimalFormat df = new DecimalFormat("#");
+        tothargatot = df.format(tothitung);
+        numbertotal = Integer.parseInt(tothargatot);
+        DecimalFormat formatter = new DecimalFormat("#,###.##");
+        String totalbiaya = formatter.format(numbertotal);
+        hasilb.setText(totalbiaya);
     }
 
     private void hitungpasir() {
@@ -192,8 +243,14 @@ public class Tambahplesteran extends AppCompatActivity {
         result = n.replace(",",".");
         float hitungp = Float.parseFloat(result);
         totpasir = hitungp*hargapas;
+        DecimalFormat df1 = new DecimalFormat("#");
+        totpasir1 = df1.format(totpasir);
+        numberpasir = Integer.parseInt(totpasir1);
+        DecimalFormat formatter = new DecimalFormat("#,###.##");
+        String totalbiaya = formatter.format(numberpasir);
+
         Toast.makeText(mContext, "Gagal mengambil data"+ppasir, Toast.LENGTH_SHORT).show();
-        hasilpas2.setText(Float.toString(totpasir));
+        hasilpas2.setText(totalbiaya);
         hasilpas1.setText(Float.toString(hitungp));
         hasilpas.setText(Float.toString(hitungp));
     }
@@ -212,10 +269,16 @@ public class Tambahplesteran extends AppCompatActivity {
         float hitungs = Float.parseFloat(result);
         float totpc = hitungs/beratsemen;
         hargasementot = totpc*hargasemen;
+        DecimalFormat df1 = new DecimalFormat("#");
+        totsemen1 = df1.format(hargasementot);
+        numbersemen = Integer.parseInt(totsemen1);
+        DecimalFormat formatter = new DecimalFormat("#,###.##");
+        String totalbiaya = formatter.format(numbersemen);
+
 
         hasilse.setText(Float.toString(hitungs));
         hasilse1.setText(Float.toString(totpc));
-        hasilse2.setText(Float.toString(hargasementot));
+        hasilse2.setText(totalbiaya);
     }
 
     private void initSpinnerDinding() {
@@ -319,6 +382,7 @@ public class Tambahplesteran extends AppCompatActivity {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 String apiKey = "oa00000000app";
+                initvalidation();
                 HashMap<String, String> map = new HashMap<>();
                 map.put("ProyekId", mId);
                 map.put("nama", namadinding);
@@ -328,20 +392,26 @@ public class Tambahplesteran extends AppCompatActivity {
                 map.put("tebal", tebal.getText().toString());
                 map.put("sisi", sisi.getText().toString());
                 map.put("volume", volume.getText().toString());
-                map.put("nama_semen", "hasilse.getText().toString()");
-                map.put("nama_pasir", "hasilse1.getText().toString()");
+                map.put("nama_semen", namasemen);
+                map.put("nama_pasir", namapasir);
                 map.put("jumlahkeperluanpasir", hasilpas1.getText().toString());
                 map.put("Jumlahkeperluansemen", hasilse.getText().toString());
                 map.put("jumlahdalamsak", hasilse1.getText().toString());
                 map.put("metode", metode);
-                map.put("hargapasir", hasilpas2.getText().toString());
-                map.put("hargasemen", hasilse2.getText().toString());
+                map.put("hargapasirtotal", String.valueOf(numberpasir));
+                map.put("hargasementotal", String.valueOf(numbersemen));
+                map.put("hargapasir", hargapasir.getText().toString());
+                map.put("hargasemen", hargasemen.getText().toString());
                 Call<Void> call = ApiClient.getRequestInterface().actionCreateplesteran(apiKey,token,map);
                 call.enqueue(new Callback<Void>() {
                     @Override
                     public void onResponse(Call<Void> call, Response<Void> response) {
                         if (response.code() == 200) {
-                            Intent Perhitunganplesteran = new Intent(Tambahplesteran.this, Perhitunganplesteran.class);
+                            Intent Perhitunganplesteran = (new Intent(Tambahplesteran.this, Perhitunganplesteran.class)
+                                    .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
+                            Bundle setData = new Bundle();
+                            setData.putString("idproyek",mId);
+                            Perhitunganplesteran.putExtras(setData);
                             startActivity(Perhitunganplesteran);
                             Toast.makeText(Tambahplesteran.this,
                                     "Tambah Data Perhitungan Plesteran Berhasil",
@@ -366,6 +436,51 @@ public class Tambahplesteran extends AppCompatActivity {
         return super.onCreateOptionsMenu(menu);
 
     }
+
+    private void initvalidation() {
+        if (panjang.getText().toString().length() == 0) {
+            panjang.setError("field ini harus diisi!");
+
+        } else if (tinggi.getText().toString().length() == 0) {
+            tinggi.setError("field ini harus diisi!");
+        } else if (sisi.getText().toString().length() == 0) {
+            sisi.setError("field ini harus diisi!");
+
+        } else if (tebal.getText().toString().length() == 0) {
+        tebal.setError("field ini harus diisi!");
+
+        }else if (hargasemen.getText().toString().length() == 0) {
+            hargasemen.setError("field ini harus diisi!");
+
+        } else if (hasilb.getText().toString().length() == 0) {
+            hitung.setError("");
+            AlertDialog.Builder builder1 = new AlertDialog.Builder(Tambahplesteran.this);
+            builder1.setTitle("Pesan Error");
+            builder1.setMessage("Klik Button hitung dulu!!");
+            builder1.setIcon(R.drawable.ic_warning_red_24dp);
+            builder1.setCancelable(true);
+
+            builder1.setPositiveButton(
+                    "Yes",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.cancel();
+                        }
+                    });
+
+            builder1.setNegativeButton(
+                    "No",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.cancel();
+                        }
+                    });
+
+            AlertDialog alert11 = builder1.create();
+            alert11.show();
+        }
+    }
+
     private void init() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -385,11 +500,17 @@ public class Tambahplesteran extends AppCompatActivity {
         hargapasir = findViewById(R.id.hargapasir);
         hasilse = findViewById(R.id.hasilsemen);
         hasilse1 = findViewById(R.id.hasilsemensak);
+        hasilvol = findViewById(R.id.hasilvol);
         hasilse2 = findViewById(R.id.hasilsemen2);
         hasilb = findViewById(R.id.totalbiaya);
         volume = findViewById(R.id.volume);
         hitung = findViewById(R.id.hitungb);
         campuran = findViewById(R.id.spinner22);
+        spinjenis = findViewById(R.id.spinjenis);
+        Jenispengerjaan_adapter jenispengerjaan_adapter =
+                new Jenispengerjaan_adapter(Tambahplesteran.this,
+                        android.R.layout.simple_spinner_item, jenispengerjaans);
+        spinjenis.setAdapter(jenispengerjaan_adapter);
         sm= new SessionManager(Tambahplesteran.this);
         HashMap<String,String> map = sm.getDetailLogin();
         token=(map.get(sm.KEY_TOKEN));

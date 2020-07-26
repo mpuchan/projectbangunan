@@ -1,52 +1,62 @@
 package com.example.bangunankita.adapter;
 
+import android.app.Dialog;
+import android.content.Context;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
+
 import androidx.recyclerview.widget.RecyclerView;
 
-public class Pengecatan_adapter  {
-    //    extends RecyclerView.Adapter<Pengecatan_adapter.ViewHolder>
-//    private Context context;
-//    private List<Perhitunganpengecatan1> pengecatans;
-//
-//    public Pengecatan_adapter(Context context, List<Perhitunganpengecatan1> pengecatans) {
-//        this.context=context;
-//        this.pengecatans=pengecatans;
-//    }
-//
-//    @Override
-//    public Pengecatan_adapter.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-//        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.listpengecatan, viewGroup, false);
-//        return new Pengecatan_adapter.ViewHolder(view);
-//    }
-//
-//    @Override
-//    public void onBindViewHolder(Pengecatan_adapter.ViewHolder viewHolder, final int i) {
-//        final Perhitunganpengecatan1 PengecatanModel = pengecatans.get(i);
-//        final String Name = String.valueOf(pengecatans.get(i).getNama());
-//        final String Panjangbid = String.valueOf(pengecatans.get(i).getPanjangbid());
-//        final String Tinggibid = String.valueOf(pengecatans.get(i).getTinggibid());
-//        final String Panjangjen = String.valueOf(pengecatans.get(i).getPanjangjen());
-//        final String Tinggijen = String.valueOf(pengecatans.get(i).getTinggijen());
-//        final String Panjangpin = String.valueOf(pengecatans.get(i).getPanjangpin());
-//        final String Tinggipin = String.valueOf(pengecatans.get(i).getTinggipin());
-//        final String Jumlahdalamsak = String.valueOf(pengecatans.get(i).getJumlahdalamsak());
-//        final String Metode = String.valueOf(pengecatans.get(i).getMetode());
-//        final String Hargabatako = String.valueOf(pengecatans.get(i).getHargabatako());
-//        final String Hargapasir = String.valueOf(pengecatans.get(i).getHargapasir());
-//        final String Hargasemen = String.valueOf(pengecatans.get(i).getHargasemen());
-//        final String Totalbiaya = String.valueOf(pengecatans.get(i).getHargatotal());
-//
-//
-//
-//        final String Semen = String.valueOf(pengecatans.get(i).getJumlahkeperluansemen());
-//        final String Pasir = String.valueOf(pengecatans.get(i).getJumlahkeperluanpasir());
-//        final String Batako = String.valueOf(pengecatans.get(i).getJumlahkeperluanbatako());
-//        final String Luas = String.valueOf(pengecatans.get(i).getLuasPengecatan());
-//
-//        viewHolder.Nama.setText(Name);
+import com.example.bangunankita.Model.Perhitunganpengecatan1;
+import com.example.bangunankita.R;
+
+import java.util.List;
+
+public class Pengecatan_adapter extends RecyclerView.Adapter<Pengecatan_adapter.ViewHolder>  {
+
+    private Context context;
+    private List<Perhitunganpengecatan1> pengecatans;
+
+    public Pengecatan_adapter(Context context, List<Perhitunganpengecatan1> pengecatans) {
+        this.context=context;
+        this.pengecatans=pengecatans;
+    }
+
+    @Override
+    public Pengecatan_adapter.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.listpengecatan, viewGroup, false);
+        return new Pengecatan_adapter.ViewHolder(view);
+    }
+
+    @Override
+    public void onBindViewHolder(Pengecatan_adapter.ViewHolder viewHolder, final int i) {
+        final Perhitunganpengecatan1 PengecatanModel = pengecatans.get(i);
+        final String id = String.valueOf(pengecatans.get(i).getId());
+        final String Proyekid = String.valueOf(pengecatans.get(i).getProyekId());
+        final String Name = String.valueOf(pengecatans.get(i).getNama());
+        final String Panjangbid = String.valueOf(pengecatans.get(i).getPanjangdin());
+        final String Tinggibid = String.valueOf(pengecatans.get(i).getTinggidin());
+        final String Jumlahcat = String.valueOf(pengecatans.get(i).getJumlahkeperluancat());
+        final String Jumlahcatkaleng = String.valueOf(pengecatans.get(i).getJumlahkeperluancatkaleng());
+        final String Jumlahplamur = String.valueOf(pengecatans.get(i).getJumlahkeperluanplamur());
+        final String Jumlahplamursak = String.valueOf(pengecatans.get(i).getJumlahkeperluanplamursak());
+        final String Hargacat = String.valueOf(pengecatans.get(i).getHargacat());
+        final String Hargaplamur = String.valueOf(pengecatans.get(i).getHargaplamur());
+        final String Hargatotalcat = String.valueOf(pengecatans.get(i).getHargacattotal());
+        final String Hargaplamurcat = String.valueOf(pengecatans.get(i).getHargaplamurtotal());
+        final String Totalbiaya = String.valueOf(pengecatans.get(i).getHargatotal());
+
+        final String Luas = String.valueOf(pengecatans.get(i).getLuasPengecatan());
+
+        viewHolder.Nama.setText(Name);
 //        viewHolder.semen.setText(Semen);
 //        viewHolder.pasir.setText(Pasir);
 //        viewHolder.batako.setText(Batako);
-//
+
 //        viewHolder.editpengecatan.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View view) {
@@ -127,36 +137,36 @@ public class Pengecatan_adapter  {
 //                deletedialog.show();
 //            }
 //        });
-//
-//    }
-//
-//    @Override
-//    public int getItemCount() {
-//        return pengecatans.size();
-//    }
-//
-//
-//    public class ViewHolder extends RecyclerView.ViewHolder{
-//        private TextView Nama,semen,pasir,batako,edit;
-//        private ImageView image;
-//        private Button editpengecatan,deletepengecatan,detailpengecatan;
-//        Dialog deletedialog;
-//
-//        public ViewHolder(View view) {
-//            super(view);
-//            Nama = (TextView)view.findViewById(R.id.Nama);
-//            semen = (TextView)view.findViewById(R.id.semen);
-//            pasir = (TextView)view.findViewById(R.id.pasir);
-//            batako = (TextView)view.findViewById(R.id.Batako);
-//            editpengecatan = view.findViewById(R.id.editpengecatan);
-//            deletepengecatan = view.findViewById(R.id.Deletepengecatan);
-//            detailpengecatan = view.findViewById(R.id.detailpengecatan);
-//
-//
-//
-//
-//        }
-//    }
+
+    }
+
+    @Override
+    public int getItemCount() {
+        return pengecatans.size();
+    }
+
+
+    public class ViewHolder extends RecyclerView.ViewHolder{
+        private TextView Nama,semen,pasir,batako,edit;
+        private ImageView image;
+        private Button editpengecatan,deletepengecatan,detailpengecatan;
+        Dialog deletedialog;
+
+        public ViewHolder(View view) {
+            super(view);
+            Nama = (TextView)view.findViewById(R.id.Nama);
+            semen = (TextView)view.findViewById(R.id.semen);
+            pasir = (TextView)view.findViewById(R.id.pasir);
+            batako = (TextView)view.findViewById(R.id.Batako);
+            editpengecatan = view.findViewById(R.id.editpengecatan);
+            deletepengecatan = view.findViewById(R.id.Deletepengecatan);
+            detailpengecatan = view.findViewById(R.id.detailpengecatan);
+
+
+
+
+        }
+    }
 
 
 

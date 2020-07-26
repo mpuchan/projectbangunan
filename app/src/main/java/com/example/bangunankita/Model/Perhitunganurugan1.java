@@ -44,6 +44,9 @@ public class Perhitunganurugan1 {
         @SerializedName("hargapasir")
         @Expose
         private Double hargapasir;
+        @SerializedName("hargapasirtotal")
+        @Expose
+        private Double hargapasirtotal;
         @SerializedName("hargatotal")
         @Expose
         private Double hargatotal;
@@ -153,10 +156,15 @@ public class Perhitunganurugan1 {
         public Double getHargapasir() {
             return hargapasir;
         }
-
         public void setHargapasir(Double hargapasir) {
             this.hargapasir = hargapasir;
         }
+        public Double getHargapasirtotal() {
+        return hargapasirtotal;
+    }
+        public void setHargapasirtotal(Double hargapasirtotal) {
+        this.hargapasirtotal = hargapasirtotal;
+    }
 
         public Double getHargatotal() {
             return hargatotal;

@@ -153,23 +153,51 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="0"
-            android:text="Luas dinding (m2)"
+            android:text="Volume Urugan (m3)"
             android:textColor="#FA575656" />
 
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/Theme.AppCompat.Light.DarkActionBar"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:orientation="horizontal">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/volume"
-                android:layout_width="137dp"
-                android:layout_height="wrap_content"
-                android:hint="volume"
-                android:inputType="text"
-                android:paddingBottom="16dp" />
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Theme.AppCompat.Light.DarkActionBar"
+                android:layout_width="141dp"
+                android:layout_height="wrap_content">
 
-        </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/volume"
+                    android:layout_width="137dp"
+                    android:layout_height="wrap_content"
+                    android:enabled="false"
+                    android:hint="volume"
+                    android:inputType="text"
+                    android:paddingBottom="16dp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/textView24"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0"
+                    android:text="Jenis pengerjaan" />
+
+                <Spinner
+                    android:id="@+id/spinjenis"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0" />
+            </LinearLayout>
+
+        </LinearLayout>
 
 
         <LinearLayout
@@ -216,6 +244,7 @@
                         android:id="@+id/hargaurug"
                         android:layout_width="215dp"
                         android:layout_height="wrap_content"
+                        android:enabled="true"
                         android:hint="Rp."
                         android:inputType="text"
                         android:paddingBottom="16dp" />

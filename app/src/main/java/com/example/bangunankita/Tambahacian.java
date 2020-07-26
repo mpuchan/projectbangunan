@@ -1,9 +1,11 @@
 package com.example.bangunankita;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -18,13 +20,16 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.bangunankita.Model.Jenispengerjaan;
 import com.example.bangunankita.Model.Material;
 import com.example.bangunankita.Model.Perhitunganbidang1;
 import com.example.bangunankita.Model.ResponseBidang;
 import com.example.bangunankita.Model.ResponseMaterial;
 import com.example.bangunankita.Retrovit.ApiClient;
 import com.example.bangunankita.Util.SessionManager;
+import com.example.bangunankita.adapter.Jenispengerjaan_adapter;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -34,19 +39,28 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class Tambahacian extends AppCompatActivity {
-    Spinner spindinding,spinsemen,campuran;
+    Spinner spindinding,spinsemen,spinjenis;
     EditText panjang,tinggi,sisi,hargasemen,luas;
-    TextView hasilse,hasilse1,hasilse2,hasilb;
+    TextView hasilse,hasilse1,hasilse2,hasilb,hasilvol;
     Button prosesbtn,hitung;
     float hasil,luasba,totpasir,hargasementot,psemen;
     Context mContext;
     SessionManager sm;
-    String token,nama,p,t,namapengerjaan,namasemen1;
+    String token,nama,p,t,namapengerjaan,namasemen1,jenis;
     String mId,Ju;
     int ProyekID;
     public String hs,ids,hp,idp,berats,pc,pp;
+    private int numbersemen;
+    private String totsemen1;
     private List<Perhitunganbidang1> BidangModel = new ArrayList<>();
     private List<Material> Semen = new ArrayList<>();
+    Jenispengerjaan[] jenispengerjaans  ={
+            new Jenispengerjaan("Bangunan rumah"),
+            new Jenispengerjaan("Tembok pagar"),
+            new Jenispengerjaan("Sekat kamar mandi"),
+            new Jenispengerjaan("Sekat kamar"),
+            new Jenispengerjaan("Lainnya"),
+    };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,6 +74,7 @@ public class Tambahacian extends AppCompatActivity {
         tinggi = findViewById(R.id.tinggipl);
         sisi = findViewById(R.id.sisi);
         hargasemen = findViewById(R.id.hargasemen);
+        hasilvol = findViewById(R.id.hasilvol);
         luas = findViewById(R.id.luas);
         hasilse = findViewById(R.id.hasilsemen);
         hasilse1 = findViewById(R.id.hasilsemensak);
@@ -67,6 +82,11 @@ public class Tambahacian extends AppCompatActivity {
         hasilb = findViewById(R.id.totalbiaya);
         prosesbtn = findViewById(R.id.prosesbtn);
         hitung = findViewById(R.id.hitungb);
+        spinjenis = findViewById(R.id.spinjenis);
+        Jenispengerjaan_adapter jenispengerjaan_adapter =
+                new Jenispengerjaan_adapter(Tambahacian.this,
+                        android.R.layout.simple_spinner_item, jenispengerjaans);
+        spinjenis.setAdapter(jenispengerjaan_adapter);
 
         sm= new SessionManager(Tambahacian.this);
         HashMap<String,String> map = sm.getDetailLogin();
@@ -91,6 +111,16 @@ public class Tambahacian extends AppCompatActivity {
                 String tinggi1 = tinggi.getText().toString().trim();
                 String sisi1 = sisi.getText().toString().trim();
 
+                if (panjang.getText().toString().length() == 0) {
+                    panjang.setError("Data ini harus diisi");
+                    panjang1 = "0";
+                }else if (tinggi.getText().toString().length() == 0) {
+                    tinggi.setError("Data ini harus diisi");
+                    tinggi1 = "0";
+                }else if (sisi.getText().toString().length() == 0) {
+                    sisi.setError("Data ini harus diisi");
+                    sisi1 = "0";
+                }
                 float pp = Float.parseFloat(panjang1);
                 float tp = Float.parseFloat(tinggi1);
                 float sisi = Float.parseFloat(sisi1);
@@ -104,9 +134,11 @@ public class Tambahacian extends AppCompatActivity {
             public void onClick(View v) {
                 String luas1 = luas.getText().toString().trim();
                 luasba = Float.parseFloat(luas1);
+                hasilvol.setText(luas1);
                 hitungsemen();
             }
         });
+
 
         spindinding.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
 
@@ -120,6 +152,21 @@ public class Tambahacian extends AppCompatActivity {
                 tinggi.setText(t);
 
 //                Toast.makeText(mContext, "Kamu memilih Semen " + selectedName, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+        spinjenis.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
+
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                Jenispengerjaan je = (Jenispengerjaan) (parent.getItemAtPosition(position));
+                jenis = String.valueOf(je.getJenispengerjaan());
+
+//                Toast.makeText(mContext, "Kamu memilih Campuran " + pc, Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -183,11 +230,15 @@ public class Tambahacian extends AppCompatActivity {
         float hitpc = psemen*luasba;
         float totpc = hitpc/beratsemen;
         hargasementot = totpc*hargasemen;
-
+        DecimalFormat df1 = new DecimalFormat("#");
+        totsemen1 = df1.format(hargasementot);
+        numbersemen = Integer.parseInt(totsemen1);
+        DecimalFormat formatter = new DecimalFormat("#,###.##");
+        String totalbiaya = formatter.format(numbersemen);
         hasilse.setText(Float.toString(hitpc));
         hasilse1.setText(Float.toString(totpc));
-        hasilse2.setText(Float.toString(hargasementot));
-        hasilb.setText(Float.toString(hargasementot));
+        hasilse2.setText(totalbiaya);
+        hasilb.setText(totalbiaya);
     }
     private void initSpinnerDinding() {
             String apiKey = "oa00000000app";
@@ -234,10 +285,11 @@ public class Tambahacian extends AppCompatActivity {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 String apiKey = "oa00000000app";
+                initvalidation();
                 HashMap<String, String> map = new HashMap<>();
                 map.put("ProyekId", mId);
                 map.put("nama", namapengerjaan);
-                map.put("jenis_pengerjaan", "bangunan");
+                map.put("jenis_pengerjaan", jenis);
                 map.put("panjangdin", panjang.getText().toString());
                 map.put("tinggidin", tinggi.getText().toString());
                 map.put("sisi", sisi.getText().toString());
@@ -246,14 +298,19 @@ public class Tambahacian extends AppCompatActivity {
                 map.put("Jumlahkeperluansemen", hasilse.getText().toString());
                 map.put("jumlahdalamsak", hasilse1.getText().toString());
                 map.put("metode", String.valueOf(psemen));
-                map.put("hargasemen", hasilse2.getText().toString());
-                map.put("hargatotal", hasilse2.getText().toString());
+                map.put("hargasemen", hargasemen.getText().toString());
+                map.put("hargasementotal", String.valueOf(numbersemen));
+                map.put("hargatotal", String.valueOf(numbersemen));
                 Call<Void> call = ApiClient.getRequestInterface().actionCreateacian(apiKey,token,map);
                 call.enqueue(new Callback<Void>() {
                     @Override
                     public void onResponse(Call<Void> call, Response<Void> response) {
                         if (response.code() == 200) {
-                            Intent Perhitunganacian = new Intent(Tambahacian.this, Perhitunganacian.class);
+                            Intent Perhitunganacian = (new Intent(Tambahacian.this, Perhitunganacian.class)
+                                    .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
+                            Bundle setData = new Bundle();
+                            setData.putString("idproyek",mId);
+                            Perhitunganacian.putExtras(setData);
                             startActivity(Perhitunganacian);
                             Toast.makeText(Tambahacian.this,
                                     "Tambah Data Perhitungan Bidang Berhasil",
@@ -278,5 +335,46 @@ public class Tambahacian extends AppCompatActivity {
         });
         return super.onCreateOptionsMenu(menu);
 
+    }
+
+    private void initvalidation() {
+        if (panjang.getText().toString().length() == 0) {
+            panjang.setError("field ini harus diisi!");
+
+        } else if (tinggi.getText().toString().length() == 0) {
+            tinggi.setError("field ini harus diisi!");
+        } else if (sisi.getText().toString().length() == 0) {
+            sisi.setError("field ini harus diisi!");
+
+        } else if (hargasemen.getText().toString().length() == 0) {
+            hargasemen.setError("field ini harus diisi!");
+
+        } else if (hasilvol.getText().toString().length() == 0) {
+            hitung.setError("");
+            AlertDialog.Builder builder1 = new AlertDialog.Builder(Tambahacian.this);
+            builder1.setTitle("Pesan Error");
+            builder1.setMessage("Klik Button hitung dulu!!");
+            builder1.setIcon(R.drawable.ic_warning_red_24dp);
+            builder1.setCancelable(true);
+
+            builder1.setPositiveButton(
+                    "Yes",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.cancel();
+                        }
+                    });
+
+            builder1.setNegativeButton(
+                    "No",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.cancel();
+                        }
+                    });
+
+            AlertDialog alert11 = builder1.create();
+            alert11.show();
+        }
     }
 }

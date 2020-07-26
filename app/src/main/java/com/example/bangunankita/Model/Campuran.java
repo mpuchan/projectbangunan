@@ -4,6 +4,7 @@ public class Campuran {
 
     private String campuran;
     private double pc;
+    private double pw;
 
     public double getPp() {
         return pp;
@@ -23,10 +24,20 @@ public class Campuran {
         this.pc = pc;
     }
 
-    public Campuran(String campuran, double pc, double pp){
+    public double getPw() {
+        return pw;
+    }
+
+    public void setPw(double pw) {
+        this.pw = pw;
+    }
+
+
+    public Campuran(String campuran, double pc, double pp,double pw){
         this.campuran = campuran;
         this.pc = pc;
         this.pp = pp;
+        this.pw = pw;
     }
 
     public String getCampuran() {
