@@ -22,7 +22,6 @@ import com.example.bangunankita.Model.ResponseMaterial;
 import com.example.bangunankita.Retrovit.ApiClient;
 import com.example.bangunankita.Util.SessionManager;
 
-import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -32,7 +31,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class Tambahplafon extends AppCompatActivity {
+public class Editplafon extends AppCompatActivity {
     private Spinner spintriplek,spinpaku,spinreng;
     private EditText Namapengerjaan,Panjang,Lebar,Luasplafon,Htriplek,Hreng,Hpaku;
     private TextView hasilpaku,hasilpaku1,hasilkayu,hasilkayu1,total,hasilkayu2,luas_plafon,hasiltriplek,hasiltriplek1,hasiltriplek2;
@@ -40,7 +39,7 @@ public class Tambahplafon extends AppCompatActivity {
     String token;
     private String harpaku,hartriplek,harreng,namapaku,namatriplek,namareng;
     String mId,Ju;
-    int ProyekID;
+    int ProyekID,thisid;
     private float hasil,luasba,koefplafon,koefpaku;
     Context mContext;
     private String luas1;
@@ -51,50 +50,11 @@ public class Tambahplafon extends AppCompatActivity {
 
     private String totpaku,tottriplek,totkayu;
     private int numberpaku,numbertriplek,numberkayu,hargatotal;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_tambahplafon);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        mContext = this;
-        proses = findViewById(R.id.prosesbtn);
-        hasilpaku = findViewById(R.id.hasilpaku);
-        hasilpaku1 = findViewById(R.id.hasilpaku1);
-        hasiltriplek = findViewById(R.id.hasiltriplek);
-        hasiltriplek1 = findViewById(R.id.hasiltriplek1);
-        hasiltriplek2 = findViewById(R.id.hasiltriplek2);
-        hasilkayu = findViewById(R.id.hasilreng);
-        hasilkayu1 = findViewById(R.id.hasilreng1);
-        hasilkayu2 = findViewById(R.id.hasilreng2);
-        spintriplek = findViewById(R.id.spintriplek);
-        spinpaku = findViewById(R.id.spinpaku);
-        spinreng = findViewById(R.id.pilihreng);
-        Namapengerjaan = findViewById(R.id.nama_pengerjaan1);
-        Panjang = findViewById(R.id.panjangb);
-        Lebar = findViewById(R.id.lebarb);
-        Luasplafon = findViewById(R.id.luasplafon);
-        luas_plafon = findViewById(R.id.luasplafon1);
-        Htriplek = findViewById(R.id.htriplek);
-        Hpaku = findViewById(R.id.hpaku);
-        Hreng = findViewById(R.id.hreng);
-        total = findViewById(R.id.total);
-        Hitungb = findViewById(R.id.hitungb);
-        sm= new SessionManager(Tambahplafon.this);
-        HashMap<String,String> map = sm.getDetailLogin();
-        token=(map.get(sm.KEY_TOKEN));
-        sm.checkLogin();
-        Bundle bundle = getIntent().getExtras();
-        if (bundle != null)
-        {
-            mId = bundle.getString("idproyek1");
-            Ju = mId;
-        }else{
-            mId = "0";
-        }
-        Toast.makeText(Tambahplafon.this, "Proyek Id"+mId,
-                Toast.LENGTH_SHORT).show();
+        setContentView(R.layout.activity_editplafon);
+        init();
         initSpinnerPaku();
         initSpinnerTriplek();
         initSpinnerReng();
@@ -191,6 +151,8 @@ public class Tambahplafon extends AppCompatActivity {
         });
 
     }
+
+
 
     private void hitungtotal() {
         hargatotal = numberkayu+numbertriplek+numberpaku;
@@ -331,6 +293,87 @@ public class Tambahplafon extends AppCompatActivity {
             }
         });
     }
+    private void init() {
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        mContext = this;
+        proses = findViewById(R.id.prosesbtn);
+        hasilpaku = findViewById(R.id.hasilpaku);
+        hasilpaku1 = findViewById(R.id.hasilpaku1);
+        hasiltriplek = findViewById(R.id.hasiltriplek);
+        hasiltriplek1 = findViewById(R.id.hasiltriplek1);
+        hasiltriplek2 = findViewById(R.id.hasiltriplek2);
+        hasilkayu = findViewById(R.id.hasilreng);
+        hasilkayu1 = findViewById(R.id.hasilreng1);
+        hasilkayu2 = findViewById(R.id.hasilreng2);
+        spintriplek = findViewById(R.id.spintriplek);
+        spinpaku = findViewById(R.id.spinpaku);
+        spinreng = findViewById(R.id.pilihreng);
+        Namapengerjaan = findViewById(R.id.nama_pengerjaan1);
+        Panjang = findViewById(R.id.panjangb);
+        Lebar = findViewById(R.id.lebarb);
+        Luasplafon = findViewById(R.id.luasplafon);
+        luas_plafon = findViewById(R.id.luasplafon1);
+        Htriplek = findViewById(R.id.htriplek);
+        Hpaku = findViewById(R.id.hpaku);
+        Hreng = findViewById(R.id.hreng);
+        total = findViewById(R.id.total);
+        Hitungb = findViewById(R.id.hitungb);
+        sm= new SessionManager(Editplafon.this);
+        HashMap<String,String> map = sm.getDetailLogin();
+        token=(map.get(sm.KEY_TOKEN));
+        sm.checkLogin();
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null)
+        {
+            mId = bundle.getString("ProyekId");
+        }else{
+            mId = "0";
+        }
+
+        thisid = Integer.parseInt(bundle.getString("Id"));
+        Namapengerjaan.setText(bundle.getString("nama"));
+        Panjang.setText(bundle.getString("panjang"));
+        Lebar.setText(bundle.getString("lebar"));
+        Luasplafon.setText(bundle.getString("luas"));
+//        Namapengerjaan.setText(bundle.getString("namatriplek"));
+//        Namapengerjaan.setText(bundle.getString("namapaku"));
+//        Namapengerjaan.setText(bundle.getString("namareng"));
+
+        Htriplek.setText(bundle.getString("hargatriplek"));
+        Hpaku.setText(bundle.getString("hargapaku"));
+        Hreng.setText(bundle.getString("hargareng"));
+        hasiltriplek.setText(bundle.getString("jumlahtriplek"));
+        hasilpaku.setText(bundle.getString("jumlahpaku"));
+        float hargatotpaku = Float.parseFloat(bundle.getString("hargapakutotal"));
+        DecimalFormat df = new DecimalFormat("#");
+        totpaku = df.format(hargatotpaku);
+        numberpaku = Integer.parseInt(totpaku);
+        DecimalFormat formatter = new DecimalFormat("#,###.##");
+        String totalbiayapaku = formatter.format(numberpaku);
+        hasilpaku1.setText(totalbiayapaku);
+        float hargatotkayu = Float.parseFloat(bundle.getString("hargarengtotal"));
+        DecimalFormat df1 = new DecimalFormat("#");
+        totkayu = df1.format(hargatotkayu);
+        numberkayu = Integer.parseInt(totkayu);
+        DecimalFormat formatter1 = new DecimalFormat("#,###.##");
+        String totalbiayareng = formatter1.format(numberkayu);
+        hasilkayu2.setText(totalbiayareng);
+        float hargatottriplek = Float.parseFloat(bundle.getString("hargatriplektotal"));
+        DecimalFormat df2 = new DecimalFormat("#");
+        tottriplek = df2.format(hargatottriplek);
+        numbertriplek = Integer.parseInt(tottriplek);
+        DecimalFormat formatter2 = new DecimalFormat("#,###.##");
+        String totalbiayatriplek = formatter2.format(numbertriplek);
+        hasiltriplek2.setText(totalbiayatriplek);
+        hasiltriplek1.setText(bundle.getString("jumlahtripleklembar"));
+        hasilkayu1.setText(bundle.getString("jumlahrengbatang"));
+        float hargatotal1 = Float.parseFloat(bundle.getString("hargatotal"));
+        DecimalFormat formatter3 = new DecimalFormat("#,###.##");
+        String totalbiaya = formatter3.format(hargatotal1);
+        total.setText(totalbiaya);
+
+    }
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_mainsavebidang,menu);
         MenuItem item = menu.findItem(R.id.app_bar_savedata);
@@ -344,7 +387,6 @@ public class Tambahplafon extends AppCompatActivity {
                 map.put("nama", Namapengerjaan.getText().toString());
                 map.put("panjang", Panjang.getText().toString());
                 map.put("lebar", Lebar.getText().toString());
-                map.put("luas",luas1);
                 map.put("namapaku", namapaku);
                 map.put("namareng", namareng);
                 map.put("namatriplek", namatriplek);
@@ -361,23 +403,23 @@ public class Tambahplafon extends AppCompatActivity {
                 map.put("hargatotalreng", totkayu);
                 map.put("hargatotal", String.valueOf(hargatotal));
 
-                Call<Void> call = ApiClient.getRequestInterface().actionCreateplafon(apiKey,token,map);
+                Call<Void> call = ApiClient.getRequestInterface().actionPutPerhitunganplafon(thisid,apiKey,token,map);
                 call.enqueue(new Callback<Void>() {
                     @Override
                     public void onResponse(Call<Void> call, Response<Void> response) {
-                        if (response.code() == 200) {
-                            Intent Perhitunganplafon = (new Intent(Tambahplafon.this, Perhitunganplafond.class)
+                        if (response.code() == 201) {
+                            Intent Perhitunganplafon = (new Intent(Editplafon.this, Perhitunganplafond.class)
                                     .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
                             Bundle setData = new Bundle();
                             setData.putString("idproyek",mId);
                             Perhitunganplafon.putExtras(setData);
                             startActivity(Perhitunganplafon);
-                            Toast.makeText(Tambahplafon.this,
-                                    "Tambah Data Perhitungan Plafon Berhasil ditambahkan",
+                            Toast.makeText(Editplafon.this,
+                                    "Edit Data Perhitungan Plafon Berhasil ",
                                     Toast.LENGTH_LONG).show();
 
                         } else if (response.code() == 422) {
-                            Toast.makeText(Tambahplafon.this,
+                            Toast.makeText(Editplafon.this,
                                     "Something Wrong",
                                     Toast.LENGTH_LONG).show();
                         }
@@ -385,7 +427,7 @@ public class Tambahplafon extends AppCompatActivity {
 
                     @Override
                     public void onFailure(Call<Void> call, Throwable t) {
-                        Toast.makeText(Tambahplafon.this, t.getMessage(),
+                        Toast.makeText(Editplafon.this, t.getMessage(),
                                 Toast.LENGTH_LONG).show();
                     }
                 });
@@ -395,4 +437,5 @@ public class Tambahplafon extends AppCompatActivity {
         return super.onCreateOptionsMenu(menu);
 
     }
-}
+    }
+

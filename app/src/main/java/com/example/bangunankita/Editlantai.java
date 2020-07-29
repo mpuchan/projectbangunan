@@ -528,71 +528,70 @@ public class Editlantai extends AppCompatActivity {
         });
     }
 
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        getMenuInflater().inflate(R.menu.menu_mainsavebidang,menu);
-//        MenuItem item = menu.findItem(R.id.app_bar_savedata);
-//        item.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-//            @Override
-//            public boolean onMenuItemClick(MenuItem item) {
-//                String apiKey = "oa00000000app";
-//                HashMap<String, String> map = new HashMap<>();
-//                map.put("ProyekId", mId);
-//                map.put("nama",nama_pengerjaan.getText().toString());
-//                map.put("jenis_pengerjaan", jenis);
-//                map.put("panjanglan", panjang.getText().toString());
-//                map.put("lebarlan", lebar.getText().toString());
-//                map.put("luas_lantai", luas.getText().toString());
-//                map.put("metode", metode);
-//                map.put("nama_keramik", namakeramik);
-//                map.put("nama_semen", namasemen);
-//                map.put("nama_semennat", namanat);
-//                map.put("nama_pasir", namapasir);
-//                map.put("jumlahkeperluankeramik", hasilker.getText().toString());
-//                map.put("jumlahkeperluankeramikdus", hasilker2.getText().toString());
-//                map.put("jumlahkeperluanpasir", hasilpas.getText().toString());
-//                map.put("jumlahkeperluansemen", hasilse.getText().toString());
-//                map.put("jumlahkeperluannat", hasilnat.getText().toString());
-//                map.put("jumlahdalamsak", hasilse1.getText().toString());
-//                map.put("hargakeramik", hkeramik.getText().toString());
-//                map.put("hargapasir", hpasir.getText().toString());
-//                map.put("hargasemen", hargasemen.getText().toString());
-//                map.put("harganat", hnat.getText().toString());
-//                map.put("hargakeramiktotal", hasilker1.getText().toString());
-//                map.put("hargasementotal", hasilse2.getText().toString());
-//                map.put("hargapasirtotal", hasilpas2.getText().toString());
-//                map.put("harganattotal", hasilnat1.getText().toString());
-//                Call<Void> call = ApiClient.getRequestInterface().actionCreatelantai(apiKey,token,map);
-//                call.enqueue(new Callback<Void>() {
-//                    @Override
-//                    public void onResponse(Call<Void> call, Response<Void> response) {
-//                        if (response.code() == 200) {
-//                            Intent Perhitunganlantai = (new Intent(Tambahlantai.this, Perhitunganlantai.class)
-//                                    .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
-//                            Bundle setData = new Bundle();
-//                            setData.putString("idproyek",mId);
-//                            Perhitunganlantai.putExtras(setData);
-//                            startActivity(Perhitunganlantai);
-//                            Toast.makeText(Tambahlantai.this,
-//                                    "Tambah Data Perhitungan Lantai Berhasil",
-//                                    Toast.LENGTH_LONG).show();
-//
-//                        } else if (response.code() == 422) {
-//                            Toast.makeText(Tambahlantai.this,
-//                                    "Something Wrong",
-//                                    Toast.LENGTH_LONG).show();
-//                        }
-//                    }
-//
-//                    @Override
-//                    public void onFailure(Call<Void> call, Throwable t) {
-//                        Toast.makeText(Tambahlantai.this, t.getMessage(),
-//                                Toast.LENGTH_LONG).show();
-//                    }
-//                });
-//                return false;
-//            }
-//        });
-//        return super.onCreateOptionsMenu(menu);
-//
-//    }
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_mainsavebidang,menu);
+        MenuItem item = menu.findItem(R.id.app_bar_savedata);
+        item.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                String apiKey = "oa00000000app";
+                HashMap<String, String> map = new HashMap<>();
+                map.put("nama",nama_pengerjaan.getText().toString());
+                map.put("jenis_pengerjaan", jenis);
+                map.put("panjanglan", panjang.getText().toString());
+                map.put("lebarlan", lebar.getText().toString());
+                map.put("luas_lantai", luas.getText().toString());
+                map.put("metode", metode);
+                map.put("nama_keramik", namakeramik);
+                map.put("nama_semen", namasemen);
+                map.put("nama_semennat", namanat);
+                map.put("nama_pasir", namapasir);
+                map.put("jumlahkeperluankeramik", hasilker.getText().toString());
+                map.put("jumlahkeperluankeramikdus", hasilker2.getText().toString());
+                map.put("jumlahkeperluanpasir", hasilpas.getText().toString());
+                map.put("jumlahkeperluansemen", hasilse.getText().toString());
+                map.put("jumlahkeperluannat", hasilnat.getText().toString());
+                map.put("jumlahdalamsak", hasilse1.getText().toString());
+                map.put("hargakeramik", hkeramik.getText().toString());
+                map.put("hargapasir", hpasir.getText().toString());
+                map.put("hargasemen", hargasemen.getText().toString());
+                map.put("harganat", hnat.getText().toString());
+                map.put("hargakeramiktotal", hasilker1.getText().toString());
+                map.put("hargasementotal", hasilse2.getText().toString());
+                map.put("hargapasirtotal", hasilpas2.getText().toString());
+                map.put("harganattotal", hasilnat1.getText().toString());
+                Call<Void> call = ApiClient.getRequestInterface().actionPutPerhitunganlantai(ProyekID,apiKey,token,map);
+                call.enqueue(new Callback<Void>() {
+                    @Override
+                    public void onResponse(Call<Void> call, Response<Void> response) {
+                        if (response.code() == 200) {
+                            Intent Perhitunganlantai = (new Intent(Editlantai.this, Perhitunganlantai.class)
+                                    .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
+                            Bundle setData = new Bundle();
+                            setData.putString("idproyek",mId);
+                            Perhitunganlantai.putExtras(setData);
+                            startActivity(Perhitunganlantai);
+                            Toast.makeText(Editlantai.this,
+                                    "Edit Data Perhitungan Lantai Berhasil",
+                                    Toast.LENGTH_LONG).show();
+
+                        } else if (response.code() == 422) {
+                            Toast.makeText(Editlantai.this,
+                                    "Something Wrong",
+                                    Toast.LENGTH_LONG).show();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<Void> call, Throwable t) {
+                        Toast.makeText(Editlantai.this, t.getMessage(),
+                                Toast.LENGTH_LONG).show();
+                    }
+                });
+                return false;
+            }
+        });
+        return super.onCreateOptionsMenu(menu);
+
+    }
 }

@@ -40,6 +40,7 @@ public class PerhitunganPondasi extends AppCompatActivity {
     private ImageView tambahpondasi,print;
     private TextView totalharga;
     int ProyekID;
+    int totalPrice1=0;
     String Ju,mId;
     SessionManager sm;
     String token;
@@ -54,6 +55,7 @@ public class PerhitunganPondasi extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_perhitungan_pondasi);
+        totalharga = findViewById(R.id.totalpondasi);
         tambahpondasi = findViewById(R.id.tambahpondasi);
         swipeRefreshLayout = findViewById(R.id.swiperf);
         sm= new SessionManager(PerhitunganPondasi.this);
@@ -114,12 +116,12 @@ public class PerhitunganPondasi extends AppCompatActivity {
                 if (response.code() == 200 ) {
                     PondasiModel = response.body().getPerhitunganpondasi();
 
-//                    for (int i = 0; i<PondasiModel.size(); i++) {
-//                        totalPrice += PondasiModel.get(i).getHargatotal();
-//                    }
-//                    DecimalFormat formatter = new DecimalFormat("#,###.##");
-//                    String totalbiaya = formatter.format(totalPrice);
-//                    totalPrice.setText("Rp."+totalbiaya);
+                    for (int i = 0; i<PondasiModel.size(); i++) {
+                        totalPrice1 += PondasiModel.get(i).getHargatotal();
+                    }
+                    DecimalFormat formatter = new DecimalFormat("#,###.##");
+                    String totalbiaya = formatter.format(totalPrice1);
+                    totalharga.setText("Rp."+totalbiaya);
 
                     pondasi_adapter = new Pondasi_adapter(PerhitunganPondasi.this, PondasiModel);
                     mRecyclerView.setAdapter(pondasi_adapter);

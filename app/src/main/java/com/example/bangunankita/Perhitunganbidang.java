@@ -168,7 +168,12 @@ public class Perhitunganbidang extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         String apiKey = "oa00000000app";
-                        Uri uri = Uri.parse("http://192.168.43.163:3000/api/v1/perhitunganbidang/export/1/?apiKey="+apiKey+"&accessToken="+token);
+                        if (!TextUtils.isEmpty(Ju) && TextUtils.isDigitsOnly(Ju)) {
+                            ProyekID = Integer.parseInt(Ju);
+                        } else {
+                            ProyekID =0;
+                        }
+                        Uri uri = Uri.parse("http://192.168.43.163:3000/api/v1/perhitunganbidang/export/"+ProyekID+"/?apiKey="+apiKey+"&accessToken="+token);
                         Intent intent = new Intent(Intent.ACTION_VIEW, uri);
                         startActivity(intent);
                     }

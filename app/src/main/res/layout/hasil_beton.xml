@@ -142,7 +142,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingLeft="5dp"
-            android:text="kg, "
+            android:text="m3, "
             android:textColor="#FA575656" />
 
         <TextView
@@ -169,7 +169,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:paddingLeft="5dp"
-            android:text="m3"
+            android:text="truk"
             android:textColor="#FA575656" />
 
         <TextView
@@ -215,7 +215,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:paddingLeft="5dp"
-            android:text="kg"
+            android:text="m3"
             android:textColor="#FA575656" />
         <TextView
             android:id="@+id/hasilbd12"
@@ -225,22 +225,30 @@
             android:paddingLeft="5dp"
             android:text="atau"
             android:textColor="#FA575656" />
+
         <TextView
-            android:id="@+id/hasilbatu1"
+            android:id="@+id/hasil11"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:paddingLeft="5dp"
+            android:text=" "
+            android:textColor="#FA575656" />
+        <TextView
+            android:id="@+id/hasilbaat"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:paddingLeft="5dp"
-            android:text=""
+            android:text="atau"
             android:textColor="#FA575656" />
-
         <TextView
             android:id="@+id/hasilkerd2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:paddingLeft="5dp"
-            android:text="m3"
+            android:text="truk"
             android:textColor="#FA575656" />
 
         <TextView

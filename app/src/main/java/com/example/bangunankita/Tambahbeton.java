@@ -39,7 +39,7 @@ import retrofit2.Response;
 public class Tambahbeton extends AppCompatActivity {
     private Spinner spinpapan,spinbesi,spinkawat,spinpaku,spinbegel,spinpasir,spinsemen,spinbatu,spinjenis;
     private EditText Nama,panjangbeton,Hpasir,Hsemen,Hpapan,Hbesi,Hkawat,Hpaku,Hbegel,Hbatu;
-    private TextView hasils,hasils1,hasils2,hasilp,hasilp1,hasilp2,hasilbatu,hasilbatu1,hasilbatu2,hasilpapan,hasilpapan1,
+    private TextView hasils,hasils1,hasils2,hasilp,hasilp1,hasilp2,hasilbatu,hasilbatu12,hasilbatu2,hasilpapan,hasilpapan1,
                     hasilpaku,hasilpaku1,hasilkawat,hasilkawat1,hasilbesi,hasilbesi1,hasilbegel,hasilbegel1,hasilpanjang,
                     total,hasilbesi2;
     private String hs,ids,hp,idp,berats,namasemen,namapasir,harpapan,namapapan,harpaku,harkawat,harbesi,
@@ -107,7 +107,6 @@ public class Tambahbeton extends AppCompatActivity {
         Hsemen = findViewById(R.id.hsemen);
         Hbatu = findViewById(R.id.hbatu);
         Hitung = findViewById(R.id.hitungb);
-//textview
 
         hasils = findViewById(R.id.hasils);
         hasils1 = findViewById(R.id.hasils1);
@@ -120,7 +119,7 @@ public class Tambahbeton extends AppCompatActivity {
         hasilpaku = findViewById(R.id.hasilpaku);
         hasilpaku1 = findViewById(R.id.hasilpaku1);
         hasilbatu = findViewById(R.id.hasilbatu);
-        hasilbatu1 = findViewById(R.id.hasilbatu1);
+        hasilbatu12 = findViewById(R.id.hasilbaat);
         hasilbatu2 = findViewById(R.id.hasilbatu21);
         hasilkawat = findViewById(R.id.hasilkawat);
         hasilkawat1 = findViewById(R.id.hasilkawat1);
@@ -514,12 +513,13 @@ public class Tambahbeton extends AppCompatActivity {
             float volume = b*h*panjangbet;
             jmlbatu = volume*bt;
             jmlbatum3 = jmlbatu/1000;
+            float jmlbatutruk = jmlbatum3/7;
             float hargatotbatu= jmlbatum3*hargabatu;
             DecimalFormat df = new DecimalFormat("#");
             totbatu = df.format(hargatotbatu);
             numberbatu = Integer.parseInt(totbatu);
-            hasilbatu.setText(String.valueOf(jmlbatu));
-            hasilbatu1.setText(String.valueOf(jmlbatum3));
+            hasilbatu.setText(String.valueOf(jmlbatutruk));
+            hasilbatu12.setText(String.valueOf(jmlbatum3));
             DecimalFormat formatter = new DecimalFormat("#,###.##");
             String totalbiaya = formatter.format(numberbatu);
             hasilbatu2.setText(totalbiaya);
@@ -806,7 +806,7 @@ private void initSpinnerSemen() {
                 map.put("jumlahsemendalamsak", hasils1.getText().toString());
                 map.put("jumlahbatu", hasilbatu.getText().toString());
                 map.put("jumlahpapan", hasilpapan.getText().toString());
-                map.put("jumlahbatudalamtruk", hasilbatu1.getText().toString());
+                map.put("jumlahbatudalamtruk", hasilbatu12.getText().toString());
                 map.put("jumlahpaku", hasilpaku.getText().toString());
                 map.put("hargatotalpapan", totpapan);
                 map.put("hargatotalbesi", totbesi);

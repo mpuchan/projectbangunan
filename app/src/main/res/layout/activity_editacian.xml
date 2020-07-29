@@ -181,7 +181,7 @@
                                 android:id="@+id/luas"
                                 android:layout_width="137dp"
                                 android:layout_height="wrap_content"
-                                android:hint="Luas bidang"
+                                android:hint="Luas acian"
                                 android:inputType="text"
                                 android:paddingBottom="16dp" />
 
@@ -246,14 +246,14 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:layout_weight="1"
-                                android:enabled="false">
+                                android:enabled="true">
 
                                 <com.google.android.material.textfield.TextInputEditText
                                     android:id="@+id/hargasemen"
                                     android:layout_width="215dp"
                                     android:layout_height="wrap_content"
                                     android:hint="Rp."
-                                    android:inputType="text"
+                                    android:inputType="number"
                                     android:paddingBottom="16dp" />
 
                             </com.google.android.material.textfield.TextInputLayout>

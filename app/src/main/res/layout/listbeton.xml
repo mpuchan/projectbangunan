@@ -77,18 +77,18 @@
                                 android:layout_width="20dp"
                                 android:layout_height="20dp"
                                 android:layout_weight="0"
-                                app:srcCompat="@drawable/ikon_pasir" />
+                                app:srcCompat="@drawable/ikon_besiulir" />
 
                             <TextView
                                 android:id="@+id/textView3"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="0"
-                                android:text="Pasir : "
+                                android:text="Besi : "
                                 android:textColor="#FF292929" />
 
                             <TextView
-                                android:id="@+id/pasir"
+                                android:id="@+id/besi"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Pasir"
@@ -123,6 +123,28 @@
                                 android:text="Semen"
                                 android:textColor="#FF292929" />
                         </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/textViewdd23"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="0"
+                                android:text="Harga total : "
+                                android:textColor="#FF292929"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/detailtotal"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Semen"
+                                android:textColor="#FF292929"
+                                android:textStyle="bold" />
+                        </LinearLayout>
 
                     </LinearLayout>
 
@@ -143,7 +165,7 @@
                 android:orientation="horizontal">
 
                 <Button
-                    android:id="@+id/detailbidang"
+                    android:id="@+id/detailbeton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="0"
@@ -152,7 +174,7 @@
                     android:textColor="#40C4FF" />
 
                 <Button
-                    android:id="@+id/editbidang"
+                    android:id="@+id/editbeton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="0"
@@ -161,7 +183,7 @@
                     android:textColor="#66B30B" />
 
                 <Button
-                    android:id="@+id/Deletebidang"
+                    android:id="@+id/Deletebeton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="0"

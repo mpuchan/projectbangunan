@@ -1,9 +1,11 @@
 package com.example.bangunankita;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -18,13 +20,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.bangunankita.Model.Campuran;
-import com.example.bangunankita.Model.Jenispengerjaan;
 import com.example.bangunankita.Model.Material;
 import com.example.bangunankita.Model.ResponseMaterial;
 import com.example.bangunankita.Retrovit.ApiClient;
 import com.example.bangunankita.Util.SessionManager;
 import com.example.bangunankita.adapter.Campuran_adapter;
-import com.example.bangunankita.adapter.Jenispengerjaan_adapter;
 
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
@@ -36,49 +36,43 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class Editbidang extends AppCompatActivity {
-    private EditText panjangb,tinggib,panjangp,tinggip,panjangj,tinggij,luasb;
+public class Editpondasi extends AppCompatActivity {
+    private EditText a,b,t,p,volume;
     private EditText hargab,hargas,hargap,namapengerjaan;
-    private TextView hasilb,hasilbid,hasilbat,hasilbat1,hasilse,hasilse1,
-            hasilse2,hasilpas,hasilpas1,hasilpas2;
+    private TextView hasilb,hasilbid,hasilbat2,hasilbat,hasilbat1,hasilse,hasilse1,
+            hasilse2,hasilpas,hasilpas1,hasilpas2,totalbiaya,hasilvol;
     private Button btnproses,hitung;
-    private Spinner spinbatako,campuran,spinsemen,spinpasir,spinjenis;
-    public String pbatako,tbatako,Jenis,hb,idb,hs,ids,hp,idp,berats,pc,pp,hsemen,hpasir,hbatako,namasemen1,namabatako1,namapasir1,
-            token,metode,mId,namasemen,namabatako,namapasir,idperhitunganbidang;
-    float hasilm,luasba;
+    private String Htotbatu1,Htotpasir1,Htotsemen1,totalsemua;
+    private String namasemen1,hsemen,namapasir1,namabatu1,hpasir,hbatu;
+    private Spinner spinbatu,campuran,spinsemen,spinpasir;
+    public String hb,idb,hs,ids,hp,idp,berats,pc,pp,jenis,token,metode,mId,namasemen,namapasir,namabatu;
+    public String a1,b1,t1,p1,vol;
+    private int numberbatako,numberpasir,numbersemen,numbertotal,numberbatu;
+    private String totbatako,totsemen1,totpasir1,tothitungan,totbatu;
+    float hasilm,vol1;
     float totpasir;
-    float htotbatako;
-    private int numberbatako,numberpasir,numbersemen,numbertotal;
-    private String totbatako,totsemen,totpasir1,tothitungan;
-    int idbidang;
-    float hargasementot,hargapasirparse,hargasemenparse,hargabatakoparse;
+    float htotbatu,hasilbt;
+    float hargasementot,hargapasirparse,hargasemenparse,hargabatuparse;
     public float hasil;
+    private int thisid;
     SessionManager sm;
-    private List<Material> Batako = new ArrayList<>();
+    private List<Material> Batu = new ArrayList<>();
     private List<Material> Semen = new ArrayList<>();
     private List<Material> Pasir = new ArrayList<>();
     Context mContext;
     Campuran[] campurans ={
-            new Campuran("1:3", 3,0.007,0.0),
-            new Campuran("1:4", 2.4, 0.0075,0.0),
-            new Campuran("1:5", 2.02,0.0079,0.0),
-            new Campuran("1:6", 1.74,0.0086,0.0),
-            new Campuran("1:8", 1.36,0.009,0.0)
+            new Campuran("1:3", 202,0.485,0),
+            new Campuran("1:4", 163, 0.52,0),
+            new Campuran("1:5", 136,0.544,0),
+            new Campuran("1:6", 117,0.561,0),
+            new Campuran("1:8", 91,0.584,0)
     };
-    Jenispengerjaan[] jenispengerjaans  ={
-            new Jenispengerjaan("Bangunan rumah"),
-            new Jenispengerjaan("Tembok pagar"),
-            new Jenispengerjaan("Sekat kamar mandi"),
-            new Jenispengerjaan("Sekat kamar"),
-            new Jenispengerjaan("Lainnya"),
-    };
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_editbidang);
+        setContentView(R.layout.activity_editpondasi);
         init();
-        initSpinnerBatako();
+        initSpinnerBatu();
         initSpinnerSemen();
         initSpinnerPasir();
 
@@ -86,79 +80,55 @@ public class Editbidang extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                String panjang1 = panjangb.getText().toString().trim();
-                String panjang2 = panjangp.getText().toString().trim();
-                String panjang3 = panjangj.getText().toString().trim();
-                String tinggi1 = tinggib.getText().toString().trim();
-                String tinggi2 = tinggip.getText().toString().trim();
-                String tinggi3 = tinggij.getText().toString().trim();
-                if (panjangb.getText().toString().length() == 0) {
-                    panjangb.setError("Data ini harus diisi");
-                    panjang1 = "0";
-                }else if (panjangp.getText().toString().length() == 0) {
-                    panjangp.setError("Data ini harus diisi");
-                    panjang2 = "0";
-                }else if (panjangj.getText().toString().length() == 0) {
-                    panjangj.setError("Data ini harus diisi/dibiarkan 0");
-                    panjang3 = "0";
-                }else if (tinggib.getText().toString().length() == 0) {
-                    tinggib.setError("Data ini harus diisi/dibiarkan 0");
-                    tinggi1 = "0";
-                }else if (tinggip.getText().toString().length() == 0) {
-                    tinggip.setError("Data ini harus diisi/dibiarkan 0");
-                    tinggi2 = "0";
-                }else if (tinggij.getText().toString().length() == 0) {
-                    tinggij.setError("Data ini harus diisi/dibiarkan 0");
-                    tinggi3 = "0";
+                String a1 = a.getText().toString().trim();
+                String b1 = b.getText().toString().trim();
+                String t1 = t.getText().toString().trim();
+                String p1 = p.getText().toString().trim();
+                if (a.getText().toString().length() == 0) {
+                    a.setError("Data ini harus diisi");
+                    a1 = "0";
+                }else if (b.getText().toString().length() == 0) {
+                    b.setError("Data ini harus diisi");
+                    b1 = "0";
+                }else if (t.getText().toString().length() == 0) {
+                    t.setError("Data ini harus diisi");
+                    t1 = "0";
+                }else if (p.getText().toString().length() == 0) {
+                    p.setError("Data ini harus diisi");
+                    p1 = "0";
+                }else if (p.getText().toString().length() == 0) {
+                    p.setError("Data ini harus diisi");
+                    p1 = "0";
                 }
-                float pb = Float.parseFloat(panjang1);
-                float tb = Float.parseFloat(tinggi1);
-                float pp = Float.parseFloat(panjang2);
-                float tp = Float.parseFloat(tinggi2);
-                float pj = Float.parseFloat(panjang3);
-                float tj = Float.parseFloat(tinggi3);
-                hasil = (pb*tb)-(pp*tp)- (pj*tj);
-                luasb.setText(String.valueOf(hasil));
+                float a2 = Float.parseFloat(a1);
+                float b2 = Float.parseFloat(b1);
+                float t2 = Float.parseFloat(t1);
+                float p2 = Float.parseFloat(p1);
+                hasil = (((a2+b2)*t2)/2)*p2;
+                volume.setText(String.valueOf(hasil));
+                String vol = volume.getText().toString().trim();
+                vol1 = Float.parseFloat(vol);
+
             }
         });
 
-
-        spinbatako.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
+        spinbatu.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
 
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String selectedName = parent.getItemAtPosition(position).toString();
-                if (selectedName.equalsIgnoreCase(namabatako1)){
-                    namabatako = namabatako1;
-                    hargab.setText(hbatako);
-                    pbatako = String.valueOf(Batako.get(position).getPanjang());
-                    tbatako = String.valueOf(Batako.get(position).getTinggi());
+
+                if (selectedName.equalsIgnoreCase(namabatu1)){
+                    namabatu = namabatu1;
+                    hargab.setText(hbatu);
                 }else {
-                    hb = String.valueOf(Batako.get(position).getHarga());
-                    idb = String.valueOf(Batako.get(position).getId());
-                    namabatako = String.valueOf(Batako.get(position).getNama());
-                    pbatako = String.valueOf(Batako.get(position).getPanjang());
-                    tbatako = String.valueOf(Batako.get(position).getTinggi());
+                    namabatu = String.valueOf(Batu.get(position).getNama());
+                    hb = String.valueOf(Batu.get(position).getHarga());
                     hargab.setText(hb);
                 }
 
-                Toast.makeText(mContext, "Kamu memilih Batako " + selectedName, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(mContext, "Kamu memilih Batu " + selectedName, Toast.LENGTH_SHORT).show();
             }
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-        spinjenis.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
-
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Jenispengerjaan je = (Jenispengerjaan) (parent.getItemAtPosition(position));
-                Jenis = String.valueOf(je.getJenispengerjaan());
-
-//                Toast.makeText(mContext, "Kamu memilih Campuran " + pc, Toast.LENGTH_SHORT).show();
-            }
-
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
@@ -180,8 +150,13 @@ public class Editbidang extends AppCompatActivity {
                     hargas.setText(hs);
                 }
 
+//                berats = String.valueOf(Semen.get(position).getBerat());
+//                hs = String.valueOf(Semen.get(position).getHarga());
+//                namasemen = String.valueOf(Semen.get(position).getNama());
+//                ids = String.valueOf(Semen.get(position).getId());
+//                hargas.setText(hs);
 
-                Toast.makeText(mContext, "Kamu memilih Semen " + selectedName, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(mContext, "Kamu memilih Semen " + selectedName, Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -203,7 +178,8 @@ public class Editbidang extends AppCompatActivity {
                     hargap.setText(hp);
                 }
 
-                Toast.makeText(mContext, "Kamu memilih Pasir " + selectedName, Toast.LENGTH_SHORT).show();
+
+                Toast.makeText(mContext, "Kamu memilih Pasir " + hpasir, Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -220,7 +196,7 @@ public class Editbidang extends AppCompatActivity {
                 pc = String.valueOf(obj.getPc());
                 metode = String.valueOf(obj.getCampuran());
 
-                Toast.makeText(mContext, "Kamu memilih Campuran " + pc, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(mContext, "Kamu memilih Campuran " + pc, Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -232,42 +208,36 @@ public class Editbidang extends AppCompatActivity {
         hitung.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String luas = luasb.getText().toString().trim();
-                luasba = Float.parseFloat(luas);
                 String hargapasir = hargap.getText().toString().trim();
                 hargapasirparse = Float.parseFloat(hargapasir);
-                hasilbid.setText(String.valueOf(hasil));
+//                hasilbid.setText(String.valueOf(hasil));
                 String hargasemen = hargas.getText().toString().trim();
                 hargasemenparse = Float.parseFloat(hargasemen);
-                String hargabatako = hargab.getText().toString().trim();
-                hargabatakoparse =Float.parseFloat(hargabatako);
-
-                hbatako = hargabatako;
-                hpasir = hargapasir;
-                hsemen = hargasemen;
-
-                hitungbatako();
+                String hargabatu = hargab.getText().toString().trim();
+                hargabatuparse =Float.parseFloat(hargabatu);
+                hitungbatu();
                 hitungsemen();
                 hitungpasir();
                 hitungtot();
+//
+
             }
         });
     }
 
     private void hitungtot() {
-
-        float tothitung = numberbatako+numberpasir+numbersemen;
+        float tothitung = numbersemen+numberbatu+numberpasir;
         DecimalFormat df = new DecimalFormat("#");
         tothitungan = df.format(tothitung);
         numbertotal = Integer.parseInt(tothitungan);
         DecimalFormat formatter = new DecimalFormat("#,###.##");
-        String totalbiaya = formatter.format(numbertotal);
-        hasilb.setText(totalbiaya);
+        String totalbiaya1 = formatter.format(numbertotal);
+        totalbiaya.setText(totalbiaya1);
     }
 
     private void hitungpasir() {
         float ppasir = Float.parseFloat(pp);
-        float hitpp = ppasir*luasba;
+        float hitpp = ppasir*vol1;
         DecimalFormat df = new DecimalFormat("#.##");
         df.setRoundingMode(RoundingMode.CEILING);
         float d = hitpp;
@@ -276,13 +246,11 @@ public class Editbidang extends AppCompatActivity {
         result = n.replace(",",".");
         float hitungp = Float.parseFloat(result);
         totpasir = hitungp*hargapasirparse;
-        float pembulatanhargatotpasir = (float) Math.ceil(totpasir);
         DecimalFormat df1 = new DecimalFormat("#");
-        totpasir1 = df1.format(pembulatanhargatotpasir);
+        totpasir1 = df1.format(totpasir);
         numberpasir = Integer.parseInt(totpasir1);
         DecimalFormat formatter = new DecimalFormat("#,###.##");
         String totalbiaya = formatter.format(numberpasir);
-
         Toast.makeText(mContext, "Gagal mengambil data"+ppasir, Toast.LENGTH_SHORT).show();
         hasilpas2.setText(totalbiaya);
         hasilpas1.setText(Float.toString(hitungp));
@@ -292,7 +260,7 @@ public class Editbidang extends AppCompatActivity {
     private void hitungsemen() {
         float psemen = Float.parseFloat(pc);
         float beratsemen = Float.parseFloat(berats);
-        float hitpc = psemen*luasba;
+        float hitpc = psemen*vol1;
         DecimalFormat df = new DecimalFormat("#.##");
         df.setRoundingMode(RoundingMode.CEILING);
         float d = hitpc;
@@ -303,29 +271,36 @@ public class Editbidang extends AppCompatActivity {
         float totpc = hitungs/beratsemen;
         hargasementot = totpc*hargasemenparse;
         DecimalFormat df1 = new DecimalFormat("#");
-        totsemen = df1.format(hargasementot);
-        numbersemen = Integer.parseInt(totsemen);
+        totsemen1 = df1.format(hargasementot);
+        numbersemen = Integer.parseInt(totsemen1);
         DecimalFormat formatter = new DecimalFormat("#,###.##");
         String totalbiaya = formatter.format(numbersemen);
-        hasilse.setText(totalbiaya);
+
+        hasilse.setText(Float.toString(hitungs));
         hasilse1.setText(Float.toString(totpc));
-        hasilse2.setText(Float.toString(hargasementot));
+        hasilse2.setText(totalbiaya);
     }
 
-    private void hitungbatako() {
-        float m = 100;
-        float p = Float.parseFloat(pbatako);
-        float t = Float.parseFloat(tbatako);
-        hasilm = m/(p*t)*m;
-        float tot = hasilm*luasba;
-        htotbatako = tot*hargabatakoparse;
-        DecimalFormat df = new DecimalFormat("#");
-        totbatako = df.format(htotbatako);
-        numberbatako = Integer.parseInt(totbatako);
+    private void hitungbatu() {
+        float m = 1.2f;
+        hasilm = vol1*m;
+        htotbatu = hasilm*hargabatuparse;
+        float hbt = hasilm/7;
+        DecimalFormat df = new DecimalFormat("#.##");
+        df.setRoundingMode(RoundingMode.CEILING);
+        float d = hbt;
+        String n = df.format(d);
+        String result = null;
+        result = n.replace(",",".");
+        hasilbt = Float.parseFloat(result);
+        DecimalFormat df1 = new DecimalFormat("#");
+        totbatu = df1.format(htotbatu);
+        numberbatu = Integer.parseInt(totbatu);
         DecimalFormat formatter = new DecimalFormat("#,###.##");
-        String totalbiaya = formatter.format(numberbatako);
-        hasilbat.setText(Float.toString(tot));
-        hasilbat1.setText(totalbiaya);
+        String totalbiaya = formatter.format(numberbatu);
+        hasilbat.setText(Float.toString(hasilm));
+        hasilbat1.setText(Float.toString(hasilbt));
+        hasilbat2.setText(totalbiaya);
     }
 
     private void initSpinnerSemen() {
@@ -383,7 +358,7 @@ public class Editbidang extends AppCompatActivity {
                     spinpasir.setAdapter(adapter);
                     spinpasir.setSelection(i);
                 } else {
-                    Toast.makeText(mContext, "Gagal mengambil data Batako", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mContext, "Gagal mengambil data Pasir", Toast.LENGTH_SHORT).show();
                 }
 
             }
@@ -395,31 +370,30 @@ public class Editbidang extends AppCompatActivity {
         });
     }
 
-    private void initSpinnerBatako() {
+    private void initSpinnerBatu() {
         ApiClient.getRequestInterface().getallbatako().enqueue(new Callback<ResponseMaterial>() {
-
             @Override
             public void onResponse(Call<ResponseMaterial> call, Response<ResponseMaterial> response) {
                 if (response.code() == 200) {
+                    Batu = response.body().getMaterials();
                     int i = 0;
-                    Batako = response.body().getMaterials();
                     List<String> listSpinner = new ArrayList<String>();
-                    String data = namabatako1;
-                    for (int j = 0; j < Batako.size(); j++) {
-                        if (data.equalsIgnoreCase(String.valueOf(Batako.get(j).getNama()))) {
+                    String data = namabatu1;
+                    for (int j = 0; j < Batu.size(); j++){
+                        if (data.equalsIgnoreCase(String.valueOf(Batu.get(j).getNama()))) {
                             i = j;
                         }
-                        listSpinner.add(String.valueOf(Batako.get(j).getNama()));
+                        listSpinner.add(String.valueOf(Batu.get(j).getNama()));
 
 
                     }
                     ArrayAdapter<String> adapter = new ArrayAdapter<String>(mContext,
                             android.R.layout.simple_spinner_item, listSpinner);
                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                    spinbatako.setAdapter(adapter);
-                    spinbatako.setSelection(i);
+                    spinbatu.setAdapter(adapter);
+                    spinbatu.setSelection(i);
                 } else {
-                    Toast.makeText(mContext, "Gagal mengambil data Batako", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mContext, "Gagal mengambil data Batu", Toast.LENGTH_SHORT).show();
                 }
 
             }
@@ -429,58 +403,58 @@ public class Editbidang extends AppCompatActivity {
                 Toast.makeText(mContext, "Koneksi internet bermasalah", Toast.LENGTH_SHORT).show();
             }
         });
+
     }
-        public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_mainsavebidang,menu);
         MenuItem item = menu.findItem(R.id.app_bar_savedata);
         item.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                idbidang = Integer.parseInt(idperhitunganbidang);
                 String apiKey = "oa00000000app";
+                initvalidation();
                 HashMap<String, String> map = new HashMap<>();
                 map.put("nama", namapengerjaan.getText().toString());
-                map.put("jenis_pengerjaan", Jenis);
-                map.put("panjangbid", panjangb.getText().toString());
-                map.put("tinggibid", tinggib.getText().toString());
-                map.put("panjangpin", panjangp.getText().toString());
-                map.put("tinggipin", tinggip.getText().toString());
-                map.put("panjangjen", panjangj.getText().toString());
-                map.put("tinggijen", tinggij.getText().toString());
-                map.put("luas_bidang", luasb.getText().toString());
-                map.put("jumlahkeperluanbatako", hasilbat.getText().toString());
-                map.put("jumlahkeperluanpasir", hasilpas1.getText().toString());
-                map.put("Jumlahkeperluansemen", hasilse.getText().toString());
-                map.put("jumlahdalamsak", hasilse1.getText().toString());
-                map.put("metode", metode);
-                map.put("nama_batako", namabatako);
-                map.put("nama_pasir", namapasir);
-                map.put("nama_semen", namasemen);
-                map.put("hargabatako", hbatako);
-                map.put("hargapasir", hpasir);
-                map.put("hargasemen", hsemen);
-                map.put("hargabatakototal", String.valueOf(numberbatako));
-                map.put("hargapasirtotal", String.valueOf(numberpasir));
+                map.put("a", a.getText().toString());
+                map.put("b", b.getText().toString());
+                map.put("t", t.getText().toString());
+                map.put("p", p.getText().toString());
+                map.put("luas", volume.getText().toString());
+                map.put("metode",metode);
+                map.put("namasemen",namasemen);
+                map.put("namapasir",namapasir);
+                map.put("namabatu",namabatu);
+                map.put("hargasemen",hargas.getText().toString());
+                map.put("hargapasir",hargap.getText().toString());
+                map.put("hargabatukali",hargab.getText().toString());
+                map.put("jumlahsemen",hasilse.getText().toString());
+                map.put("jumlahsemendalamsak",hasilse1.getText().toString());
+                map.put("jumlahpasir",hasilpas.getText().toString());
+                map.put("jumlahbatu",hasilbat.getText().toString());
+                map.put("jumlahbatutruk",hasilbat1.getText().toString());
                 map.put("hargasementotal", String.valueOf(numbersemen));
+                map.put("hargapasirtotal", String.valueOf(numberpasir));
+                map.put("hargabatutotal", String.valueOf(numberbatu));
                 map.put("hargatotal", String.valueOf(numbertotal));
-                Call<Void> call = ApiClient.getRequestInterface().actionPutPerhitunganbidang(idbidang,apiKey,token,map);
+
+
+                Call<Void> call = ApiClient.getRequestInterface().actionPutPerhitunganpondasi(thisid,apiKey,token,map);
                 call.enqueue(new Callback<Void>() {
                     @Override
                     public void onResponse(Call<Void> call, Response<Void> response) {
                         if (response.code() == 201) {
-
-                            Intent perhitunganbidang = (new Intent(Editbidang.this, Perhitunganbidang.class)
+                            Intent Perhitunganpondasi = (new Intent(Editpondasi.this, PerhitunganPondasi.class)
                                     .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
                             Bundle setData = new Bundle();
                             setData.putString("idproyek",mId);
-                            perhitunganbidang.putExtras(setData);
-                            startActivity(perhitunganbidang);
-                            Toast.makeText(Editbidang.this,
-                                    "Tambah Data Perhitungan Bidang Berhasil",
+                            Perhitunganpondasi.putExtras(setData);
+                            startActivity(Perhitunganpondasi);
+                            Toast.makeText(Editpondasi.this,
+                                    "Edit Data Perhitungan Pondasi Berhasil",
                                     Toast.LENGTH_LONG).show();
 
                         } else if (response.code() == 422) {
-                            Toast.makeText(Editbidang.this,
+                            Toast.makeText(Editpondasi.this,
                                     "Something Wrong",
                                     Toast.LENGTH_LONG).show();
                         }
@@ -488,7 +462,7 @@ public class Editbidang extends AppCompatActivity {
 
                     @Override
                     public void onFailure(Call<Void> call, Throwable t) {
-                        Toast.makeText(Editbidang.this, t.getMessage(),
+                        Toast.makeText(Editpondasi.this, t.getMessage(),
                                 Toast.LENGTH_LONG).show();
                     }
                 });
@@ -498,49 +472,92 @@ public class Editbidang extends AppCompatActivity {
         return super.onCreateOptionsMenu(menu);
 
     }
+
+    private void initvalidation() {
+        if (a.getText().toString().length() == 0) {
+            a.setError("Data ini harus diisi");
+            a1 = "0";
+        }else if (b.getText().toString().length() == 0) {
+            b.setError("Data ini harus diisi");
+            b1 = "0";
+        }else if (t.getText().toString().length() == 0) {
+            t.setError("Data ini harus diisi");
+            t1 = "0";
+        }else if (p.getText().toString().length() == 0) {
+            p.setError("Data ini harus diisi");
+            p1 = "0";
+        }else if (p.getText().toString().length() == 0) {
+            p.setError("Data ini harus diisi");
+            p1 = "0";
+
+        } else if (hasilbat1.getText().toString().length() == 0) {
+            hitung.setError("");
+            AlertDialog.Builder builder1 = new AlertDialog.Builder(Editpondasi.this);
+            builder1.setTitle("Pesan Error");
+            builder1.setMessage("Klik Button hitung dulu!!");
+            builder1.setIcon(R.drawable.ic_warning_red_24dp);
+            builder1.setCancelable(true);
+
+            builder1.setPositiveButton(
+                    "Yes",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.cancel();
+                        }
+                    });
+
+            builder1.setNegativeButton(
+                    "No",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.cancel();
+                        }
+                    });
+
+            AlertDialog alert11 = builder1.create();
+            alert11.show();
+        }
+    }
+
     private void init() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         mContext = this;
-        sm= new SessionManager(Editbidang.this);
+        sm= new SessionManager(Editpondasi.this);
         HashMap<String,String> map = sm.getDetailLogin();
         token=(map.get(sm.KEY_TOKEN));
         sm.checkLogin();
-        spinjenis = findViewById(R.id.spinjenis);
-        spinbatako = findViewById(R.id.spinbata);
-        spinsemen = findViewById(R.id.spinsemen);
-        spinpasir = findViewById(R.id.spinpasir);
-        panjangb = findViewById(R.id.panjangb);
-        panjangp = findViewById(R.id.ppintu);
-        panjangj = findViewById(R.id.panjangj);
-        tinggib= findViewById(R.id.tinggib);
-        tinggij= findViewById(R.id.tinggij);
-        hargab= findViewById(R.id.hbata);
-        hargap= findViewById(R.id.hargapasir);
-        hargas= findViewById(R.id.hargasemen);
-        tinggip = findViewById(R.id.tpintu);
-        luasb = findViewById(R.id.luasbidang);
-        hitung = findViewById(R.id.hitungb);
-        campuran = findViewById(R.id.spinner22);
-        hasilbat = findViewById(R.id.hasilbat);
-        hasilbat1 = findViewById(R.id.hasilbat1);
-        hasilpas = findViewById(R.id.hasilp2);
-        hasilpas1 =  findViewById(R.id.hasilp);
-        hasilpas2 = findViewById(R.id.hasilp1);
-        hasilse = findViewById(R.id.hasils);
-        hasilse1 = findViewById(R.id.hasils1);
-        hasilse2 = findViewById(R.id.hasils2);
-        hasilbid = findViewById(R.id.hasilbid);
-        hasilb = findViewById(R.id.total);
         namapengerjaan = findViewById(R.id.nama_pengerjaan);
+        a = findViewById(R.id.a);
+        b = findViewById(R.id.b);
+        t = findViewById(R.id.t);
+        p = findViewById(R.id.p);
+        volume = findViewById(R.id.volume);
+        campuran = findViewById(R.id.spinner22);
+        spinpasir = findViewById(R.id.spinpasir);
+        spinbatu = findViewById(R.id.spinbatu);
+        spinsemen = findViewById(R.id.spinsemen);
+        hargas = findViewById(R.id.hargasemen);
+        hargap = findViewById(R.id.hargapasir);
+        hargab= findViewById(R.id.hargabatu);
+        hitung = findViewById(R.id.hitungb);
+        hasilpas = findViewById(R.id.hasilpasir);
+        hasilpas1 = findViewById(R.id.hasilpasirtruk);
+        hasilpas2 = findViewById(R.id.hasilhargap);
+        hasilse = findViewById(R.id.hasilsemen);
+        hasilse1 = findViewById(R.id.hasilsemensak);
+        hasilse2 = findViewById(R.id.hasilsemen2);
+        hasilbat = findViewById(R.id.hasilbatu);
+        hasilbat1 = findViewById(R.id.hasilbatu1);
+        hasilbat2 = findViewById(R.id.hasilbatu2);
+        totalbiaya= findViewById(R.id.totalbiaya);
+        hasilvol = findViewById(R.id.hasilvol);
+
         Campuran_adapter campuran_adapter =
-                new Campuran_adapter(Editbidang.this,
+                new Campuran_adapter(Editpondasi.this,
                         android.R.layout.simple_spinner_item, campurans);
         campuran.setAdapter(campuran_adapter);
-        Jenispengerjaan_adapter jenispengerjaan_adapter =
-                new Jenispengerjaan_adapter(Editbidang.this,
-                        android.R.layout.simple_spinner_item, jenispengerjaans);
-        spinjenis.setAdapter(jenispengerjaan_adapter);
+
         Bundle bundle = getIntent().getExtras();
         if (bundle != null)
         {
@@ -548,62 +565,68 @@ public class Editbidang extends AppCompatActivity {
         }else{
             mId = "0";
         }
-        idperhitunganbidang= bundle.getString("id");
-       namapengerjaan.setText(bundle.getString("nama"));
-        bundle.getString("jenis_pengerjaan");
-        panjangb.setText(bundle.getString("panjangbid"));
-        tinggib.setText(bundle.getString("tinggibid"));
-        panjangp.setText(bundle.getString("panjangpin"));
-        tinggip.setText(bundle.getString("tinggipin"));
-        panjangj.setText(bundle.getString("panjangjen"));
-        tinggij.setText(bundle.getString("tinggijen"));
-        luasb.setText(bundle.getString("luas_bidang"));
-        hasilbid.setText(bundle.getString("luas_bidang"));
-        hasilbat.setText(bundle.getString("jumlahkeperluanbatako"));
-        hasilpas.setText(bundle.getString("jumlahkeperluanpasir"));
-        hasilse.setText(bundle.getString("Jumlahkeperluansemen"));
-        hasilse1.setText(bundle.getString("jumlahdalamsak"));
-      namabatako1= bundle.getString("nama_batako");
-      namapasir1 = bundle.getString("nama_pasir");
-        namasemen1 = bundle.getString("nama_semen");
-        bundle.getString("metode");
-      hbatako =bundle.getString("hargabatako");
-        hpasir =bundle.getString("hargapasir");
+
+        thisid= Integer.parseInt(bundle.getString("id"));
+        namapengerjaan.setText(bundle.getString("nama"));
+        a.setText(bundle.getString("a"));
+        b.setText(bundle.getString("b"));
+        t.setText(bundle.getString("t"));
+        p.setText(bundle.getString("p"));
+        volume.setText(bundle.getString("luas"));
+        hasilvol.setText(bundle.getString("luas"));
+        namasemen1=bundle.getString("namasemen");
+        namabatu1=bundle.getString("namabatu");
+       namapasir1=bundle.getString("namapasir");
+        hasilbat.setText(bundle.getString("jumlahbatu"));
+        hasilbat1.setText(bundle.getString("jumlahbatutruk"));
+        hasilse.setText(bundle.getString("jumlahsemen"));
+        hasilse1.setText(bundle.getString("jumlahsemendalamsak"));
+       hasilpas.setText(bundle.getString("jumlahpasir"));
+        hasilpas1.setText(bundle.getString("jumlahpasir"));
+        hbatu=bundle.getString("hargabatu");
         hsemen =bundle.getString("hargasemen");
+        hpasir=bundle.getString("hargapasir");
 
-        htotbatako= Float.parseFloat(bundle.getString("hargabatakototal"));
-        DecimalFormat df = new DecimalFormat("#");
-        totbatako = df.format(htotbatako);
-        numberbatako = Integer.parseInt(totbatako);
-        DecimalFormat formatter = new DecimalFormat("#,###.##");
-        String totalbiayabatako = formatter.format(numberbatako);
-        hasilbat1.setText(totalbiayabatako);
-
-        totpasir = Float.parseFloat(bundle.getString("hargapasirtotal"));
+        htotbatu= Float.parseFloat(bundle.getString("hargabatutotal"));
         DecimalFormat df1 = new DecimalFormat("#");
-        totpasir1 = df1.format(totpasir);
-        numberpasir = Integer.parseInt(totpasir1);
-        DecimalFormat formatter1 = new DecimalFormat("#,###.##");
-        String totalbiayapasir = formatter1.format(numberpasir);
-        hasilpas2.setText(totalbiayapasir);
+        totbatu = df1.format(htotbatu);
+        numberbatu = Integer.parseInt(totbatu);
+        DecimalFormat formatter = new DecimalFormat("#,###.##");
+        Htotbatu1 = formatter.format(numberbatu);
+        hasilbat2.setText(Htotbatu1);
 
-        hargasementot = Float.parseFloat(bundle.getString("hargasementotal"));
+        hargasementot= Float.parseFloat(bundle.getString("hargasementotal"));
         DecimalFormat df2 = new DecimalFormat("#");
-        totsemen = df2.format(hargasementot);
-        numbersemen = Integer.parseInt(totsemen);
-        DecimalFormat formatter2 = new DecimalFormat("#,###.##");
-        String totalbiayasemen = formatter2.format(numbersemen);
-       hasilse2.setText(totalbiayasemen);
+        totsemen1= df2.format(hargasementot);
+        numbersemen = Integer.parseInt(totsemen1);
+        DecimalFormat formatter1 = new DecimalFormat("#,###.##");
+        Htotsemen1 = formatter1.format(numbersemen);
+        hasilse2.setText(Htotsemen1);
 
-        float tothitung = Float.parseFloat(bundle.getString("hargatotal"));
+        totpasir= Float.parseFloat(bundle.getString("hargapasirtotal"));
         DecimalFormat df3 = new DecimalFormat("#");
-        tothitungan = df3.format(tothitung);
+        totpasir1= df3.format(totpasir);
+        numberpasir = Integer.parseInt(totpasir1);
+        DecimalFormat formatter2 = new DecimalFormat("#,###.##");
+        Htotpasir1 = formatter2.format(numberpasir);
+        hasilpas2.setText(Htotpasir1);
+
+        float tothitung= Float.parseFloat(bundle.getString("hargatotal"));
+        DecimalFormat df = new DecimalFormat("#");
+        tothitungan = df.format(tothitung);
         numbertotal = Integer.parseInt(tothitungan);
         DecimalFormat formatter3 = new DecimalFormat("#,###.##");
-        String totalbiayaseluruh = formatter3.format(numbertotal);
-        hasilb.setText(totalbiayaseluruh);
+        totalsemua = formatter3.format(numbertotal);
+        totalbiaya.setText(totalsemua);
 
         float luas;
         btnproses = findViewById(R.id.prosesbtn);
+
+
+
+
+
     }
+
     }
+

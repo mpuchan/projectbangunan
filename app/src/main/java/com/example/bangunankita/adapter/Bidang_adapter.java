@@ -23,6 +23,7 @@ import com.example.bangunankita.R;
 import com.example.bangunankita.Retrovit.ApiClient;
 import com.example.bangunankita.Util.SessionManager;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -74,22 +75,29 @@ public class Bidang_adapter extends RecyclerView.Adapter<Bidang_adapter.ViewHold
         final String Hargapasirtotal = String.valueOf(bidangs.get(i).getHargapasirtotal());
         final String Hargasementotal = String.valueOf(bidangs.get(i).getHargasementotal());
         final String Totalbiaya = String.valueOf(bidangs.get(i).getHargatotal());
-        float sum;
         Double price = bidangs.get(i).getHargatotal();
         for (int j =0; j<price; j++){
 
     }
-
 
         final String Semen = String.valueOf(bidangs.get(i).getJumlahkeperluansemen());
         final String Pasir = String.valueOf(bidangs.get(i).getJumlahkeperluanpasir());
         final String Batako = String.valueOf(bidangs.get(i).getJumlahkeperluanbatako());
         final String Luas = String.valueOf(bidangs.get(i).getLuasBidang());
 
+        float total1 = Float.parseFloat(Totalbiaya);
+        DecimalFormat df = new DecimalFormat("#");
+        String tothitungan = df.format(total1);
+        int numbertotal = Integer.parseInt(tothitungan);
+        DecimalFormat formatter = new DecimalFormat("#,###.##");
+        String totals = formatter.format(numbertotal);
+
+
         viewHolder.Nama.setText(Name);
-        viewHolder.semen.setText(Semen);
-        viewHolder.pasir.setText(Pasir);
-        viewHolder.batako.setText(Batako);
+        viewHolder.semen.setText(Semen+"sak");
+        viewHolder.pasir.setText(Pasir+"m3");
+        viewHolder.batako.setText(Batako+"buah");
+        viewHolder.detailtotal.setText("Rp."+totals);
 
         viewHolder.editbidang.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -132,6 +140,8 @@ public class Bidang_adapter extends RecyclerView.Adapter<Bidang_adapter.ViewHold
             public void onClick(View view) {
                 Dialog detaildialog = new Dialog(context);
                 detaildialog.setContentView(R.layout.detail_bidang);
+                Button keluar = detaildialog.findViewById(R.id.keluar);
+                ImageView exit = detaildialog.findViewById(R.id.exit);
                 TextView nama = detaildialog.findViewById(R.id.nama);
                 TextView luasbidang = detaildialog.findViewById(R.id.luasbidang);
                 TextView Batako1 = detaildialog.findViewById(R.id.jumlahbatako);
@@ -182,6 +192,18 @@ public class Bidang_adapter extends RecyclerView.Adapter<Bidang_adapter.ViewHold
 
                 detaildialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 detaildialog.show();
+                exit.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        detaildialog.hide();
+                    }
+                });
+                keluar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        detaildialog.hide();
+                    }
+                });
             }
         });
         viewHolder.deletebidang.setOnClickListener(new View.OnClickListener() {
@@ -215,9 +237,7 @@ public class Bidang_adapter extends RecyclerView.Adapter<Bidang_adapter.ViewHold
                                     Toast.makeText(context, "Sukses hapus!",
                                             Toast.LENGTH_SHORT).show();
 
-//                                    Intent finish= new Intent(context, Perhitunganbidang.class)
-//                                            .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-//                                    context.startActivity(finish);
+
 
                                 } else if (response.code() == 422) {
                                     Toast.makeText(context, "Something wrong!",
@@ -263,7 +283,7 @@ public class Bidang_adapter extends RecyclerView.Adapter<Bidang_adapter.ViewHold
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
-        private TextView Nama,semen,pasir,batako,edit;
+        private TextView Nama,semen,pasir,batako,edit,detailtotal;
         private ImageView image;
         private Button editbidang,deletebidang,detailbidang;
         Dialog deletedialog;
@@ -273,6 +293,7 @@ public class Bidang_adapter extends RecyclerView.Adapter<Bidang_adapter.ViewHold
             Nama = (TextView)view.findViewById(R.id.Nama);
             semen = (TextView)view.findViewById(R.id.semen);
             pasir = (TextView)view.findViewById(R.id.pasir);
+            detailtotal = view.findViewById(R.id.detailtotal);
             batako = (TextView)view.findViewById(R.id.Batako);
             editbidang = view.findViewById(R.id.editbidang);
             deletebidang = view.findViewById(R.id.Deletebidang);

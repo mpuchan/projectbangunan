@@ -247,7 +247,7 @@ private void setupfilter(){
                 return false;
             }
         });
-        return super.onCreateOptionsMenu(menu);
+        return true;
 
     }
 

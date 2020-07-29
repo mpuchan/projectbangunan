@@ -84,7 +84,7 @@
                             android:textStyle="bold" />
 
                         <TextView
-                            android:id="@+id/totalacian"
+                            android:id="@+id/totalpondasi"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentRight="true"
@@ -98,7 +98,7 @@
                             android:id="@+id/garis"
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
-                            android:layout_below="@id/totalacian"
+                            android:layout_below="@id/totalpondasi"
                             android:layout_marginTop="10dp"
                             android:background="#f0efef"
                             android:orientation="horizontal" />

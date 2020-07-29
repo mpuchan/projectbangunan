@@ -104,7 +104,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:paddingLeft="5dp"
-            android:text="Truk"
+            android:text="colt"
             android:textColor="#FA575656" />
 
         <TextView
@@ -229,7 +229,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:paddingLeft="5dp"
-            android:text="kg,"
+            android:text="m3,"
             android:textColor="#FA575656" />
 
         <TextView

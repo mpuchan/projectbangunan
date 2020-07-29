@@ -22,6 +22,7 @@ import com.example.bangunankita.R;
 import com.example.bangunankita.Retrovit.ApiClient;
 import com.example.bangunankita.Util.SessionManager;
 
+import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.List;
 
@@ -63,9 +64,16 @@ public class Acian_adapter  extends RecyclerView.Adapter<Acian_adapter.ViewHolde
         final String Hargasementotal = String.valueOf(acians.get(i).getHargasementotal());
         final String Luas = String.valueOf(acians.get(i).getLuas());
         final String Namasemen = String.valueOf(acians.get(i).getNamaSemen());
+        float total1 = Float.parseFloat(Totalbiaya);
+        DecimalFormat df = new DecimalFormat("#");
+        String tothitungan = df.format(total1);
+        int numbertotal = Integer.parseInt(tothitungan);
+        DecimalFormat formatter = new DecimalFormat("#,###.##");
+        String totals = formatter.format(numbertotal);
 
         viewHolder.Nama.setText(Name);
-        viewHolder.semen.setText(Semen);
+        viewHolder.semen.setText(Jumlahdalamsak +"sak");
+        viewHolder.detailtotal.setText("Rp."+ totals);
 
         viewHolder.editacian.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -187,7 +195,7 @@ public class Acian_adapter  extends RecyclerView.Adapter<Acian_adapter.ViewHolde
 
 
     public class ViewHolder extends RecyclerView.ViewHolder{
-        private TextView Nama,semen,pasir,batako,edit;
+        private TextView Nama,semen,pasir,batako,edit,detailtotal;
         private ImageView image;
         private Button editacian,deleteacian,detailacian;
         Dialog deletedialog;
@@ -196,14 +204,10 @@ public class Acian_adapter  extends RecyclerView.Adapter<Acian_adapter.ViewHolde
             super(view);
             Nama = (TextView)view.findViewById(R.id.Nama);
             semen = (TextView)view.findViewById(R.id.semen);
-            pasir = (TextView)view.findViewById(R.id.pasir);
-            batako = (TextView)view.findViewById(R.id.Batako);
             editacian = view.findViewById(R.id.editbidang);
             deleteacian = view.findViewById(R.id.Deletebidang);
             detailacian = view.findViewById(R.id.detailbidang);
-
-
-
+            detailtotal=view.findViewById(R.id.detailtotal);
 
         }
     }

@@ -2,19 +2,32 @@ package com.example.bangunankita.adapter;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.bangunankita.Editplafon;
 import com.example.bangunankita.Model.Perhitunganplafon1;
 import com.example.bangunankita.R;
+import com.example.bangunankita.Retrovit.ApiClient;
+import com.example.bangunankita.Util.SessionManager;
 
+import java.util.HashMap;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class Plafond_adapter extends RecyclerView.Adapter<Plafond_adapter.ViewHolder> {
 
@@ -35,6 +48,8 @@ public class Plafond_adapter extends RecyclerView.Adapter<Plafond_adapter.ViewHo
     @Override
     public void onBindViewHolder(Plafond_adapter.ViewHolder viewHolder, final int i) {
         final Perhitunganplafon1 PlafondModel = plafonds.get(i);
+        final String id = String.valueOf(plafonds.get(i).getId());
+        final String ProyekID = String.valueOf(plafonds.get(i).getProyekId());
         final String Name = String.valueOf(plafonds.get(i).getNama());
         final String Panjang = String.valueOf(plafonds.get(i).getPanjang());
         final String Lebar = String.valueOf(plafonds.get(i).getLebar());
@@ -58,34 +73,39 @@ public class Plafond_adapter extends RecyclerView.Adapter<Plafond_adapter.ViewHo
         viewHolder.Nama.setText(Name);
 //
 
-//        viewHolder.editplafond.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent editplafond = new Intent(context, Editplafond.class)
-//                        .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-//                Bundle setData = new Bundle();
-//                setData.putString("nama", Name);
-//                setData.putString("jenis_pengerjaan", "bangunan");
-//                setData.putString("panjangbid", Panjangbid);
-//                setData.putString("tinggibid", Tinggibid);
-//                setData.putString("panjangpin", Panjangpin);
-//                setData.putString("tinggipin", Tinggipin);
-//                setData.putString("panjangjen",Panjangjen);
-//                setData.putString("tinggijen", Tinggijen);
-//                setData.putString("luas_plafond",Luas);
-//                setData.putString("jumlahkeperluanbatako", Batako);
-//                setData.putString("jumlahkeperluanpasir", Pasir);
-//                setData.putString("Jumlahkeperluansemen", Semen);
-//                setData.putString("jumlahdalamsak", Jumlahdalamsak);
-//                setData.putString("metode", Metode);
-//                setData.putString("hargabatako", Hargabatako);
-//                setData.putString("hargapasir", Hargapasir);
-//                setData.putString("hargasemen", Hargasemen);
-//                editplafond.putExtras(setData);
-//                context.startActivity(editplafond);
-//
-//            }
-//        });
+        viewHolder.editplafond.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent editplafond = new Intent(context, Editplafon.class)
+                        .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                Bundle setData = new Bundle();
+                setData.putString("ProyekId", ProyekID);
+                setData.putString("Id", id);
+                setData.putString("nama", Name);
+                setData.putString("panjang", Panjang);
+                setData.putString("lebar", Lebar);
+                setData.putString("luas", Luas);
+                setData.putString("namatriplek", Namatriplek);
+                setData.putString("namapaku", Namapaku);
+                setData.putString("namareng", Namareng);
+                setData.putString("hargatriplek", HargaTriplek);
+                setData.putString("hargapaku", HargaPaku);
+                setData.putString("hargareng", HargaReng);
+                setData.putString("jumlahpaku", Jumlahpaku);
+                setData.putString("jumlahreng", Jumlahreng);
+                setData.putString("hargatriplektotal", Hargatottriplek);
+                setData.putString("hargapakutotal", Hargatotpaku);
+                setData.putString("hargarengtotal", Hargatotreng);
+                setData.putString("jumlahtriplek", Jumlahtriplek);
+                setData.putString("jumlahtripleklembar", Jumlahtripleklembar);
+                setData.putString("jumlahrengbatang", Jumlahrengbatang);
+                setData.putString("hargatotal", Totalbiaya);
+
+                editplafond.putExtras(setData);
+                context.startActivity(editplafond);
+
+            }
+        });
 //        viewHolder.detailplafond.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View view) {
@@ -111,34 +131,63 @@ public class Plafond_adapter extends RecyclerView.Adapter<Plafond_adapter.ViewHo
 //                detaildialog.show();
 //            }
 //        });
-//        viewHolder.deleteplafond.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Dialog deletedialog = new Dialog(context);
-//                deletedialog.setContentView(R.layout.delete_dialog);
-//                TextView deletemessage = deletedialog.findViewById(R.id.textdelete);
-//                TextView silang = deletedialog.findViewById(R.id.silang);
-//                Button btndelete = deletedialog.findViewById(R.id.buttonhapus);
-//                Button btncancel = deletedialog.findViewById(R.id.buttoncancel);
-//                deletemessage.setText("Yakin ingin menghapus data plafond " +Name);
-//
-//                btndelete.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//
-//                    }
-//                });
-//                btncancel.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//
-//                    }
-//                });
-//                deletedialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-//                deletedialog.show();
-//            }
-//        });
-//
+        viewHolder.deleteplafond.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Dialog deletedialog = new Dialog(context);
+                deletedialog.setContentView(R.layout.delete_dialog);
+                TextView deletemessage = deletedialog.findViewById(R.id.textdelete);
+                TextView silang = deletedialog.findViewById(R.id.silang);
+                Button btndelete = deletedialog.findViewById(R.id.buttonhapus);
+                Button btncancel = deletedialog.findViewById(R.id.buttoncancel);
+                deletemessage.setText("Yakin ingin menghapus data plafond " +Name);
+                int ID = Integer.parseInt(id);
+                String apiKey = "oa00000000app";
+                SessionManager sm;
+                sm= new SessionManager(context);
+                HashMap<String,String> map = sm.getDetailLogin();
+                String token=(map.get(sm.KEY_TOKEN));
+                btndelete.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Call<Void> call = ApiClient.getRequestInterface().actionDeletePerhitunganplafon(ID,apiKey,token);
+                        call.enqueue(new Callback<Void>() {
+                            @Override
+                            public void onResponse(Call<Void> call, Response<Void> response) {
+                                if (response.code() == 200 ) {
+                                    deletedialog.hide();
+
+                                    Toast.makeText(context, "Sukses hapus!",
+                                            Toast.LENGTH_SHORT).show();
+
+
+                                } else if (response.code() == 422) {
+                                    Toast.makeText(context, "Something wrong!",
+                                            Toast.LENGTH_SHORT).show();
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<Void> call, Throwable t) {
+//                swipeRefreshLayout.setRefreshing(false);
+                                Toast.makeText(context, "Oops! Something went wrong!" + t.getMessage(),
+                                        Toast.LENGTH_SHORT).show();
+
+                            }
+                        });
+                    }
+                });
+                btncancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                    }
+                });
+                deletedialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                deletedialog.show();
+            }
+        });
+
     }
 
     @Override
@@ -157,9 +206,9 @@ public class Plafond_adapter extends RecyclerView.Adapter<Plafond_adapter.ViewHo
             super(view);
             Nama = (TextView)view.findViewById(R.id.Nama1);
 //
-//            editplafond = view.findViewById(R.id.editplafond);
-//            deleteplafond = view.findViewById(R.id.Deleteplafond);
-//            detailplafond = view.findViewById(R.id.detailplafond);
+            editplafond = view.findViewById(R.id.editplafon);
+            deleteplafond = view.findViewById(R.id.Deleteplafon);
+            detailplafond = view.findViewById(R.id.detailplafon);
 
 
 

@@ -330,6 +330,8 @@ public class Editacian extends AppCompatActivity {
         hargasemen1=bundle.getString("hargasemen");
         namasemen= bundle.getString("nama_semen");
         hasilse2.setText(bundle.getString("hargasementotal"));
+
+        hasilb.setText(bundle.getString("totalbiaya"));
         hasilvol.setText(bundle.getString("luas_acian"));
 
 

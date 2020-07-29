@@ -26,6 +26,7 @@ import com.example.bangunankita.R;
 import com.example.bangunankita.Retrovit.ApiClient;
 import com.example.bangunankita.Util.SessionManager;
 
+import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.List;
 
@@ -71,7 +72,18 @@ public class Plesteran_adapter extends RecyclerView.Adapter<Plesteran_adapter.Vi
         final String Hargapasirtotal = String.valueOf(plesterans.get(i).getHargapasirtotal());
         final String Hargasementotal = String.valueOf(plesterans.get(i).getHargasementotal());
         final String Hargatotal = String.valueOf(plesterans.get(i).getHargatotal());
+
+        float total1 = Float.parseFloat(Hargatotal);
+        DecimalFormat df = new DecimalFormat("#");
+        String tothitungan = df.format(total1);
+        int numbertotal = Integer.parseInt(tothitungan);
+        DecimalFormat formatter = new DecimalFormat("#,###.##");
+        String totals = formatter.format(numbertotal);
         viewHolder.Nama.setText(Name);
+        viewHolder.detailtotal.setText("Rp."+ totals);
+
+        viewHolder.semen.setText(Jumlahkeperluanpasir +"m3");
+        viewHolder.pasir.setText(Jumlahdalamsak +"sak");
 
         viewHolder.editbidang.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -218,7 +230,7 @@ public class Plesteran_adapter extends RecyclerView.Adapter<Plesteran_adapter.Vi
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
-        private TextView Nama,semen,pasir,batako,edit;
+        private TextView Nama,semen,pasir,edit,detailtotal;
         private ImageView image;
         private Button editbidang,deletebidang,detailbidang;
         Dialog deletedialog;
@@ -228,10 +240,10 @@ public class Plesteran_adapter extends RecyclerView.Adapter<Plesteran_adapter.Vi
             Nama = (TextView)view.findViewById(R.id.Nama1);
             semen = (TextView)view.findViewById(R.id.semen);
             pasir = (TextView)view.findViewById(R.id.pasir);
-            batako = (TextView)view.findViewById(R.id.Batako);
             editbidang = view.findViewById(R.id.editbidang);
             deletebidang = view.findViewById(R.id.Deletebidang);
             detailbidang = view.findViewById(R.id.detailbidang);
+            detailtotal = view.findViewById(R.id.detailtotal);
 
 
 

@@ -287,7 +287,7 @@ public interface RequestInterface {
                                     @Query("accessToken")String accessToken,
                                     @Body HashMap<String, String> map);
 
-        @PUT("perhitunganplafon//{id}")
+        @PUT("perhitunganplafon/{id}")
         Call<Void>actionPutPerhitunganplafon(@Path("id") int id,
                                             @Query("apiKey") String apiKey,
                                             @Query("accessToken")String accessToken,

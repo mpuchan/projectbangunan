@@ -17,12 +17,15 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.bangunankita.Model.Jenispengerjaan;
 import com.example.bangunankita.Model.Material;
 import com.example.bangunankita.Model.Perhitunganbidang1;
 import com.example.bangunankita.Model.ResponseMaterial;
 import com.example.bangunankita.Retrovit.ApiClient;
 import com.example.bangunankita.Util.SessionManager;
+import com.example.bangunankita.adapter.Jenispengerjaan_adapter;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -32,19 +35,26 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class Editurugan extends AppCompatActivity {
-    Spinner spindinding,spinurugan;
+    Spinner spindinding,spinurugan,spinjenis;
     EditText panjang,tinggi,lebar,hargaurugan,vol,nama;
     TextView hasilpas,hasilpas1,hasilpas2,hasilb,totalbiaya,hasilvol;
     Button prosesbtn,hitung;
-    float hasil,volumeurugan,totpasir,hargasementot,pembulatanurugan;
+    float hasil,volumeurugan,totpasir,hargasementot,pembulatanurugan,hargapasirparse;
+    private String totpasir1;
+    private int numberpasir;
     Context mContext;
     SessionManager sm;
-    String token,nama1,p,t,idproyek;
+    String token,nama1,p,t,idproyek,jenis;
     String mId,Ju;
     int ProyekID,idurugan1;
     public String hs,ids,hp,idp,berats,pc,pp,namapasir,hpasir,namapasir1,idurugan;
     private List<Perhitunganbidang1> BidangModel = new ArrayList<>();
     private List<Material> Pasir = new ArrayList<>();
+    Jenispengerjaan[] jenispengerjaans  ={
+            new Jenispengerjaan("Urugan Taman"),
+            new Jenispengerjaan("Pondasi Urugan"),
+            new Jenispengerjaan("Lainnya"),
+    };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,20 +78,42 @@ public class Editurugan extends AppCompatActivity {
 
             }
         });
+        spinjenis.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
+
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                Jenispengerjaan je = (Jenispengerjaan) (parent.getItemAtPosition(position));
+                jenis = String.valueOf(je.getJenispengerjaan());
+
+//                Toast.makeText(mContext, "Kamu memilih Campuran " + pc, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
         spinurugan.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
 
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String selectedName = parent.getItemAtPosition(position).toString();
-                 namapasir = String.valueOf(Pasir.get(position).getNama());
-                hp = String.valueOf(Pasir.get(position).getHarga());
-                idp = String.valueOf(Pasir.get(position).getId());
 
-                hargaurugan.setText(hp);
+                if (selectedName.equalsIgnoreCase(namapasir1)){
+                    namapasir = namapasir1;
+                    hargaurugan.setText(hpasir);
 
-//                Toast.makeText(mContext, "Kamu memilih Pasir " + selectedName, Toast.LENGTH_SHORT).show();
+
+                }else {
+                    namapasir = String.valueOf(Pasir.get(position).getNama());
+                    hp = String.valueOf(Pasir.get(position).getHarga());
+                    hargaurugan.setText(hp);
+                }
+
+                Toast.makeText(mContext, "Kamu memilih Pasir " + selectedName, Toast.LENGTH_SHORT).show();
             }
+
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
@@ -93,7 +125,8 @@ public class Editurugan extends AppCompatActivity {
             public void onClick(View v) {
                 String vol1 = vol.getText().toString().trim();
                 volumeurugan = Float.parseFloat(vol1);
-                hpasir = hp;
+                String hargapasir = hargaurugan.getText().toString().trim();
+                hargapasirparse = Float.parseFloat(hargapasir);
                 namapasir1 = namapasir;
                 hitungpasir();
                 totalbiaya=hasilpas2;
@@ -104,19 +137,25 @@ public class Editurugan extends AppCompatActivity {
 
     private void hitungpasir() {
         float kepadatan = 1.2f;
-        float hargapas = Float.parseFloat(hp);
         float hitpp = kepadatan*volumeurugan;
 //        float pembulatanpasir = (float) Math.ceil(hitpp);
 
         float pembulatanurugan = (float) Math.ceil(hitpp);
         float urugandalamtruk = pembulatanurugan/7f;
         float pembulatanurugantruk = (float) Math.ceil(urugandalamtruk);
-        totpasir = pembulatanurugan*hargapas;
+        totpasir = pembulatanurugan*hargapasirparse;
+        DecimalFormat df1 = new DecimalFormat("#");
+        totpasir1 = df1.format(totpasir);
+        numberpasir = Integer.parseInt(totpasir1);
+        DecimalFormat formatter = new DecimalFormat("#,###.##");
+        String totalbiayaurugan = formatter.format(numberpasir);
+
         hasilvol.setText(Float.toString(volumeurugan));
-        hasilpas2.setText(Float.toString(totpasir));
+        hasilvol.setText(Float.toString(volumeurugan));
+        hasilpas2.setText(totalbiayaurugan);
         hasilpas1.setText(Float.toString(pembulatanurugantruk));
         hasilpas.setText(Float.toString(pembulatanurugan));
-        totalbiaya.setText(Float.toString(totpasir));
+        totalbiaya.setText(totalbiayaurugan);
     }
 
     private void initSpinnerPasir() {
@@ -126,14 +165,20 @@ public class Editurugan extends AppCompatActivity {
             public void onResponse(Call<ResponseMaterial> call, Response<ResponseMaterial> response) {
                 if (response.code() == 200) {
                     Pasir = response.body().getMaterials();
+                    int i = 0;
                     List<String> listSpinner = new ArrayList<String>();
-                    for (int i = 0; i < Pasir.size(); i++) {
-                        listSpinner.add(Pasir.get(i).getNama());
+                    String data = namapasir1;
+                    for (int j = 0; j < Pasir.size(); j++){
+                        if (data.equalsIgnoreCase(String.valueOf(Pasir.get(j).getNama()))) {
+                            i = j;
+                        }
+                        listSpinner.add(Pasir.get(j).getNama());
                     }
                     ArrayAdapter<String> adapter = new ArrayAdapter<String>(mContext,
                             android.R.layout.simple_spinner_item, listSpinner);
                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     spinurugan.setAdapter(adapter);
+                    spinurugan.setSelection(i);
                 } else {
                     Toast.makeText(mContext, "Gagal mengambil data Batako", Toast.LENGTH_SHORT).show();
                 }
@@ -164,10 +209,11 @@ public class Editurugan extends AppCompatActivity {
                 map.put("volume", vol.getText().toString());
                 map.put("volumejadi", hasilvol.getText().toString());
                 map.put("nama_pasir", namapasir1);
-                map.put("Jumlahkeperluanpasir", hasilpas1.getText().toString());
+                map.put("Jumlahkeperluanpasir", hasilpas.getText().toString());
                 map.put("jumlahdalamtruk", hasilpas1.getText().toString());
-                map.put("hargapasir", hasilpas2.getText().toString());
-                map.put("hargatotal", totalbiaya.getText().toString());
+                map.put("hargapasir", hargaurugan.getText().toString());
+                map.put("hargapasirtotal", String.valueOf(numberpasir));
+                map.put("hargatotal", String.valueOf(numberpasir));
                 Call<Void> call = ApiClient.getRequestInterface().actionPutPerhitunganurugan(idurugan1,apiKey,token,map);
                 call.enqueue(new Callback<Void>() {
                     @Override
@@ -177,7 +223,7 @@ public class Editurugan extends AppCompatActivity {
                             Intent perhitunganurugan = (new Intent(Editurugan.this, Perhitunganurugan.class)
                                     .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
                             Bundle setData = new Bundle();
-                            setData.putString("idproyek",idproyek);
+                            setData.putString("idproyek",mId);
                             perhitunganurugan.putExtras(setData);
                             startActivity(perhitunganurugan);
                             Toast.makeText(Editurugan.this,
@@ -221,6 +267,11 @@ public class Editurugan extends AppCompatActivity {
         nama = findViewById(R.id.nama_pengerjaan);
         totalbiaya = findViewById(R.id.totalbiaya);
         hasilvol = findViewById(R.id.hasilvol);
+        spinjenis = findViewById(R.id.spinjenis);
+        Jenispengerjaan_adapter jenispengerjaan_adapter =
+                new Jenispengerjaan_adapter(Editurugan.this,
+                        android.R.layout.simple_spinner_item, jenispengerjaans);
+        spinjenis.setAdapter(jenispengerjaan_adapter);
 
         sm= new SessionManager(Editurugan.this);
         HashMap<String,String> map = sm.getDetailLogin();
@@ -229,7 +280,7 @@ public class Editurugan extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         if (bundle != null)
         {
-            mId = bundle.getString("ProyekID");
+            mId = bundle.getString("ProyekId");
             Ju = mId;
         }else{
             mId = "0";
@@ -238,18 +289,23 @@ public class Editurugan extends AppCompatActivity {
                 Toast.LENGTH_SHORT).show();
         idurugan= bundle.getString("Id");
         nama.setText(bundle.getString("nama"));
-        idproyek = bundle.getString("ProyekId");
         bundle.getString("jenis_pengerjaan");
         panjang.setText(bundle.getString("panjang"));
         tinggi.setText(bundle.getString("tinggi"));
         lebar.setText(bundle.getString("lebar"));
         vol.setText(bundle.getString("volume"));
         hasilvol.setText(bundle.getString("volumejadi"));
-        hasilpas1.setText(bundle.getString("jumlahkeperluanpasir"));
+        hasilpas.setText(bundle.getString("jumlahkeperluanpasir"));
         hasilpas1.setText(bundle.getString("jumlahdalamtruk"));
         namapasir1 = bundle.getString("nama_pasir");
         hpasir= bundle.getString("hargapasir");
-        hasilpas2.setText(bundle.getString("hargapasirtotal"));
-        totalbiaya.setText(bundle.getString("hargatotal"));
+        totpasir = Float.parseFloat(bundle.getString("hargapasirtotal"));
+        DecimalFormat df1 = new DecimalFormat("#");
+        totpasir1 = df1.format(totpasir);
+        numberpasir = Integer.parseInt(totpasir1);
+        DecimalFormat formatter = new DecimalFormat("#,###.##");
+        String totalbiayaurugan = formatter.format(numberpasir);
+        hasilpas2.setText(totalbiayaurugan);
+        totalbiaya.setText(totalbiayaurugan);
     }
 }

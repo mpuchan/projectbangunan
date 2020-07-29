@@ -125,7 +125,6 @@ public class Tambahurugan extends AppCompatActivity {
                 Jenispengerjaan je = (Jenispengerjaan) (parent.getItemAtPosition(position));
                 jenis = String.valueOf(je.getJenispengerjaan());
 
-//                Toast.makeText(mContext, "Kamu memilih Campuran " + pc, Toast.LENGTH_SHORT).show();
             }
 
             @Override

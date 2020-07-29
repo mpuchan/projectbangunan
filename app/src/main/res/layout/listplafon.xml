@@ -77,7 +77,7 @@
                                 android:layout_width="20dp"
                                 android:layout_height="20dp"
                                 android:layout_weight="0"
-                                app:srcCompat="@drawable/ikon_pasir" />
+                                app:srcCompat="@drawable/ikon_papan" />
 
                             <TextView
                                 android:id="@+id/textView3"
@@ -106,18 +106,18 @@
                                 android:layout_width="20dp"
                                 android:layout_height="20dp"
                                 android:layout_weight="1"
-                                app:srcCompat="@drawable/ikon_semen" />
+                                app:srcCompat="@drawable/ikonbesidankayu" />
 
                             <TextView
                                 android:id="@+id/textView23"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:text="Semen : "
+                                android:text="Reng : "
                                 android:textColor="#FF292929" />
 
                             <TextView
-                                android:id="@+id/semen"
+                                android:id="@+id/reng"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:text="Semen"
@@ -143,7 +143,7 @@
                 android:orientation="horizontal">
 
                 <Button
-                    android:id="@+id/detailbidang"
+                    android:id="@+id/detailplafon"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="0"
@@ -152,7 +152,7 @@
                     android:textColor="#40C4FF" />
 
                 <Button
-                    android:id="@+id/editbidang"
+                    android:id="@+id/editplafon"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="0"
@@ -161,7 +161,7 @@
                     android:textColor="#66B30B" />
 
                 <Button
-                    android:id="@+id/Deletebidang"
+                    android:id="@+id/Deleteplafon"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="0"

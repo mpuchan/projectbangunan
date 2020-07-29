@@ -23,6 +23,7 @@ import com.example.bangunankita.R;
 import com.example.bangunankita.Retrovit.ApiClient;
 import com.example.bangunankita.Util.SessionManager;
 
+import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.List;
 
@@ -78,10 +79,19 @@ public class Lantai_adapter extends RecyclerView.Adapter<Lantai_adapter.ViewHold
         final String Keramikdus = String.valueOf(lantais.get(i).getJumlahkeperluankeramikdus());
         final String Luas = String.valueOf(lantais.get(i).getLuasLantai());
 
+        float total1 = Float.parseFloat(Totalbiaya);
+        DecimalFormat df = new DecimalFormat("#");
+        String tothitungan = df.format(total1);
+        int numbertotal = Integer.parseInt(tothitungan);
+        DecimalFormat formatter = new DecimalFormat("#,###.##");
+        String totals = formatter.format(numbertotal);
+
         viewHolder.Nama.setText(Name);
-//        viewHolder.semen.setText(Semen);
-//        viewHolder.pasir.setText(Pasir);
-//        viewHolder.batako.setText(Batako);
+        viewHolder.semen.setText(Jumlahdalamsak+"sak");
+        viewHolder.keramik.setText(Keramikdus+"dus");
+        viewHolder.detailtotal.setText("Rp."+totals);
+
+
 
         viewHolder.editlantai.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -260,7 +270,7 @@ public class Lantai_adapter extends RecyclerView.Adapter<Lantai_adapter.ViewHold
 
 
     public class ViewHolder extends RecyclerView.ViewHolder{
-        private TextView Nama,semen,pasir,batako,edit;
+        private TextView Nama,semen,keramik,edit,detailtotal;
         private ImageView image;
         private Button editlantai,deletelantai,detaillantai;
         Dialog deletedialog;
@@ -269,11 +279,12 @@ public class Lantai_adapter extends RecyclerView.Adapter<Lantai_adapter.ViewHold
             super(view);
             Nama = (TextView)view.findViewById(R.id.Nama);
             semen = (TextView)view.findViewById(R.id.semen);
-            pasir = (TextView)view.findViewById(R.id.pasir);
-            batako = (TextView)view.findViewById(R.id.Batako);
+            keramik = (TextView)view.findViewById(R.id.keramik);
             editlantai = view.findViewById(R.id.editlantai);
             deletelantai = view.findViewById(R.id.Deletelantai);
             detaillantai = view.findViewById(R.id.detaillantai);
+            detailtotal = view.findViewById(R.id.detailtotal);
+
 
         }
     }

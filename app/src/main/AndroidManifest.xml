@@ -13,11 +13,24 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Settingprofile"
+        <activity android:name=".Editplafon"
+            android:label="Edit Plafon"
+            android:theme="@style/AppTheme.NoActionBarperhitungan"></activity>
+        <activity android:name=".Editbeton" />
+        <activity android:name=".Editpengecatan"
+            android:label="Edit Pengecatan"
+            android:theme="@style/AppTheme.NoActionBarperhitungan"/>
+        <activity
+            android:name=".Editpondasi"
+            android:label="Edit Pondasi"
+            android:theme="@style/AppTheme.NoActionBarperhitungan" />
+        <activity
+            android:name=".Settingprofile"
             android:label="Setting Profile"
             android:parentActivityName=".Profile"
-            android:theme="@style/Theme.AppCompat.Light.DarkActionBar"></activity>
-        <activity android:name=".Profile"
+            android:theme="@style/Theme.AppCompat.Light.DarkActionBar" />
+        <activity
+            android:name=".Profile"
             android:theme="@style/AppTheme.NoActionBarperhitungan" />
         <activity
             android:name=".Tambahbeton"
@@ -27,16 +40,21 @@
             android:name=".Perhitunganbeton"
             android:theme="@style/AppTheme.NoActionBarperhitungan" />
         <activity android:name=".Resetpass" />
-        <activity android:name=".Tambahplafon"
+        <activity
+            android:name=".Tambahplafon"
             android:label="Tambah Plafon"
+            android:theme="@style/AppTheme.NoActionBarperhitungan" />
+        <activity android:name=".Tambahatap"
             android:theme="@style/AppTheme.NoActionBarperhitungan"/>
-        <activity android:name=".Tambahatap" />
-        <activity android:name=".Perhitunganatap" />
-        <activity android:name=".Tambahpondasi"
+        <activity android:name=".Perhitunganatap"
+            android:theme="@style/AppTheme.NoActionBarperhitungan"/>
+        <activity
+            android:name=".Tambahpondasi"
             android:label="Tambah Pondasi"
             android:theme="@style/AppTheme.NoActionBarperhitungan" />
-        <activity android:name=".PerhitunganPondasi"
-            android:theme="@style/AppTheme.NoActionBarperhitungan"/>
+        <activity
+            android:name=".PerhitunganPondasi"
+            android:theme="@style/AppTheme.NoActionBarperhitungan" />
         <activity
             android:name=".Tambahpengecatan"
             android:label="Tambah Pengecatan"
@@ -51,18 +69,23 @@
         <activity android:name=".Panduanacian" />
         <activity
             android:name=".Editlantai"
+            android:label="Edit Lantai"
             android:theme="@style/AppTheme.NoActionBarperhitungan" />
         <activity
             android:name=".Editacian"
+            android:label="Edit Acian"
             android:theme="@style/AppTheme.NoActionBarperhitungan" />
         <activity
             android:name=".Editurugan"
+            android:label="Edit Urugan"
             android:theme="@style/AppTheme.NoActionBarperhitungan" />
         <activity
             android:name=".Editplesteran"
+            android:label="Edit Plesteran"
             android:theme="@style/AppTheme.NoActionBarperhitungan" />
         <activity
             android:name=".Editbidang"
+            android:label="Edit Bidang"
             android:theme="@style/AppTheme.NoActionBarperhitungan" />
         <activity
             android:name=".Tambahurugan"
@@ -92,7 +115,10 @@
         <activity
             android:name=".Perhitunganplesteran"
             android:theme="@style/AppTheme.NoActionBarperhitungan" />
-        <activity android:name=".Panduanapl" />
+        <activity
+            android:name=".Panduanapl"
+            android:label="Panduan Aplikasi"
+            android:theme="@style/AppTheme.NoActionBarperhitungan" />
         <activity
             android:name=".Perhitunganbidang"
             android:theme="@style/AppTheme.NoActionBarperhitungan" />
@@ -104,7 +130,8 @@
         <activity
             android:name=".MenuProyek"
             android:theme="@style/AppTheme.NoActionBarperhitungan" />
-        <activity android:name=".Edit_Proyek"
+        <activity
+            android:name=".Edit_Proyek"
             android:label="Edit Proyek"
             android:parentActivityName=".Dashboard"
             android:theme="@style/Theme.AppCompat.Light.DarkActionBar" />

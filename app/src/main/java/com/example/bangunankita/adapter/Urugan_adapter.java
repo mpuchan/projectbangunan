@@ -24,6 +24,7 @@ import com.example.bangunankita.R;
 import com.example.bangunankita.Retrovit.ApiClient;
 import com.example.bangunankita.Util.SessionManager;
 
+import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.List;
 
@@ -66,8 +67,16 @@ public class Urugan_adapter extends RecyclerView.Adapter<Urugan_adapter.ViewHold
         final String Totalbiaya = String.valueOf(urugans.get(i).getHargatotal());
         final String Pasir = String.valueOf(urugans.get(i).getJumlahkeperluanpasir());
 
+        float total1 = Float.parseFloat(Totalbiaya);
+        DecimalFormat df = new DecimalFormat("#");
+        String tothitungan = df.format(total1);
+        int numbertotal = Integer.parseInt(tothitungan);
+        DecimalFormat formatter = new DecimalFormat("#,###.##");
+        String totals = formatter.format(numbertotal);
+
         viewHolder.Nama.setText(Name);
-        viewHolder.pasir.setText(Pasir);
+        viewHolder.pasir.setText(Pasir +"m3");
+        viewHolder.detailtotal.setText("Rp."+totals);
 
 
         viewHolder.editurugan.setOnClickListener(new View.OnClickListener() {
@@ -93,7 +102,6 @@ public class Urugan_adapter extends RecyclerView.Adapter<Urugan_adapter.ViewHold
                 setData.putString("hargatotal", Totalbiaya);
                 editurugan.putExtras(setData);
                 context.startActivity(editurugan);
-
             }
         });
         viewHolder.detailurugan.setOnClickListener(new View.OnClickListener() {
@@ -193,7 +201,7 @@ public class Urugan_adapter extends RecyclerView.Adapter<Urugan_adapter.ViewHold
 
 
     public class ViewHolder extends RecyclerView.ViewHolder{
-        private TextView Nama,semen,pasir,batako,edit;
+        private TextView Nama,semen,pasir,batako,edit,detailtotal;
         private ImageView image;
         private Button editurugan,deleteurugan,detailurugan;
         Dialog deletedialog;
@@ -201,13 +209,11 @@ public class Urugan_adapter extends RecyclerView.Adapter<Urugan_adapter.ViewHold
         public ViewHolder(View view) {
             super(view);
             Nama = (TextView)view.findViewById(R.id.Nama);
-            semen = (TextView)view.findViewById(R.id.semen);
             pasir = (TextView)view.findViewById(R.id.pasir);
-            batako = (TextView)view.findViewById(R.id.Batako);
             editurugan = view.findViewById(R.id.editbidang);
             deleteurugan = view.findViewById(R.id.Deletebidang);
             detailurugan = view.findViewById(R.id.detailbidang);
-
+            detailtotal = view.findViewById(R.id.detailtotal);
 
 
 
