@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -50,6 +51,7 @@ public class Tambahbidang extends AppCompatActivity {
     private Spinner spinbatako,campuran,spinsemen,spinpasir,spinjenis;
     public String pbatako,tbatako,hb,idb,hs,ids,hp,idp,berats,pc,pp,jenis,token,metode,mId,namasemen,namapasir,namabatako;
     float hasilm,luasba;
+    ProgressDialog pd;
     float totpasir;
     float htotbatako;
     private int numberbatako,numberpasir,numbersemen,numbertotal;
@@ -63,11 +65,8 @@ public class Tambahbidang extends AppCompatActivity {
     private List<Material> Pasir = new ArrayList<>();
     Context mContext;
     Campuran[] campurans ={
-            new Campuran("1:3", 3,0.007,0),
-            new Campuran("1:4", 2.4, 0.0075,0),
-            new Campuran("1:5", 2.02,0.0079,0),
-            new Campuran("1:6", 1.74,0.0086,0),
-            new Campuran("1:8", 1.36,0.009,0)
+            new Campuran("1:3", 15.16,0.0364,0),
+
     };
     Jenispengerjaan[] jenispengerjaans  ={
             new Jenispengerjaan("Bangunan rumah"),
@@ -82,6 +81,9 @@ public class Tambahbidang extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tambahbidang);
         init();
+        pd = new ProgressDialog(this);
+        pd.setMessage("loading");
+        pd.show();
         initSpinnerBatako();
         initSpinnerSemen();
         initSpinnerPasir();
@@ -303,14 +305,18 @@ public class Tambahbidang extends AppCompatActivity {
         result = n.replace(",",".");
         float hitungs = Float.parseFloat(result);
         float totpc = hitungs/beratsemen;
-        hargasementot = totpc*hargasemenparse;
+        String f = df.format(totpc);
+        String result1 = null;
+        result1 = f.replace(",",".");
+        float semensak = Float.parseFloat(result1);
+        hargasementot = semensak*hargasemenparse;
         DecimalFormat df1 = new DecimalFormat("#");
         totsemen = df1.format(hargasementot);
         numbersemen = Integer.parseInt(totsemen);
         DecimalFormat formatter = new DecimalFormat("#,###.##");
         String totalbiaya = formatter.format(numbersemen);
         hasilse.setText(Float.toString(hitungs));
-        hasilse1.setText(Float.toString(totpc));
+        hasilse1.setText(Float.toString(semensak));
         hasilse2.setText(totalbiaya);
     }
 
@@ -318,15 +324,18 @@ public class Tambahbidang extends AppCompatActivity {
         float m = 100;
         float p = Float.parseFloat(pbatako);
         float t = Float.parseFloat(tbatako);
+        DecimalFormat df = new DecimalFormat("#");
         hasilm = m/(p*t)*m;
         float tot = hasilm*luasba;
-        htotbatako = tot*hargabatakoparse;
-        DecimalFormat df = new DecimalFormat("#");
+        String to1 = df.format(tot);
+        float totabatako = Float.parseFloat(to1);
+        htotbatako = totabatako*hargabatakoparse;
+
         totbatako = df.format(htotbatako);
         numberbatako = Integer.parseInt(totbatako);
         DecimalFormat formatter = new DecimalFormat("#,###.##");
         String totalbiaya = formatter.format(numberbatako);
-        hasilbat.setText(Float.toString(tot));
+        hasilbat.setText(Float.toString(totabatako));
         hasilbat1.setText(totalbiaya);
     }
 
@@ -336,6 +345,7 @@ public class Tambahbidang extends AppCompatActivity {
         @Override
         public void onResponse(Call<ResponseMaterial> call, Response<ResponseMaterial> response) {
             if (response.code() == 200) {
+                pd.hide();
                 Semen = response.body().getMaterials();
                 List<String> listSpinner = new ArrayList<String>();
                 for (int i = 0; i < Semen.size(); i++){
@@ -363,6 +373,7 @@ public class Tambahbidang extends AppCompatActivity {
             @Override
             public void onResponse(Call<ResponseMaterial> call, Response<ResponseMaterial> response) {
                 if (response.code() == 200) {
+                    pd.hide();
                     Pasir = response.body().getMaterials();
                     List<String> listSpinner = new ArrayList<String>();
                     for (int i = 0; i < Pasir.size(); i++){
@@ -390,6 +401,7 @@ public class Tambahbidang extends AppCompatActivity {
             @Override
             public void onResponse(Call<ResponseMaterial> call, Response<ResponseMaterial> response) {
                 if (response.code() == 200) {
+                    pd.hide();
                     Batako = response.body().getMaterials();
 
                     List<String> listSpinner = new ArrayList<String>();
@@ -421,6 +433,7 @@ public class Tambahbidang extends AppCompatActivity {
         item.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
+                pd.show();
                 String apiKey = "oa00000000app";
                 initvalidation();
                 HashMap<String, String> map = new HashMap<>();
@@ -453,6 +466,7 @@ public class Tambahbidang extends AppCompatActivity {
                     @Override
                     public void onResponse(Call<Void> call, Response<Void> response) {
                         if (response.code() == 200) {
+                            pd.hide();
                             Intent Perhitunganbidang = (new Intent(Tambahbidang.this, Perhitunganbidang.class)
                                     .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
                             Bundle setData = new Bundle();

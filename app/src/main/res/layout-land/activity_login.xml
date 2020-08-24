@@ -27,7 +27,7 @@
                 android:id="@+id/imageView5"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:src="@drawable/icon4apl" />
+                android:src="@drawable/icon41apl" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -108,8 +108,8 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/email"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="email"
+                    android:layout_height="36dp"
+                    android:hint="username"
                     android:inputType="textEmailAddress"
                     android:paddingBottom="16dp" />
 

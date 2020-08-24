@@ -12,7 +12,7 @@ public class ApiClient {
     OkHttpClient okHttpClient = new OkHttpClient.Builder().addInterceptor(httpLoggingInterceptor).build();
 
     Retrofit retrofit = new Retrofit.Builder()
-            .baseUrl("http://192.168.43.163:3000/api/v1/")
+            .baseUrl("https://bangunankita.herokuapp.com/api/v1/")
             .addConverterFactory(GsonConverterFactory.create())
             .client(okHttpClient)
             .build();

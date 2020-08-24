@@ -34,7 +34,7 @@
                 android:gravity="center"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
-                android:text="Meliputi perhitungan kebutuhan material dalam proses pendasi bangunan"
+                android:text="Meliputi perhitungan kebutuhan material dalam proses perhitungan pondasi bangunan"
                 android:textColor="#FDFDFD"
                 android:textSize="12sp"
                 android:textStyle="bold" />
@@ -118,7 +118,7 @@
                                 android:gravity="center">
 
                                 <ImageView
-                                    android:id="@+id/rincianacian"
+                                    android:id="@+id/rincianpondasi"
                                     android:layout_width="40dp"
                                     android:layout_height="40dp"
                                     android:layout_centerHorizontal="true"
@@ -127,9 +127,10 @@
                                 <TextView
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:layout_below="@id/rincianacian"
+                                    android:layout_below="@id/rincianpondasi"
+                                    android:layout_marginTop="-2dp"
                                     android:gravity="center"
-                                    android:text="Rincian Data Acian"
+                                    android:text="Rincian Data Pondasi"
                                     android:textColor="#000"
                                     android:textSize="12dp" />
 
@@ -144,7 +145,7 @@
                                 android:gravity="center">
 
                                 <ImageView
-                                    android:id="@+id/panduanacian"
+                                    android:id="@+id/panduanpondasi"
                                     android:layout_width="40dp"
                                     android:layout_height="40dp"
                                     android:layout_centerHorizontal="true"
@@ -154,7 +155,7 @@
 
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:layout_below="@id/panduanacian"
+                                    android:layout_below="@id/panduanpondasi"
                                     android:gravity="center"
                                     android:text="Panduan Aplikasi"
                                     android:textColor="#000"
@@ -182,7 +183,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_below="@id/tambahpondasi"
                                     android:gravity="center"
-                                    android:text="Tambah bidang"
+                                    android:text="Tambah pondasi"
                                     android:textColor="#000"
                                     android:textSize="12dp" />
 

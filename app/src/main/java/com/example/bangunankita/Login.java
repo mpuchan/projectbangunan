@@ -80,10 +80,12 @@ public class Login extends AppCompatActivity {
                             Integer status =result.getStatus();
                             String statusk= String.valueOf(status);
                             String Image = result.getPicture();
+                            String notelp = result.getNotelp();
+                            String email = result.getEmail();
                             Integer id = result.getId();
                             String idk = String.valueOf(id);
                             String accessToken = result.getAccessToken();
-                            sm.storeLogin(idk,result.getUsername(),nama,accessToken,statusk,Image);
+                            sm.storeLogin(idk,result.getUsername(),notelp,nama,accessToken,statusk,Image,email);
 
                             builder1.setMessage("Login Success"+statusk);
                             builder1.show();

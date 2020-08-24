@@ -4,6 +4,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -47,8 +48,9 @@ public class Editpengecatan extends AppCompatActivity {
             hargakebcat,hargakebplamir;
     Context mContext;
     SessionManager sm;
+    ProgressDialog pd;
     private int iid, numbercat,numberplamir,numbertotal;
-    private String totcat,totplamir,tottotal;
+    private String totcat,namapenger,totplamir,panjang1,tinggi1,tottotal,namacat1,namaplamur1,hargacat1,hargaplamur1;
     String token,nama,p,t,pw,namapengerjaan,namasemen1,jenis,metode,jmlplam,jmlcat,namacat,namaplamur;
     String mId,Ju;
     int ProyekID;
@@ -68,6 +70,9 @@ public class Editpengecatan extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_editpengecatan);
         init();
+        pd = new ProgressDialog(this);
+        pd.setMessage("loading");
+        pd.show();
         initSpinnerCat();
         initSpinnerDinding();
         initSpinnerPlamur();
@@ -107,13 +112,28 @@ public class Editpengecatan extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String selectedName = parent.getItemAtPosition(position).toString();
                 namapengerjaan = String.valueOf(BidangModel.get(position).getNama());
-                p = String.valueOf(BidangModel.get(position).getPanjangbid());
-                t = String.valueOf(BidangModel.get(position).getTinggibid());
-                panjang.setText(p);
-                tinggi.setText(t);
+
+                if (selectedName.equalsIgnoreCase(namapenger)){
+                    namapengerjaan = namapenger;
+                    panjang.setText(panjang1);
+                    tinggi.setText(tinggi1);
+//                    Toast.makeText(mContext, "if jalan ", Toast.LENGTH_SHORT).show();
+                }else {
+                    namapengerjaan = String.valueOf(BidangModel.get(position).getNama());
+                    namapenger = namapengerjaan;
+                    p = String.valueOf(BidangModel.get(position).getPanjangbid());
+                    t = String.valueOf(BidangModel.get(position).getTinggibid());
+                    panjang.setText(p);
+                    tinggi.setText(t);
+//                    Toast.makeText(mContext, "if tidak jalan" + namapenger,Toast.LENGTH_SHORT).show();
+                }
 
 //                Toast.makeText(mContext, "Kamu memilih Semen " + selectedName, Toast.LENGTH_SHORT).show();
             }
+
+
+
+
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
@@ -127,13 +147,18 @@ public class Editpengecatan extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String selectedName = parent.getItemAtPosition(position).toString();
-                berats = String.valueOf(Cat.get(position).getBerat());
-                hc = String.valueOf(Cat.get(position).getHarga());
-                namacat = String.valueOf(Cat.get(position).getNama());
-//                ids = String.valueOf(Cat.get(position).getId());
-                hargacat.setText(hc);
+                if (selectedName.equalsIgnoreCase(namacat)){
+                    namacat1 = namacat;
+                    berats = String.valueOf(Cat.get(position).getBerat());
+                    hargacat.setText(hargacat1);
+                }else {
+                    namacat1 = String.valueOf(Cat.get(position).getNama());
+                    berats = String.valueOf(Cat.get(position).getBerat());
+                    hc = String.valueOf(Cat.get(position).getHarga());
+                    hargacat.setText(hc);
 
-                Toast.makeText(mContext, "Kamu memilih Semen " + selectedName, Toast.LENGTH_SHORT).show();
+                }
+
             }
 
             @Override
@@ -146,14 +171,21 @@ public class Editpengecatan extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String selectedName = parent.getItemAtPosition(position).toString();
-                beratp = String.valueOf(Plamur.get(position).getBerat());
-                jmlplam = String.valueOf(Plamur.get(position).getJumlah());
-                hpl = String.valueOf(Plamur.get(position).getHarga());
-                namaplamur = String.valueOf(Plamur.get(position).getNama());
-//                ids = String.valueOf(Plamur.get(position).getId());
-                hargaplamur.setText(hpl);
 
-                Toast.makeText(mContext, "Kamu memilih Semen " + selectedName, Toast.LENGTH_SHORT).show();
+                if (selectedName.equalsIgnoreCase(namaplamur)){
+                    namaplamur1 = namaplamur;
+                    beratp = String.valueOf(Plamur.get(position).getBerat());
+                    jmlplam = String.valueOf(Plamur.get(position).getJumlah());
+                    hargaplamur.setText(hargaplamur1);
+                }else {
+                    namaplamur1 = String.valueOf(Plamur.get(position).getNama());
+                    jmlplam = String.valueOf(Plamur.get(position).getJumlah());
+                    beratp = String.valueOf(Plamur.get(position).getBerat());
+                    hpl = String.valueOf(Plamur.get(position).getHarga());
+                    hargaplamur.setText(hpl);
+
+                }
+
             }
 
             @Override
@@ -253,9 +285,15 @@ public class Editpengecatan extends AppCompatActivity {
             @Override
             public void onResponse(Call<ResponseMaterial> call, Response<ResponseMaterial> response) {
                 if (response.code() == 200) {
+                    pd.hide();
+                    int i = 0;
                     Plamur = response.body().getMaterials();
                     List<String> listSpinner = new ArrayList<String>();
-                    for (int i = 0; i < Plamur.size(); i++) {
+                    String data = namaplamur;
+                    for (int j = 0; j < Plamur.size(); j++) {
+                        if (data.equalsIgnoreCase(String.valueOf(Plamur.get(j).getNama()))) {
+                            i = j;
+                        }
                         listSpinner.add(Plamur.get(i).getNama());
 
                     }
@@ -263,6 +301,7 @@ public class Editpengecatan extends AppCompatActivity {
                             android.R.layout.simple_spinner_item, listSpinner);
                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     spinplamur.setAdapter(adapter);
+                    spinplamur.setSelection(i);
                 } else {
                     Toast.makeText(mContext, "Gagal mengambil data plamur", Toast.LENGTH_SHORT).show();
                 }
@@ -281,9 +320,15 @@ public class Editpengecatan extends AppCompatActivity {
             @Override
             public void onResponse(Call<ResponseMaterial> call, Response<ResponseMaterial> response) {
                 if (response.code() == 200) {
+                    pd.hide();
+                    int i = 0;
                     Cat = response.body().getMaterials();
                     List<String> listSpinner = new ArrayList<String>();
-                    for (int i = 0; i < Cat.size(); i++) {
+                    String data = namacat;
+                    for (int j = 0; j < Cat.size(); j++) {
+                        if (data.equalsIgnoreCase(String.valueOf(Cat.get(j).getNama()))) {
+                            i = j;
+                        }
                         listSpinner.add(Cat.get(i).getNama());
 
                     }
@@ -291,6 +336,8 @@ public class Editpengecatan extends AppCompatActivity {
                             android.R.layout.simple_spinner_item, listSpinner);
                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     spincat.setAdapter(adapter);
+                    spincat.setSelection(i);
+
                 } else {
                     Toast.makeText(mContext, "Gagal mengambil data Cat", Toast.LENGTH_SHORT).show();
                 }
@@ -316,15 +363,22 @@ public class Editpengecatan extends AppCompatActivity {
             @Override
             public void onResponse(Call<ResponseBidang> call, Response<ResponseBidang> response) {
                 if (response.code() == 200 ) {
+                    pd.hide();
                     BidangModel = response.body().getPerhitunganbidang();
+                    int i =0;
                     List<String> listSpinner = new ArrayList<String>();
-                    for (int i = 0; i < BidangModel.size(); i++){
-                        listSpinner.add(String.valueOf(BidangModel.get(i).getNama()));
+                    String data = namapenger;
+                    for (int j = 0; j < BidangModel.size(); j++){
+                        if (data.equalsIgnoreCase(String.valueOf(BidangModel.get(j).getNama()))) {
+                            i = j;
+                        }
+                        listSpinner.add(String.valueOf(BidangModel.get(j).getNama()));
                     }
                     ArrayAdapter<String> adapter = new ArrayAdapter<String>(mContext,
                             android.R.layout.simple_spinner_item, listSpinner);
                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     spindinding.setAdapter(adapter);
+                    spindinding.setSelection(i);
 
                 } else {
                     Toast.makeText(mContext, "Gagal mengambil data Bidang", Toast.LENGTH_SHORT).show();
@@ -348,6 +402,7 @@ public class Editpengecatan extends AppCompatActivity {
             public boolean onMenuItemClick(MenuItem item) {
                 String apiKey = "oa00000000app";
                 initvalidation();
+                pd.show();
                 HashMap<String, String> map = new HashMap<>();
                 map.put("nama", namapengerjaan);
                 map.put("jenis_pengerjaan", jenis);
@@ -356,8 +411,8 @@ public class Editpengecatan extends AppCompatActivity {
                 map.put("sisi", sisi.getText().toString());
                 map.put("luas_pengecatan", luas.getText().toString());
                 map.put("metode", metode);
-                map.put("nama_cat", String.valueOf(namacat));
-                map.put("nama_plamur", String.valueOf(namaplamur));
+                map.put("nama_cat", String.valueOf(namacat1));
+                map.put("nama_plamur", String.valueOf(namaplamur1));
                 map.put("jumlahkeperluancat", hasilcat.getText().toString());
                 map.put("jumlahkeperluancatkaleng", hasilcat1.getText().toString());
                 map.put("jumlahkeperluanplamur", hasilplamur.getText().toString());
@@ -371,6 +426,7 @@ public class Editpengecatan extends AppCompatActivity {
                     @Override
                     public void onResponse(Call<Void> call, Response<Void> response) {
                         if (response.code() == 201) {
+                            pd.hide();
                             Intent Perhitunganbidang = (new Intent(Editpengecatan.this, Perhitunganpengecatan.class)
                                     .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
                             Bundle setData = new Bundle();
@@ -440,10 +496,10 @@ public class Editpengecatan extends AppCompatActivity {
             mId = "0";
         }
         iid= Integer.parseInt(bundle.getString("id"));
-        bundle.getString("nama");
+        namapenger =bundle.getString("nama");
         bundle.getString("jenis_pengerjaan");
-        panjang.setText(bundle.getString("panjangdin"));
-        tinggi.setText(bundle.getString("tinggidin"));
+        panjang1 =bundle.getString("panjangdin");
+        tinggi1=bundle.getString("tinggidin");
         sisi.setText(bundle.getString("sisi"));
         luas.setText(bundle.getString("luaspengecatan"));
         hasilluas.setText(bundle.getString("luaspengecatan"));
@@ -454,8 +510,8 @@ public class Editpengecatan extends AppCompatActivity {
         hasilplamur.setText(bundle.getString("jumlahkeperluanplamur"));
         hasilplamur1.setText(bundle.getString("jumlahkeperluanplamursak"));
         hasilcat1.setText(bundle.getString("jumlahkeperluancatkaleng"));
-        hargacat.setText(bundle.getString("hargacat"));
-        hargaplamur.setText(bundle.getString("hargaplamur"));
+        hargacat1=bundle.getString("hargacat");
+        hargaplamur1=bundle.getString("hargaplamur");
 
         hargakebplamir = Float.parseFloat(bundle.getString("hargaplamurtotal"));
         DecimalFormat df1 = new DecimalFormat("#");

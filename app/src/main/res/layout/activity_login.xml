@@ -26,7 +26,7 @@
                 android:id="@+id/imageView4"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:src="@drawable/icon4apl" />
+                android:src="@drawable/icon41apl" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -100,7 +100,7 @@
                     android:id="@+id/email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="email"
+                    android:hint="username"
                     android:inputType="textEmailAddress"
                     android:paddingBottom="16dp" />
 
@@ -157,38 +157,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/textView2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Sign in with Social Network" />
-
-<!--                <LinearLayout-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="match_parent">-->
-
-<!--                    <com.google.android.gms.common.SignInButton-->
-<!--                        android:id="@+id/sign_in_button"-->
-<!--                        android:layout_width="0dp"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:layout_margin="@dimen/margin_short"-->
-<!--                        android:layout_weight="1"-->
-<!--                        android:text="Google"-->
-<!--                        android:textColor="@android:color/white" />-->
-
-<!--                    <Button-->
-<!--                        android:id="@+id/login2"-->
-<!--                        android:layout_width="0dp"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:layout_margin="@dimen/margin_short"-->
-<!--                        android:layout_weight="1"-->
-<!--                        android:background="@drawable/facebookbutton"-->
-<!--                        android:text="Facebook"-->
-<!--                        android:textColor="@android:color/white" />-->
-<!--                </LinearLayout>-->
-            </LinearLayout>
+                android:orientation="vertical"/>
 
         </LinearLayout>
 

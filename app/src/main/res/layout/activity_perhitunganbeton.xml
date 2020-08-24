@@ -121,7 +121,7 @@
                                 android:gravity="center">
 
                                 <ImageView
-                                    android:id="@+id/print"
+                                    android:id="@+id/rincianbeton"
                                     android:layout_width="40dp"
                                     android:layout_height="40dp"
                                     android:layout_centerHorizontal="true"
@@ -130,7 +130,7 @@
                                 <TextView
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:layout_below="@id/print"
+                                    android:layout_below="@id/rincianbeton"
                                     android:gravity="center"
                                     android:text="Rincian Data Beton"
                                     android:textColor="#000"
@@ -147,7 +147,7 @@
                                 android:gravity="center">
 
                                 <ImageView
-                                    android:id="@+id/panduan"
+                                    android:id="@+id/panduanbeton"
                                     android:layout_width="40dp"
                                     android:layout_height="40dp"
                                     android:layout_centerHorizontal="true"
@@ -157,7 +157,7 @@
 
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:layout_below="@id/panduan"
+                                    android:layout_below="@id/panduanbeton"
                                     android:gravity="center"
                                     android:text="Panduan Aplikasi"
                                     android:textColor="#000"

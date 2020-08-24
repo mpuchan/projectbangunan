@@ -3,6 +3,7 @@ package com.example.bangunankita;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -45,6 +46,7 @@ public class Tambahbeton extends AppCompatActivity {
     private String hs,ids,hp,idp,berats,namasemen,namapasir,harpapan,namapapan,harpaku,harkawat,harbesi,
             namapaku,namakawat,namabesi,namabegel,harbegel,harbatu,namabatu;
     private String token,mId,jenis;
+    ProgressDialog pd;
     private float pk,kwt,pc,pb,bt;
     private Button Hitung;
     private float panjangbet,pbsi,lbsi;
@@ -75,6 +77,9 @@ public class Tambahbeton extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         mContext = this;
+        pd = new ProgressDialog(this);
+        pd.setMessage("loading");
+        pd.show();
         sm= new SessionManager(Tambahbeton.this);
         HashMap<String,String> map = sm.getDetailLogin();
         token=(map.get(sm.KEY_TOKEN));
@@ -119,7 +124,7 @@ public class Tambahbeton extends AppCompatActivity {
         hasilpaku = findViewById(R.id.hasilpaku);
         hasilpaku1 = findViewById(R.id.hasilpaku1);
         hasilbatu = findViewById(R.id.hasilbatu);
-        hasilbatu12 = findViewById(R.id.hasilbaat);
+        hasilbatu12 = findViewById(R.id.hasil11);
         hasilbatu2 = findViewById(R.id.hasilbatu21);
         hasilkawat = findViewById(R.id.hasilkawat);
         hasilkawat1 = findViewById(R.id.hasilkawat1);
@@ -370,7 +375,14 @@ public class Tambahbeton extends AppCompatActivity {
     private void hitungpaku() {
 
         float hargapku = Float.parseFloat(Hpaku.getText().toString());
-        jumlahpaku = panjangbet*pk;
+        float jumpaku = panjangbet*pk;
+        DecimalFormat df1 = new DecimalFormat("#.##");
+        df1.setRoundingMode(RoundingMode.CEILING);
+        String n = df1.format(jumpaku);
+        String result = null;
+        result = n.replace(",",".");
+        jumlahpaku = Float.parseFloat(result);
+
         float hargatotpaku = jumlahpaku*hargapku;
         DecimalFormat df = new DecimalFormat("#");
         totpaku = df.format(hargatotpaku);
@@ -383,7 +395,13 @@ public class Tambahbeton extends AppCompatActivity {
 
     private void hitungkawat() {
         float hargakwat = Float.parseFloat(Hkawat.getText().toString());
-        jumlahkwat = panjangbet*kwt;
+        float jumkwat = panjangbet*kwt;
+        DecimalFormat df1 = new DecimalFormat("#.##");
+        df1.setRoundingMode(RoundingMode.CEILING);
+        String n = df1.format(jumkwat);
+        String result = null;
+        result = n.replace(",",".");
+        jumlahkwat = Float.parseFloat(result);
         float hargakawaat = jumlahkwat*hargakwat;
         DecimalFormat df = new DecimalFormat("#");
         totkawat = df.format(hargakawaat);
@@ -410,15 +428,26 @@ public class Tambahbeton extends AppCompatActivity {
 
     private void hitungbesi() {
         float hargabsi = Float.parseFloat(Hbesi.getText().toString());
-        jumlahbesis = (panjangbet*4)/12;
+        float jumlahbsi = (panjangbet*4)/12;
+        DecimalFormat df1 = new DecimalFormat("#.##");
+        df1.setRoundingMode(RoundingMode.CEILING);
+        String n = df1.format(jumlahbsi);
+        String result = null;
+        result = n.replace(",",".");
+        jumlahbesis = Float.parseFloat(result);
+        DecimalFormat df2 = new DecimalFormat("#");
+        df2.setRoundingMode(RoundingMode.CEILING);
+        String pembulatanbesi = df2.format(jumlahbesis);
+
         float hargabesi1 = hargabsi*jumlahbesis;
         DecimalFormat df = new DecimalFormat("#");
         totbesi = df.format(hargabesi1);
         numberbesi = Integer.parseInt(totbesi);
         hasilbesi.setText(String.valueOf(jumlahbesis));
+        hasilbesi1.setText(pembulatanbesi);
         DecimalFormat formatter = new DecimalFormat("#,###.##");
         String totalbiaya = formatter.format(numberbesi);
-        hasilbesi2.setText(String.valueOf(totalbiaya));
+        hasilbesi2.setText(totalbiaya);
 
     }
 
@@ -439,7 +468,7 @@ public class Tambahbeton extends AppCompatActivity {
             hasils1.setText(String.valueOf(smndlmsak));
             DecimalFormat formatter = new DecimalFormat("#,###.##");
             String totalbiaya = formatter.format(numbersemen);
-            hasils2.setText(String.valueOf(totalbiaya));
+            hasils2.setText(totalbiaya);
 
         }else{
             jmlsemen = panjangbet*pc;
@@ -463,7 +492,15 @@ public class Tambahbeton extends AppCompatActivity {
             float h = lbsi/100;
             float volume = b*h*panjangbet;
             jmlpasir = volume*pb;
-            jumlahm3 = jmlpasir/1000;
+            float jumlahm = jmlpasir/1000;
+
+            DecimalFormat df1 = new DecimalFormat("#.##");
+            df1.setRoundingMode(RoundingMode.CEILING);
+            String n = df1.format(jumlahm);
+            String result = null;
+            result = n.replace(",",".");
+            jumlahm3 = Float.parseFloat(result);
+
             float hargatotpasir= jumlahm3*hargapasir;
             DecimalFormat df = new DecimalFormat("#");
             totpasir = df.format(hargatotpasir);
@@ -475,12 +512,19 @@ public class Tambahbeton extends AppCompatActivity {
             hasilp2.setText(totalbiaya);
 
         }else{
-            jmlpasir = panjangbet*pb;
+            float jumlpasir = panjangbet*pb;
+            DecimalFormat df1 = new DecimalFormat("#.##");
+            df1.setRoundingMode(RoundingMode.CEILING);
+            String n = df1.format(jumlpasir);
+            String result = null;
+            result = n.replace(",",".");
+            jmlpasir = Float.parseFloat(result);
+            float jmlpasirkg = jmlpasir*1000;
             float hargatotpasir = jmlpasir*hargapasir;
             DecimalFormat df = new DecimalFormat("#");
             totpasir = df.format(hargatotpasir);
             numberpasir = Integer.parseInt(totpasir);
-            hasilp.setText(String.valueOf(jmlpasir));
+            hasilp.setText(String.valueOf(jmlpasirkg));
             hasilp1.setText(String.valueOf(jmlpasir));
             DecimalFormat formatter = new DecimalFormat("#,###.##");
             String totalbiaya = formatter.format(numberpasir);
@@ -490,12 +534,17 @@ public class Tambahbeton extends AppCompatActivity {
     }
     private void hitungbegel() {
         float hargabgel = Float.parseFloat(Hbegel.getText().toString());
-
         float kebbegel = (2*pbsi)+(2*lbsi)-(2*2)+(2*2)+5;
         float hasildalamm = kebbegel/100;
         float begels = panjangbet/0.2f;
         float totalbegelx = begels*hasildalamm;
-        begelbesi = totalbegelx/12;
+        float begelbesi1 = totalbegelx/12;
+        DecimalFormat df1 = new DecimalFormat("#.##");
+        df1.setRoundingMode(RoundingMode.CEILING);
+        String n = df1.format(begelbesi1);
+        String result = null;
+        result = n.replace(",",".");
+        begelbesi = Float.parseFloat(result);
         float hargabgeltot = begelbesi*hargabgel;
         DecimalFormat df = new DecimalFormat("#");
         totbegel = df.format(hargabgeltot);
@@ -512,13 +561,20 @@ public class Tambahbeton extends AppCompatActivity {
             float h = lbsi/100;
             float volume = b*h*panjangbet;
             jmlbatu = volume*bt;
-            jmlbatum3 = jmlbatu/1000;
-            float jmlbatutruk = jmlbatum3/7;
+            float jumlbatus = jmlbatu/1000;
+            DecimalFormat df1 = new DecimalFormat("#.##");
+            df1.setRoundingMode(RoundingMode.CEILING);
+            String n = df1.format(jumlbatus);
+            String result = null;
+            result = n.replace(",",".");
+            jmlbatum3 = Float.parseFloat(result);
+
+//            float jmlbatutruk = jmlbatum3/7;
             float hargatotbatu= jmlbatum3*hargabatu;
             DecimalFormat df = new DecimalFormat("#");
             totbatu = df.format(hargatotbatu);
             numberbatu = Integer.parseInt(totbatu);
-            hasilbatu.setText(String.valueOf(jmlbatutruk));
+            hasilbatu.setText(String.valueOf(jmlbatu));
             hasilbatu12.setText(String.valueOf(jmlbatum3));
             DecimalFormat formatter = new DecimalFormat("#,###.##");
             String totalbiaya = formatter.format(numberbatu);
@@ -526,12 +582,20 @@ public class Tambahbeton extends AppCompatActivity {
 
 
         }else{
-            jmlbatu = panjangbet*bt;
+            float jmlbatu1 = panjangbet*bt;
+            DecimalFormat df1 = new DecimalFormat("#.##");
+            df1.setRoundingMode(RoundingMode.CEILING);
+            String n = df1.format(jmlbatu1);
+            String result = null;
+            result = n.replace(",",".");
+            jmlbatu = Float.parseFloat(result);
+            jmlbatum3 = jmlbatu*1000;
             float hargatotbatu = jmlbatu*hargabatu;
             DecimalFormat df = new DecimalFormat("#");
             totbatu = df.format(hargatotbatu);
             numberbatu = Integer.parseInt(totbatu);
-            hasilbatu.setText(String.valueOf(jmlbatu));
+            hasilbatu.setText(String.valueOf(jmlbatum3));
+            hasilbatu12.setText(String.valueOf(jmlbatu));
             DecimalFormat formatter = new DecimalFormat("#,###.##");
             String totalbiaya = formatter.format(numberbatu);
             hasilbatu2.setText(totalbiaya);
@@ -548,6 +612,7 @@ private void initSpinnerSemen() {
         @Override
         public void onResponse(Call<ResponseMaterial> call, Response<ResponseMaterial> response) {
             if (response.code() == 200) {
+                pd.hide();
                 Semen = response.body().getMaterials();
                 List<String> listSpinner = new ArrayList<String>();
                 for (int i = 0; i < Semen.size(); i++){
@@ -575,6 +640,7 @@ private void initSpinnerSemen() {
             @Override
             public void onResponse(Call<ResponseMaterial> call, Response<ResponseMaterial> response) {
                 if (response.code() == 200) {
+                    pd.hide();
                     Pasir = response.body().getMaterials();
                     List<String> listSpinner = new ArrayList<String>();
                     for (int i = 0; i < Pasir.size(); i++){
@@ -603,6 +669,7 @@ private void initSpinnerSemen() {
             @Override
             public void onResponse(Call<ResponseMaterial> call, Response<ResponseMaterial> response) {
                 if (response.code() == 200) {
+                    pd.hide();
                     Paku = response.body().getMaterials();
                     List<String> listSpinner = new ArrayList<String>();
                     for (int i = 0; i < Paku.size(); i++){
@@ -631,6 +698,7 @@ private void initSpinnerSemen() {
             @Override
             public void onResponse(Call<ResponseMaterial> call, Response<ResponseMaterial> response) {
                 if (response.code() == 200) {
+                    pd.hide();
                     Kawat = response.body().getMaterials();
                     List<String> listSpinner = new ArrayList<String>();
                     for (int i = 0; i < Kawat.size(); i++){
@@ -659,6 +727,7 @@ private void initSpinnerSemen() {
             @Override
             public void onResponse(Call<ResponseMaterial> call, Response<ResponseMaterial> response) {
                 if (response.code() == 200) {
+                    pd.hide();
                     Besi = response.body().getMaterials();
                     List<String> listSpinner = new ArrayList<String>();
                     for (int i = 0; i < Besi.size(); i++){
@@ -687,6 +756,7 @@ private void initSpinnerSemen() {
             @Override
             public void onResponse(Call<ResponseMaterial> call, Response<ResponseMaterial> response) {
                 if (response.code() == 200) {
+                    pd.hide();
                     Besi = response.body().getMaterials();
                     List<String> listSpinner = new ArrayList<String>();
                     for (int i = 0; i < Besi.size(); i++){
@@ -716,6 +786,7 @@ private void initSpinnerSemen() {
             @Override
             public void onResponse(Call<ResponseMaterial> call, Response<ResponseMaterial> response) {
                 if (response.code() == 200) {
+                    pd.hide();
                     Papan = response.body().getMaterials();
                     List<String> listSpinner = new ArrayList<String>();
                     for (int i = 0; i < Papan.size(); i++){
@@ -744,6 +815,7 @@ private void initSpinnerSemen() {
             @Override
             public void onResponse(Call<ResponseMaterial> call, Response<ResponseMaterial> response) {
                 if (response.code() == 200) {
+                    pd.hide();
                     Batu = response.body().getMaterials();
                     List<String> listSpinner = new ArrayList<String>();
                     for (int i = 0; i < Batu.size(); i++){
@@ -774,13 +846,14 @@ private void initSpinnerSemen() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 String apiKey = "oa00000000app";
-//                initvalidation();
+                initvalidation();
+                pd.show();
                 HashMap<String, String> map = new HashMap<>();
                 map.put("ProyekId", mId);
                 map.put("nama", Nama.getText().toString());
                 map.put("pilihanbeton", jenis);
                 map.put("panjangbeton", String.valueOf(panjangbet));
-                map.put("namapapan", namabatu);
+                map.put("namapapan", namapapan);
                 map.put("namapaku", namapaku);
                 map.put("namabesi", namabesi);
                 map.put("namabegel", namabegel);
@@ -788,7 +861,7 @@ private void initSpinnerSemen() {
                 map.put("namapasir", namapasir);
                 map.put("namasemen", namasemen);
                 map.put("namabatu", namabatu);
-                map.put("hargapapan", namapapan);
+                map.put("hargapapan", Hpapan.getText().toString());
                 map.put("hargabesi",   Hbesi.getText().toString());
                 map.put("hargabegel", Hbegel.getText().toString());
                 map.put("hargakawat", Hkawat.getText().toString());
@@ -823,6 +896,7 @@ private void initSpinnerSemen() {
                     @Override
                     public void onResponse(Call<Void> call, Response<Void> response) {
                         if (response.code() == 200) {
+                            pd.hide();
                             Intent Perhitunganbeton = (new Intent(Tambahbeton.this, Perhitunganbeton.class)
                                     .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
                             Bundle setData = new Bundle();
@@ -850,6 +924,10 @@ private void initSpinnerSemen() {
             }
         });
         return super.onCreateOptionsMenu(menu);
+
+    }
+
+    private void initvalidation() {
 
     }
 

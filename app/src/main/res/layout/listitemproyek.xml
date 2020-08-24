@@ -47,7 +47,7 @@
                         android:layout_height="100dp"
                         android:paddingRight="5dp"
                         android:paddingBottom="5dp"
-                        android:src="@drawable/icon4apl" />
+                        android:src="@drawable/icon41apl" />
 
 
                 </LinearLayout>

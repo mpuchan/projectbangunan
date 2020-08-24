@@ -109,6 +109,7 @@ public class Acian_adapter  extends RecyclerView.Adapter<Acian_adapter.ViewHolde
                 TextView nama = detaildialog.findViewById(R.id.nama);
                 TextView luasacian = detaildialog.findViewById(R.id.luasacian);
                 TextView Semen1 = detaildialog.findViewById(R.id.semen1);
+                TextView Jumlahsemen1 = detaildialog.findViewById(R.id.jumlahsemen);
                 TextView totalbiaya = detaildialog.findViewById(R.id.totalbiaya);
                 TextView namasemen = detaildialog.findViewById(R.id.namasemen);
                 TextView hargatotalsemen = detaildialog.findViewById(R.id.semen1);
@@ -121,7 +122,8 @@ public class Acian_adapter  extends RecyclerView.Adapter<Acian_adapter.ViewHolde
                 resulthargastotal = Hargasementotal.replace(".0","");
                 hargatotalsemen.setText("Rp."+resulthargastotal);
                 namasemen.setText(Namasemen);
-                Semen1.setText(Semen+"kg");
+                Jumlahsemen1.setText(Semen+"kg");
+                Semen1.setText("Rp."+Totalbiaya);
                 sathargas.setText("Rp."+resulthargas);
                 totalbiaya.setText("Rp."+Totalbiaya);
 

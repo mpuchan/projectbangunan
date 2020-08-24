@@ -5,8 +5,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -25,6 +29,7 @@ import com.example.bangunankita.adapter.Pengecatan_adapter;
 import com.example.bangunankita.adapter.Plesteran_adapter;
 import com.github.andreilisun.swipedismissdialog.SwipeDismissDialog;
 
+import java.io.ByteArrayOutputStream;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -40,6 +45,7 @@ public class Perhitunganpengecatan extends AppCompatActivity {
     private ImageView tambahpengecatan,print;
     private TextView totalharga;
     int ProyekID;
+    ImageView rincian,panduanpengecatan;
     String Ju,mId;
     SessionManager sm;
     int totalPrice=0;
@@ -47,8 +53,10 @@ public class Perhitunganpengecatan extends AppCompatActivity {
     private List<Perhitunganpengecatan1> PengecatanModel = new ArrayList<>();
     private RecyclerView mRecyclerView;
     String token;
+    String nama1;
     String stringid;
     Context mContext;
+    ProgressDialog pd;
     SwipeRefreshLayout swipeRefreshLayout;
     SwipeDismissDialog swipeDismissDialog;
     @Override
@@ -57,6 +65,12 @@ public class Perhitunganpengecatan extends AppCompatActivity {
         setContentView(R.layout.activity_perhitunganpengecatan);
         tambahpengecatan = findViewById(R.id.tambahcat);
         totalharga = findViewById(R.id.totalpengecatan);
+        pd = new ProgressDialog(this);
+        pd.setMessage("loading");
+        pd.show();
+        nama1 = "Panduan Perhitungan Pengecatan";
+        rincian = findViewById(R.id.rincianpengecatan);
+        panduanpengecatan = findViewById(R.id.panduanpengecatan);
         swipeRefreshLayout = findViewById(R.id.swiperf);
         sm= new SessionManager(Perhitunganpengecatan.this);
         mRecyclerView = findViewById(R.id.rv_pengecatan);
@@ -68,11 +82,41 @@ public class Perhitunganpengecatan extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         mId = bundle.getString("idproyek");
 
-        Toast.makeText(Perhitunganpengecatan.this, "Proyek Id"+mId,
-                Toast.LENGTH_SHORT).show();
+//        Toast.makeText(Perhitunganpengecatan.this, "Proyek Id"+mId,
+//                Toast.LENGTH_SHORT).show();
         Ju = mId;
         mContext = this;
         getperhitunganpengecatan();
+        rincian.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String apiKey = "oa00000000app";
+                if (!TextUtils.isEmpty(Ju) && TextUtils.isDigitsOnly(Ju)) {
+                    ProyekID = Integer.parseInt(Ju);
+                } else {
+                    ProyekID =0;
+                }
+                Uri uri = Uri.parse("https://bangunankita.herokuapp.com/api/v1/perhitunganbidang/export/"+ProyekID+"/?apiKey="+apiKey+"&accessToken="+token);
+                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                startActivity(intent);
+            }
+        });
+        panduanpengecatan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent panduan = (new Intent(Perhitunganpengecatan.this, Panduanapl.class)
+                        .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
+                Bundle setData = new Bundle();
+                Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.drawable.luasplafon);
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                bmp.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                byte[] byteArray = stream.toByteArray();
+                setData.putString("ini",nama1);
+                panduan.putExtra("picture", byteArray);
+                panduan.putExtras(setData);
+                startActivity(panduan);
+            }
+        });
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -115,6 +159,7 @@ public class Perhitunganpengecatan extends AppCompatActivity {
 //                swipeRefreshLayout.setRefreshing(false);
 //                String message = response.body().getMessage();
                 if (response.code() == 200 ) {
+                    pd.hide();
                     PengecatanModel = response.body().getPerhitunganpengecatan();
 
                     for (int i = 0; i<PengecatanModel.size(); i++) {

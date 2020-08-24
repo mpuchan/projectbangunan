@@ -195,7 +195,8 @@
                         <com.google.android.material.textfield.TextInputLayout
                             style="@style/Theme.AppCompat.Light.DarkActionBar"
                             android:layout_width="141dp"
-                            android:layout_height="wrap_content">
+                            android:layout_height="wrap_content"
+                            android:enabled="false">
 
                             <com.google.android.material.textfield.TextInputEditText
                                 android:id="@+id/volume"
@@ -267,14 +268,14 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:layout_weight="1"
-                                android:enabled="false">
+                                android:enabled="true">
 
                                 <com.google.android.material.textfield.TextInputEditText
                                     android:id="@+id/hargasemen"
                                     android:layout_width="215dp"
                                     android:layout_height="wrap_content"
                                     android:hint="Rp."
-                                    android:inputType="text"
+                                    android:inputType="number"
                                     android:paddingBottom="16dp" />
 
                             </com.google.android.material.textfield.TextInputLayout>
@@ -325,9 +326,9 @@
                                     android:id="@+id/hargapasir"
                                     android:layout_width="215dp"
                                     android:layout_height="wrap_content"
-                                    android:enabled="false"
+                                    android:enabled="true"
                                     android:hint="Rp."
-                                    android:inputType="text"
+                                    android:inputType="number"
                                     android:paddingBottom="16dp" />
 
                             </com.google.android.material.textfield.TextInputLayout>

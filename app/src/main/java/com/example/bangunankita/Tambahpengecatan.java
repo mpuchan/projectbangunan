@@ -4,6 +4,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -48,6 +49,7 @@ public class Tambahpengecatan extends AppCompatActivity {
     float hasil,luasba,hargacatparse,hargaplamurparse,kebutuhancat,kebutuhancat1,kebutuhanplamir,kebutuhanplamur1,
             hargakebcat,hargakebplamir;
     Context mContext;
+    ProgressDialog pd;
     SessionManager sm;
     private int numbercat,numberplamir,numbertotal;
     private String totcat,totplamir,tottotal;
@@ -72,6 +74,9 @@ public class Tambahpengecatan extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         mContext = this;
+        pd = new ProgressDialog(this);
+        pd.setMessage("loading");
+        pd.show();
         sm= new SessionManager(Tambahpengecatan.this);
         HashMap<String,String> map = sm.getDetailLogin();
         token=(map.get(sm.KEY_TOKEN));
@@ -291,6 +296,7 @@ public class Tambahpengecatan extends AppCompatActivity {
             @Override
             public void onResponse(Call<ResponseMaterial> call, Response<ResponseMaterial> response) {
                 if (response.code() == 200) {
+
                     Plamur = response.body().getMaterials();
                     List<String> listSpinner = new ArrayList<String>();
                     for (int i = 0; i < Plamur.size(); i++) {

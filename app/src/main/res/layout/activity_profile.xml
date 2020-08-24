@@ -83,7 +83,7 @@
                 android:layout_width="140dp"
                 android:layout_height="140dp"
                 android:layout_centerInParent="true"
-                android:src="@drawable/icon4apl" />
+                android:src="@drawable/icon41apl" />
 
         </RelativeLayout>
 

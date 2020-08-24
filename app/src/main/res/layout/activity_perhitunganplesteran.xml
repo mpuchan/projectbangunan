@@ -119,7 +119,7 @@
                                 android:gravity="center">
 
                                 <ImageView
-                                    android:id="@+id/rincian"
+                                    android:id="@+id/rincianplesteran"
                                     android:layout_width="40dp"
                                     android:layout_height="40dp"
                                     android:layout_centerHorizontal="true"
@@ -128,7 +128,7 @@
                                 <TextView
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:layout_below="@id/rincian"
+                                    android:layout_below="@id/rincianplesteran"
                                     android:gravity="center"
                                     android:text="Rincian Data Plesteran"
                                     android:textColor="#000"
@@ -145,7 +145,7 @@
                                 android:gravity="center">
 
                                 <ImageView
-                                    android:id="@+id/panduanplester"
+                                    android:id="@+id/panduanplesteran"
                                     android:layout_width="40dp"
                                     android:layout_height="40dp"
                                     android:layout_centerHorizontal="true"
@@ -155,7 +155,7 @@
 
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:layout_below="@id/panduanplester"
+                                    android:layout_below="@id/panduanplesteran"
                                     android:gravity="center"
                                     android:text="Panduan Aplikasi"
                                     android:textColor="#000"

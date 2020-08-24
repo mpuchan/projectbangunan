@@ -10,20 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-        <com.google.android.material.appbar.AppBarLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:theme="@style/AppTheme.NoActionBarperhitungan">
 
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:background="@color/bg_screen4r"
-                app:popupTheme="@style/AppTheme.darks"
-                app:titleTextColor="#FFFFFF" />
-
-        </com.google.android.material.appbar.AppBarLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="621dp"
@@ -50,16 +37,27 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/textView17"
+                        android:id="@+id/judulpanduan"
                         android:layout_width="match_parent"
                         android:layout_height="39dp"
-                        android:text="TextView" />
+                        android:text="Tes 1"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
 
-                    <ImageView
-                        android:id="@+id/imageView"
+                    <com.zolad.zoominimageview.ZoomInImageView
+                        android:id="@+id/thisimage"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:src="@drawable/batako" />
+                        android:layout_height="345dp"
+                        android:src="@drawable/bidang" />
+
+                    <TextView
+                        android:id="@+id/judulpanduan2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Tes 1"
+                        android:textAlignment="viewStart"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
                 </LinearLayout>
                 </LinearLayout>
             </androidx.core.widget.NestedScrollView>

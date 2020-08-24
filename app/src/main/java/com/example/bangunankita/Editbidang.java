@@ -3,6 +3,7 @@ package com.example.bangunankita;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -46,10 +47,11 @@ public class Editbidang extends AppCompatActivity {
     public String pbatako,tbatako,Jenis,hb,idb,hs,ids,hp,idp,berats,pc,pp,hsemen,hpasir,hbatako,namasemen1,namabatako1,namapasir1,
             token,metode,mId,namasemen,namabatako,namapasir,idperhitunganbidang;
     float hasilm,luasba;
+    ProgressDialog pd;
     float totpasir;
     float htotbatako;
     private int numberbatako,numberpasir,numbersemen,numbertotal;
-    private String totbatako,totsemen,totpasir1,tothitungan;
+    private String namajenis1, totbatako,totsemen,totpasir1,tothitungan;
     int idbidang;
     float hargasementot,hargapasirparse,hargasemenparse,hargabatakoparse;
     public float hasil;
@@ -57,27 +59,30 @@ public class Editbidang extends AppCompatActivity {
     private List<Material> Batako = new ArrayList<>();
     private List<Material> Semen = new ArrayList<>();
     private List<Material> Pasir = new ArrayList<>();
+    private List<Jenispengerjaan> jensi = new ArrayList<>();
     Context mContext;
     Campuran[] campurans ={
-            new Campuran("1:3", 3,0.007,0.0),
-            new Campuran("1:4", 2.4, 0.0075,0.0),
-            new Campuran("1:5", 2.02,0.0079,0.0),
-            new Campuran("1:6", 1.74,0.0086,0.0),
-            new Campuran("1:8", 1.36,0.009,0.0)
+            new Campuran("1:3", 15.16,0.0364,0.0),
+
     };
-    Jenispengerjaan[] jenispengerjaans  ={
-            new Jenispengerjaan("Bangunan rumah"),
-            new Jenispengerjaan("Tembok pagar"),
-            new Jenispengerjaan("Sekat kamar mandi"),
-            new Jenispengerjaan("Sekat kamar"),
-            new Jenispengerjaan("Lainnya"),
-    };
+//    Jenispengerjaan[] jenispengerjaans  ={
+//            new Jenispengerjaan("Bangunan rumah"),
+//            new Jenispengerjaan("Tembok pagar"),
+//            new Jenispengerjaan("Sekat kamar mandi"),
+//            new Jenispengerjaan("Sekat kamar"),
+//            new Jenispengerjaan("Lainnya"),
+//    };
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_editbidang);
         init();
+
+        pd = new ProgressDialog(this);
+        pd.setMessage("loading");
+        pd.show();
         initSpinnerBatako();
         initSpinnerSemen();
         initSpinnerPasir();
@@ -142,7 +147,7 @@ public class Editbidang extends AppCompatActivity {
                     hargab.setText(hb);
                 }
 
-                Toast.makeText(mContext, "Kamu memilih Batako " + selectedName, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(mContext, "Kamu memilih Batako " + selectedName, Toast.LENGTH_SHORT).show();
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
@@ -153,8 +158,8 @@ public class Editbidang extends AppCompatActivity {
 
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Jenispengerjaan je = (Jenispengerjaan) (parent.getItemAtPosition(position));
-                Jenis = String.valueOf(je.getJenispengerjaan());
+                String selectedName = parent.getItemAtPosition(position).toString();
+                Jenis = String.valueOf(jensi.get(position).getJenispengerjaan());
 
 //                Toast.makeText(mContext, "Kamu memilih Campuran " + pc, Toast.LENGTH_SHORT).show();
             }
@@ -181,7 +186,7 @@ public class Editbidang extends AppCompatActivity {
                 }
 
 
-                Toast.makeText(mContext, "Kamu memilih Semen " + selectedName, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(mContext, "Kamu memilih Semen " + selectedName, Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -203,7 +208,7 @@ public class Editbidang extends AppCompatActivity {
                     hargap.setText(hp);
                 }
 
-                Toast.makeText(mContext, "Kamu memilih Pasir " + selectedName, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(mContext, "Kamu memilih Pasir " + selectedName, Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -220,7 +225,7 @@ public class Editbidang extends AppCompatActivity {
                 pc = String.valueOf(obj.getPc());
                 metode = String.valueOf(obj.getCampuran());
 
-                Toast.makeText(mContext, "Kamu memilih Campuran " + pc, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(mContext, "Kamu memilih Campuran " + pc, Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -234,9 +239,10 @@ public class Editbidang extends AppCompatActivity {
             public void onClick(View v) {
                 String luas = luasb.getText().toString().trim();
                 luasba = Float.parseFloat(luas);
+                hasilbid.setText(Float.toString(luasba));
+                Toast.makeText(mContext, "Kamu memilih Campuran " + luas, Toast.LENGTH_SHORT).show();
                 String hargapasir = hargap.getText().toString().trim();
                 hargapasirparse = Float.parseFloat(hargapasir);
-                hasilbid.setText(String.valueOf(hasil));
                 String hargasemen = hargas.getText().toString().trim();
                 hargasemenparse = Float.parseFloat(hargasemen);
                 String hargabatako = hargab.getText().toString().trim();
@@ -283,7 +289,6 @@ public class Editbidang extends AppCompatActivity {
         DecimalFormat formatter = new DecimalFormat("#,###.##");
         String totalbiaya = formatter.format(numberpasir);
 
-        Toast.makeText(mContext, "Gagal mengambil data"+ppasir, Toast.LENGTH_SHORT).show();
         hasilpas2.setText(totalbiaya);
         hasilpas1.setText(Float.toString(hitungp));
         hasilpas.setText(Float.toString(hitungp));
@@ -301,15 +306,19 @@ public class Editbidang extends AppCompatActivity {
         result = n.replace(",",".");
         float hitungs = Float.parseFloat(result);
         float totpc = hitungs/beratsemen;
-        hargasementot = totpc*hargasemenparse;
+        String jumlahsemensak = df.format(totpc);
+        String result1 = null;
+        result1 = jumlahsemensak.replace(",",".");
+        float jumlahsemenfix = Float.parseFloat(result1);
+        hargasementot = jumlahsemenfix*hargasemenparse;
         DecimalFormat df1 = new DecimalFormat("#");
         totsemen = df1.format(hargasementot);
         numbersemen = Integer.parseInt(totsemen);
         DecimalFormat formatter = new DecimalFormat("#,###.##");
         String totalbiaya = formatter.format(numbersemen);
-        hasilse.setText(totalbiaya);
-        hasilse1.setText(Float.toString(totpc));
-        hasilse2.setText(Float.toString(hargasementot));
+        hasilse.setText(Float.toString(hitungs));
+        hasilse1.setText(Float.toString(jumlahsemenfix));
+        hasilse2.setText(totalbiaya);
     }
 
     private void hitungbatako() {
@@ -317,14 +326,16 @@ public class Editbidang extends AppCompatActivity {
         float p = Float.parseFloat(pbatako);
         float t = Float.parseFloat(tbatako);
         hasilm = m/(p*t)*m;
-        float tot = hasilm*luasba;
-        htotbatako = tot*hargabatakoparse;
         DecimalFormat df = new DecimalFormat("#");
+        float tot = hasilm*luasba;
+        String totalbatako = df.format(tot);
+        int numberbat1 = Integer.parseInt(totalbatako);
+        htotbatako = numberbat1*hargabatakoparse;
         totbatako = df.format(htotbatako);
         numberbatako = Integer.parseInt(totbatako);
         DecimalFormat formatter = new DecimalFormat("#,###.##");
         String totalbiaya = formatter.format(numberbatako);
-        hasilbat.setText(Float.toString(tot));
+        hasilbat.setText(String.valueOf(numberbat1));
         hasilbat1.setText(totalbiaya);
     }
 
@@ -401,8 +412,8 @@ public class Editbidang extends AppCompatActivity {
             @Override
             public void onResponse(Call<ResponseMaterial> call, Response<ResponseMaterial> response) {
                 if (response.code() == 200) {
-                    int i = 0;
                     Batako = response.body().getMaterials();
+                    int i = 0;
                     List<String> listSpinner = new ArrayList<String>();
                     String data = namabatako1;
                     for (int j = 0; j < Batako.size(); j++) {
@@ -537,10 +548,10 @@ public class Editbidang extends AppCompatActivity {
                 new Campuran_adapter(Editbidang.this,
                         android.R.layout.simple_spinner_item, campurans);
         campuran.setAdapter(campuran_adapter);
-        Jenispengerjaan_adapter jenispengerjaan_adapter =
-                new Jenispengerjaan_adapter(Editbidang.this,
-                        android.R.layout.simple_spinner_item, jenispengerjaans);
-        spinjenis.setAdapter(jenispengerjaan_adapter);
+//        Jenispengerjaan_adapter jenispengerjaan_adapter =
+//                new Jenispengerjaan_adapter(Editbidang.this,
+//                        android.R.layout.simple_spinner_item, jenispengerjaans);
+
         Bundle bundle = getIntent().getExtras();
         if (bundle != null)
         {
@@ -550,7 +561,7 @@ public class Editbidang extends AppCompatActivity {
         }
         idperhitunganbidang= bundle.getString("id");
        namapengerjaan.setText(bundle.getString("nama"));
-        bundle.getString("jenis_pengerjaan");
+        namajenis1 = bundle.getString("jenis_pengerjaan");
         panjangb.setText(bundle.getString("panjangbid"));
         tinggib.setText(bundle.getString("tinggibid"));
         panjangp.setText(bundle.getString("panjangpin"));
@@ -561,6 +572,7 @@ public class Editbidang extends AppCompatActivity {
         hasilbid.setText(bundle.getString("luas_bidang"));
         hasilbat.setText(bundle.getString("jumlahkeperluanbatako"));
         hasilpas.setText(bundle.getString("jumlahkeperluanpasir"));
+        hasilpas1.setText(bundle.getString("jumlahkeperluanpasir"));
         hasilse.setText(bundle.getString("Jumlahkeperluansemen"));
         hasilse1.setText(bundle.getString("jumlahdalamsak"));
       namabatako1= bundle.getString("nama_batako");
@@ -602,7 +614,26 @@ public class Editbidang extends AppCompatActivity {
         DecimalFormat formatter3 = new DecimalFormat("#,###.##");
         String totalbiayaseluruh = formatter3.format(numbertotal);
         hasilb.setText(totalbiayaseluruh);
+        jensi.add(new Jenispengerjaan("Bangunan rumah"));
+        jensi.add(new Jenispengerjaan("Tembok pagar"));
+        jensi.add(new Jenispengerjaan("Sekat kamar mandi"));
+        jensi.add(new Jenispengerjaan("Sekat kamar"));
+        jensi.add(new Jenispengerjaan("Lainnya"));
 
+        int i = 0;
+        List<String> listSpinner = new ArrayList<String>();
+        String data = namajenis1;
+        for (int j = 0; j <jensi.size(); j++) {
+            if (data.equalsIgnoreCase(String.valueOf(jensi.get(j).getJenispengerjaan()))) {
+                i = j;
+            }
+            listSpinner.add(String.valueOf(jensi.get(j).getJenispengerjaan()));
+        }
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(mContext,
+                android.R.layout.simple_spinner_item, listSpinner);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinjenis.setAdapter(adapter);
+        spinjenis.setSelection(i);
         float luas;
         btnproses = findViewById(R.id.prosesbtn);
     }

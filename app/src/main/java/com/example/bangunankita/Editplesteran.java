@@ -3,6 +3,7 @@ package com.example.bangunankita;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -45,9 +46,13 @@ public class Editplesteran extends AppCompatActivity {
     TextView hasilse,hasilse1,hasilse2,hasilb,hasilpas,hasilpas1,hasilpas2,hasilvol;
     Button prosesbtn1,hitung;
     float hasil,luasba,totpasir,hargasementot;
+    private String totpasir1,totsemen1,tothargatot;
+    private int numberpasir,numbersemen,numbertotal;
+
     Context mContext;
+    ProgressDialog pd;
     SessionManager sm;
-    String token,nama,p,t,namapengerjaan,namasemen1,namapenger,idperhitunganplesteran,namasemen,namadinding,namapasir
+    String namajenis1,campuran1,token,nama,p,t,namapengerjaan,namasemen1,namapenger,idperhitunganplesteran,namasemen,namadinding,namapasir
     ,panjang1,jenis,tinggi1,metode,tebal1,sisi1,hargasemen1,hargapasir1,namapasir1;
     String mId,Ju;
     int ProyekID,idplesteran;
@@ -55,6 +60,8 @@ public class Editplesteran extends AppCompatActivity {
     private List<Perhitunganbidang1> BidangModel = new ArrayList<>();
     private List<Material> Semen = new ArrayList<>();
     private List<Material> Pasir = new ArrayList<>();
+    private List<Jenispengerjaan> jensi = new ArrayList<>();
+    private List<Campuran> campura = new ArrayList<>();
 
     Campuran[] campurans ={
             new Campuran("1:1", 15.504,0.016,0.0),
@@ -78,6 +85,9 @@ public class Editplesteran extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_editplesteran);
         init();
+        pd = new ProgressDialog(this);
+        initcampuran();
+        initjenispengerjaan();
         initSpinnerDinding();
         initSpinnerSemen();
         initSpinnerPasir();
@@ -191,10 +201,10 @@ public class Editplesteran extends AppCompatActivity {
 
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Campuran obj = (Campuran) (parent.getItemAtPosition(position));
-                pp = String.valueOf(obj.getPp());
-                pc = String.valueOf(obj.getPc());
-                metode = String.valueOf(obj.getCampuran());
+                String selectedName = parent.getItemAtPosition(position).toString();
+                pp = String.valueOf(campura.get(position).getPp());
+                pc = String.valueOf(campura.get(position).getPc());
+                metode = String.valueOf(campura.get(position).getCampuran());
 
 //                Toast.makeText(mContext, "Kamu memilih Campuran " + pc, Toast.LENGTH_SHORT).show();
             }
@@ -208,8 +218,9 @@ public class Editplesteran extends AppCompatActivity {
 
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Jenispengerjaan je = (Jenispengerjaan) (parent.getItemAtPosition(position));
-                jenis = String.valueOf(je.getJenispengerjaan());
+                String selectedName = parent.getItemAtPosition(position).toString();
+                jenis = String.valueOf(jensi.get(position).getJenispengerjaan());
+
 
 //                Toast.makeText(mContext, "Kamu memilih Campuran " + pc, Toast.LENGTH_SHORT).show();
             }
@@ -222,8 +233,13 @@ public class Editplesteran extends AppCompatActivity {
     }
 
     private void hitungtot() {
-        float tothitung = hargasementot+totpasir;
-        hasilb.setText(String.valueOf(tothitung));
+        float tothitung = numberpasir+numbersemen;
+        DecimalFormat df = new DecimalFormat("#");
+        tothargatot = df.format(tothitung);
+        numbertotal = Integer.parseInt(tothargatot);
+        DecimalFormat formatter = new DecimalFormat("#,###.##");
+        String totalbiaya = formatter.format(numbertotal);
+        hasilb.setText(totalbiaya);
     }
 
     private void hitungpasir() {
@@ -239,8 +255,15 @@ public class Editplesteran extends AppCompatActivity {
         result = n.replace(",",".");
         float hitungp = Float.parseFloat(result);
         totpasir = hitungp*hargapas;
+
+        DecimalFormat df1 = new DecimalFormat("#");
+        totpasir1 = df1.format(totpasir);
+        numberpasir = Integer.parseInt(totpasir1);
+        DecimalFormat formatter = new DecimalFormat("#,###.##");
+        String totalbiaya = formatter.format(numberpasir);
+
         Toast.makeText(mContext, "Gagal mengambil data"+ppasir, Toast.LENGTH_SHORT).show();
-        hasilpas2.setText(Float.toString(totpasir));
+        hasilpas2.setText(totalbiaya);
         hasilpas1.setText(Float.toString(hitungp));
         hasilpas.setText(Float.toString(hitungp));
     }
@@ -259,13 +282,69 @@ public class Editplesteran extends AppCompatActivity {
         result = n.replace(",",".");
         float hitungs = Float.parseFloat(result);
         float totpc = hitungs/beratsemen;
-        hargasementot = totpc*hargasemen;
+        String k = df.format(totpc);
+        String result1 = null;
+        result1 = k.replace(",",".");
+        float totpc1 = Float.parseFloat(result1);
+        hargasementot = totpc1*hargasemen;
+        DecimalFormat df1 = new DecimalFormat("#");
+        totsemen1 = df1.format(hargasementot);
+        numbersemen = Integer.parseInt(totsemen1);
+        DecimalFormat formatter = new DecimalFormat("#,###.##");
+        String totalbiaya = formatter.format(numbersemen);
 
         hasilse.setText(Float.toString(hitungs));
-        hasilse1.setText(Float.toString(totpc));
-        hasilse2.setText(Float.toString(hargasementot));
+        hasilse1.setText(Float.toString(totpc1));
+        hasilse2.setText(totalbiaya);
     }
+    private void initcampuran() {
+        campura.add(new Campuran("1:1",15.504,0.016,0.0));
+        campura.add(new Campuran("1:2",10.224,0.020,0.0));
+        campura.add(new Campuran("1:3",7.776,0.023,0.0));
+        campura.add(new Campuran("1:4",6.240,0.024,0.0));
+        campura.add(new Campuran("1:5",5.184,0.026,0.0));
+        campura.add(new Campuran("1:6",4.416,0.027,0.0));
+        campura.add(new Campuran("1:7",3.936,0.028,0.0));
+        campura.add(new Campuran("1:8",3.456,0.029,0.0));
 
+        int i = 0;
+        List<String> listSpinner = new ArrayList<String>();
+        String data = metode;
+        for (int j = 0; j <jensi.size(); j++) {
+            if (data.equalsIgnoreCase(String.valueOf(jensi.get(j).getJenispengerjaan()))) {
+                i = j;
+            }
+            listSpinner.add(String.valueOf(jensi.get(j).getJenispengerjaan()));
+        }
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(mContext,
+                android.R.layout.simple_spinner_item, listSpinner);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinjenis.setAdapter(adapter);
+        spinjenis.setSelection(i);
+
+    }
+    private void initjenispengerjaan() {
+        jensi.add(new Jenispengerjaan("Bangunan rumah"));
+        jensi.add(new Jenispengerjaan("Tembok pagar"));
+        jensi.add(new Jenispengerjaan("Sekat kamar mandi"));
+        jensi.add(new Jenispengerjaan("Sekat kamar"));
+        jensi.add(new Jenispengerjaan("Lainnya"));
+
+        int i = 0;
+        List<String> listSpinner = new ArrayList<String>();
+        String data = namajenis1;
+        for (int j = 0; j <jensi.size(); j++) {
+            if (data.equalsIgnoreCase(String.valueOf(jensi.get(j).getJenispengerjaan()))) {
+                i = j;
+            }
+            listSpinner.add(String.valueOf(jensi.get(j).getJenispengerjaan()));
+        }
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(mContext,
+                android.R.layout.simple_spinner_item, listSpinner);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinjenis.setAdapter(adapter);
+        spinjenis.setSelection(i);
+    }
     private void initSpinnerDinding() {
         String apiKey = "oa00000000app";
         if (!TextUtils.isEmpty(Ju) && TextUtils.isDigitsOnly(Ju)) {
@@ -318,6 +397,7 @@ public class Editplesteran extends AppCompatActivity {
             @Override
             public void onResponse(Call<ResponseMaterial> call, Response<ResponseMaterial> response) {
                 if (response.code() == 200) {
+                    pd.hide();
                     Semen = response.body().getMaterials();
                     int i=0;
                     List<String> listSpinner = new ArrayList<String>();
@@ -351,6 +431,7 @@ public class Editplesteran extends AppCompatActivity {
             @Override
             public void onResponse(Call<ResponseMaterial> call, Response<ResponseMaterial> response) {
                 if (response.code() == 200) {
+                    pd.hide();
                     Pasir = response.body().getMaterials();
                     int i = 0;
                     List<String> listSpinner = new ArrayList<String>();
@@ -387,6 +468,7 @@ public class Editplesteran extends AppCompatActivity {
             public boolean onMenuItemClick(MenuItem item) {
                 idplesteran = Integer.parseInt(idperhitunganplesteran);
                 String apiKey = "oa00000000app";
+                pd.show();
                 HashMap<String, String> map = new HashMap<>();
                 map.put("ProyekId", mId);
                 map.put("nama", namapenger);
@@ -402,16 +484,17 @@ public class Editplesteran extends AppCompatActivity {
                 map.put("Jumlahkeperluansemen", hasilse.getText().toString());
                 map.put("jumlahdalamsak", hasilse1.getText().toString());
                 map.put("metode", metode);
-                map.put("hargapasirtotal",hasilpas2.getText().toString());
-                map.put("hargasementotal",hasilse2.getText().toString());
+                map.put("hargapasirtotal", String.valueOf(numberpasir));
+                map.put("hargasementotal", String.valueOf(numbersemen));
                 map.put("hargapasir", hargapasir.getText().toString());
                 map.put("hargasemen", hargasemen.getText().toString());
-                map.put("hargatotal", hasilb.getText().toString());
+                map.put("hargatotal", String.valueOf(numbertotal));
                 Call<Void> call = ApiClient.getRequestInterface().actionPutPerhitunganplesteran(idplesteran,apiKey,token,map);
                 call.enqueue(new Callback<Void>() {
                     @Override
                     public void onResponse(Call<Void> call, Response<Void> response) {
                         if (response.code() == 201) {
+                            pd.hide();
                             Intent Perhitunganplesteran = (new Intent(Editplesteran.this, Perhitunganplesteran.class)
                                     .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
                             Bundle setData = new Bundle();
@@ -493,7 +576,7 @@ public class Editplesteran extends AppCompatActivity {
 
         idperhitunganplesteran= bundle.getString("id");
         namapenger=(bundle.getString("nama"));
-        bundle.getString("jenis_pengerjaan");
+        namajenis1=bundle.getString("jenis_pengerjaan");
         panjang1 =bundle.getString("panjangdin");
         tinggi1 =bundle.getString("tinggidin");
         sisi.setText(bundle.getString("sisi"));
@@ -508,10 +591,31 @@ public class Editplesteran extends AppCompatActivity {
         hargapasir1 =bundle.getString("hargapasir");
         namasemen= bundle.getString("nama_semen");
         namapasir= bundle.getString("nama_pasir");
-        hasilpas2.setText(bundle.getString("hargapasirtotal"));
-        hasilse2.setText(bundle.getString("hargasementotal"));
-        hasilvol.setText(bundle.getString("volume"));
-        hasilb.setText(bundle.getString("hargatotal"));
+
+        totpasir = Float.parseFloat(bundle.getString("hargapasirtotal"));
+        DecimalFormat df1 = new DecimalFormat("#");
+        totpasir1 = df1.format(totpasir);
+        numberpasir = Integer.parseInt(totpasir1);
+        DecimalFormat formatter = new DecimalFormat("#,###.##");
+        String totalbiayapasir = formatter.format(numberpasir);
+        hasilpas2.setText(totalbiayapasir);
+
+        hargasementot = Float.parseFloat(bundle.getString("hargasementotal"));
+        DecimalFormat df2 = new DecimalFormat("#");
+        totsemen1 = df2.format(hargasementot);
+        numbersemen = Integer.parseInt(totsemen1);
+        DecimalFormat formatter2 = new DecimalFormat("#,###.##");
+        String totalbiayasemen = formatter2.format(numbersemen);
+        hasilse2.setText(totalbiayasemen);
+
+        float tothitung = Float.parseFloat(bundle.getString("hargatotal"));
+        DecimalFormat df = new DecimalFormat("#");
+        tothargatot = df.format(tothitung);
+        numbertotal = Integer.parseInt(tothargatot);
+        DecimalFormat formatter1 = new DecimalFormat("#,###.##");
+        String totalbiaya = formatter1.format(numbertotal);
+        hasilb.setText(totalbiaya);
+
     }
 
 }

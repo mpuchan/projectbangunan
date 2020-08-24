@@ -3,6 +3,7 @@ package com.example.bangunankita;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -47,12 +48,13 @@ public class Editurugan extends AppCompatActivity {
     String token,nama1,p,t,idproyek,jenis;
     String mId,Ju;
     int ProyekID,idurugan1;
+    ProgressDialog pd;
     public String hs,ids,hp,idp,berats,pc,pp,namapasir,hpasir,namapasir1,idurugan;
     private List<Perhitunganbidang1> BidangModel = new ArrayList<>();
     private List<Material> Pasir = new ArrayList<>();
     Jenispengerjaan[] jenispengerjaans  ={
             new Jenispengerjaan("Urugan Taman"),
-            new Jenispengerjaan("Pondasi Urugan"),
+            new Jenispengerjaan("Urugan Pondasi"),
             new Jenispengerjaan("Lainnya"),
     };
     @Override
@@ -60,6 +62,9 @@ public class Editurugan extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_editurugan);
         init();
+        pd = new ProgressDialog(this);
+        pd.setMessage("loading");
+        pd.show();
         initSpinnerPasir();
 
         prosesbtn.setOnClickListener(new View.OnClickListener() {
@@ -111,7 +116,7 @@ public class Editurugan extends AppCompatActivity {
                     hargaurugan.setText(hp);
                 }
 
-                Toast.makeText(mContext, "Kamu memilih Pasir " + selectedName, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(mContext, "Kamu memilih Pasir " + selectedName, Toast.LENGTH_SHORT).show();
             }
 
 
@@ -164,6 +169,7 @@ public class Editurugan extends AppCompatActivity {
             @Override
             public void onResponse(Call<ResponseMaterial> call, Response<ResponseMaterial> response) {
                 if (response.code() == 200) {
+                    pd.hide();
                     Pasir = response.body().getMaterials();
                     int i = 0;
                     List<String> listSpinner = new ArrayList<String>();
@@ -197,6 +203,7 @@ public class Editurugan extends AppCompatActivity {
         item.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
+                pd.show();
                 idurugan1 = Integer.parseInt(idurugan);
                 String apiKey = "oa00000000app";
                 HashMap<String, String> map = new HashMap<>();
@@ -219,7 +226,7 @@ public class Editurugan extends AppCompatActivity {
                     @Override
                     public void onResponse(Call<Void> call, Response<Void> response) {
                         if (response.code() == 201) {
-
+                            pd.hide();
                             Intent perhitunganurugan = (new Intent(Editurugan.this, Perhitunganurugan.class)
                                     .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
                             Bundle setData = new Bundle();
@@ -233,6 +240,7 @@ public class Editurugan extends AppCompatActivity {
                         } else if (response.code() == 422) {
                             Toast.makeText(Editurugan.this,
                                     "Something Wrong",
+//                                    "Terjadi kesalahan saat menyimpan data, ini bisa terjadi ketika terdapat data yang belum terisi",
                                     Toast.LENGTH_LONG).show();
                         }
                     }
@@ -285,8 +293,8 @@ public class Editurugan extends AppCompatActivity {
         }else{
             mId = "0";
         }
-        Toast.makeText(Editurugan.this, "Proyek Id"+mId,
-                Toast.LENGTH_SHORT).show();
+//        Toast.makeText(Editurugan.this, "Proyek Id"+mId,
+//                Toast.LENGTH_SHORT).show();
         idurugan= bundle.getString("Id");
         nama.setText(bundle.getString("nama"));
         bundle.getString("jenis_pengerjaan");

@@ -35,7 +35,7 @@
                 android:gravity="center"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
-                android:text="Meliputi perhitungan kebutuhan material kayu, genteng,pasir dan semen dalam proses pembuatan atap bangunan"
+                android:text="Meliputi perhitungan kebutuhan material genteng,bubungan,pasir dan semen dalam proses pembuatan atap bangunan"
                 android:textColor="#FDFDFD"
                 android:textSize="12sp"
                 android:textStyle="bold" />
@@ -121,7 +121,7 @@
                                 android:gravity="center">
 
                                 <ImageView
-                                    android:id="@+id/gold"
+                                    android:id="@+id/rincianatap"
                                     android:layout_width="40dp"
                                     android:layout_height="40dp"
                                     android:layout_centerHorizontal="true"
@@ -130,7 +130,7 @@
                                 <TextView
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:layout_below="@id/gold"
+                                    android:layout_below="@id/rincianatap"
                                     android:gravity="center"
                                     android:text="Rincian Data Atap"
                                     android:textColor="#000"
@@ -147,9 +147,9 @@
                                 android:gravity="center">
 
                                 <ImageView
-                                    android:id="@+id/elixir"
-                                    android:layout_width="40dp"
-                                    android:layout_height="40dp"
+                                    android:id="@+id/panduanatap"
+                                    android:layout_width="32dp"
+                                    android:layout_height="32dp"
                                     android:layout_centerHorizontal="true"
                                     android:src="@drawable/iconpanduan" />
 
@@ -157,7 +157,7 @@
 
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:layout_below="@id/elixir"
+                                    android:layout_below="@id/panduanatap"
                                     android:gravity="center"
                                     android:text="Panduan Aplikasi"
                                     android:textColor="#000"

@@ -22,6 +22,7 @@ import com.example.bangunankita.R;
 import com.example.bangunankita.Retrovit.ApiClient;
 import com.example.bangunankita.Util.SessionManager;
 
+import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.List;
 
@@ -71,6 +72,15 @@ public class Plafond_adapter extends RecyclerView.Adapter<Plafond_adapter.ViewHo
         final String Totalbiaya = String.valueOf(plafonds.get(i).getHargatotal());
 
         viewHolder.Nama.setText(Name);
+        viewHolder.reng.setText(Jumlahrengbatang+"batang");
+        viewHolder.plafon.setText(Jumlahtripleklembar+"lembar");
+        float total1 = Float.parseFloat(Totalbiaya);
+        DecimalFormat df = new DecimalFormat("#");
+        String tothitungan = df.format(total1);
+        int numbertotal = Integer.parseInt(tothitungan);
+        DecimalFormat formatter = new DecimalFormat("#,###.##");
+        String totals = formatter.format(numbertotal);
+        viewHolder.detailtotal.setText("Rp."+ totals);
 //
 
         viewHolder.editplafond.setOnClickListener(new View.OnClickListener() {
@@ -106,31 +116,48 @@ public class Plafond_adapter extends RecyclerView.Adapter<Plafond_adapter.ViewHo
 
             }
         });
-//        viewHolder.detailplafond.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Dialog detaildialog = new Dialog(context);
-//                detaildialog.setContentView(R.layout.detail_plafond);
-//                TextView nama = detaildialog.findViewById(R.id.nama);
-//                TextView luasplafond = detaildialog.findViewById(R.id.luasplafond);
-//                TextView Batako1 = detaildialog.findViewById(R.id.Batako);
-//                TextView Semen1 = detaildialog.findViewById(R.id.semen1);
-//                TextView Pasir1 = detaildialog.findViewById(R.id.pasir);
-//                TextView totalbiaya = detaildialog.findViewById(R.id.totalbiaya);
-//                nama.setText(Name);
-//                luasplafond.setText("Panjang "+Panjangbid+"m "+",Tinggi "+Tinggibid+"m "+"" +
-//                        ",Panjang panel pintu "+Panjangpin+"m "+",Tinggi panel pintu "+Tinggipin+
-//                        ",Panjang panel jendela "+Panjangjen+"m "+",Tinggi panel jendela "+Tinggijen+"m "+
-//                        ",Luas Plafond "+Luas+"m ");
-//                Batako1.setText("Jumlah "+Batako+"buah"+",Harga Rp."+Hargabatako);
-//                Semen1.setText("Berat "+Semen+"kg"+",Harga Rp."+Hargasemen);
-//                Pasir1.setText("Jumlah "+Pasir+"m3"+",Harga Rp."+Hargapasir);
-//                totalbiaya.setText(",Harga Rp."+Totalbiaya);
-//
-//                detaildialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-//                detaildialog.show();
-//            }
-//        });
+        viewHolder.detailplafond.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Dialog detaildialog = new Dialog(context);
+                detaildialog.setContentView(R.layout.detail_plafon);
+                TextView nama = detaildialog.findViewById(R.id.nama);
+                TextView luasplafond = detaildialog.findViewById(R.id.luasplafon);
+                TextView namaplafon = detaildialog.findViewById(R.id.namaplafon);
+                TextView namapaku = detaildialog.findViewById(R.id.namamurbaut);
+                TextView namareng = detaildialog.findViewById(R.id.namarenghollow);
+                TextView hargaplafon = detaildialog.findViewById(R.id.hargaplafon);
+                TextView hargapakumur = detaildialog.findViewById(R.id.hargamurpaku);
+                TextView hargareng = detaildialog.findViewById(R.id.hargareng);
+                TextView jumlahplafon = detaildialog.findViewById(R.id.jumlahplafon);
+                TextView jumlahpakumur = detaildialog.findViewById(R.id.jumlahmurbaut);
+                TextView jumlahreng = detaildialog.findViewById(R.id.jumlahrenghollow);
+                TextView hargatotalplafon = detaildialog.findViewById(R.id.hargatotalplafon);
+                TextView hargatotalmur = detaildialog.findViewById(R.id.hargatotalmurbaut);
+                TextView hargatotalreng = detaildialog.findViewById(R.id.hargatotalreng);
+                TextView totalbiaya = detaildialog.findViewById(R.id.totalbiaya);
+                nama.setText(Name);
+                luasplafond.setText("Panjang "+Panjang+"m "+",Lebar "+Lebar+"m "+
+                        ",Luas Plafon "+Luas+"m2 ");
+                namaplafon.setText(Namatriplek);
+                namapaku.setText(Namapaku);
+                namareng.setText(Namareng);
+                hargaplafon.setText("Rp"+HargaTriplek);
+                hargareng.setText("Rp"+HargaReng);
+                hargapakumur.setText("Rp"+HargaPaku);
+                jumlahplafon.setText(Jumlahtripleklembar +"lembar");
+                jumlahpakumur.setText(Jumlahpaku+"kg");
+                jumlahreng.setText(Jumlahrengbatang+"batang");
+                hargatotalplafon.setText("Rp."+Hargatottriplek);
+                hargatotalmur.setText("Rp."+Hargatotpaku);
+                hargatotalreng.setText("Rp."+Hargatotreng);
+
+                totalbiaya.setText("Rp."+Totalbiaya);
+
+                detaildialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                detaildialog.show();
+            }
+        });
         viewHolder.deleteplafond.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -197,7 +224,7 @@ public class Plafond_adapter extends RecyclerView.Adapter<Plafond_adapter.ViewHo
 
 
     public class ViewHolder extends RecyclerView.ViewHolder{
-        private TextView Nama,edit;
+        private TextView Nama,edit,detailtotal,plafon,reng;
         private ImageView image;
         private Button editplafond,deleteplafond,detailplafond;
         Dialog deletedialog;
@@ -205,6 +232,9 @@ public class Plafond_adapter extends RecyclerView.Adapter<Plafond_adapter.ViewHo
         public ViewHolder(View view) {
             super(view);
             Nama = (TextView)view.findViewById(R.id.Nama1);
+            plafon = (TextView)view.findViewById(R.id.plafon);
+            reng = (TextView)view.findViewById(R.id.reng);
+            detailtotal = view.findViewById(R.id.detailtotal);
 //
             editplafond = view.findViewById(R.id.editplafon);
             deleteplafond = view.findViewById(R.id.Deleteplafon);

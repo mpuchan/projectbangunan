@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -54,7 +55,6 @@ import retrofit2.Response;
 import static maes.tech.intentanim.CustomIntent.customType;
 
 public class Dashboard extends AppCompatActivity {
-
     private Proyek_adapter proyek_adapter;
     private List<Proyek_model> proyekModels = new ArrayList<>();
     private RecyclerView mRecyclerView;
@@ -65,26 +65,29 @@ public class Dashboard extends AppCompatActivity {
     private TextView edit;
     SwipeRefreshLayout swipeRefreshLayout;
     private String TAG = "Dashboard";
-    private String token,status,picture,tangkapidproyek;
+    private String token, status, picture, tangkapidproyek;
     SliderView sliderbuilding;
     private String stringid;
     private ImageView image;
-    int PengembangID,status1;
+    int PengembangID, status1;
     SessionManager sm;
     Context mContext;
-
+    ProgressDialog pd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
         sliderbuilding = findViewById(R.id.imageSlider);
+        pd = new ProgressDialog(this);
+        pd.setMessage("loading");
+        pd.show();
         name = findViewById(R.id.namekita);
-        datanull =findViewById(R.id.txt_resultadapter);
+        datanull = findViewById(R.id.txt_resultadapter);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         edit = findViewById(R.id.editproyek);
-        sm= new SessionManager(Dashboard.this);
+        sm = new SessionManager(Dashboard.this);
         image = findViewById(R.id.imageView3);
         mContext = this;
         proyek_adapter = new Proyek_adapter(this, proyekModels);
@@ -92,11 +95,11 @@ public class Dashboard extends AppCompatActivity {
         Fabadd = findViewById(R.id.fab);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         swipeRefreshLayout = findViewById(R.id.swiperf);
-        HashMap<String,String> map = sm.getDetailLogin();
-        token=(map.get(sm.KEY_TOKEN));
-        status=(map.get(sm.KEY_STATUS));
-        picture=(map.get(sm.KEY_PICTURE));
-        stringid=(map.get(sm.KEY_ID));
+        HashMap<String, String> map = sm.getDetailLogin();
+        token = (map.get(sm.KEY_TOKEN));
+        status = (map.get(sm.KEY_STATUS));
+        picture = (map.get(sm.KEY_PICTURE));
+        stringid = (map.get(sm.KEY_ID));
         name.setText(map.get(sm.KEY_NAMA));
         Dialog verifdialog = new Dialog(Dashboard.this);
         verifdialog.setContentView(R.layout.dialogverification);
@@ -111,22 +114,22 @@ public class Dashboard extends AppCompatActivity {
         sliderbuilding.setIndicatorUnselectedColor(Color.GRAY);
         sliderbuilding.startAutoCycle();
         setupfilter();
-            RequestOptions options = new RequestOptions()
-                    .centerCrop()
-                    .placeholder(R.drawable.gravatar)
-                    .error(R.drawable.gravatar);
-            Glide.with(this).load("https://1.bp.blogspot.com/"+picture).apply(options).into(image);
+        RequestOptions options = new RequestOptions()
+                .centerCrop()
+                .placeholder(R.drawable.gravatar)
+                .error(R.drawable.gravatar);
+        Glide.with(this).load("https://1.bp.blogspot.com/" + picture).apply(options).into(image);
 
         Fabadd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (!TextUtils.isEmpty(status) && TextUtils.isDigitsOnly(status)) {
-                    status1= Integer.parseInt(status);
+                    status1 = Integer.parseInt(status);
                 } else {
-                    status1 =0;
+                    status1 = 0;
                 }
 //
-                if (status1 == 2){
+                if (status1 == 2) {
                     Button btndelete = verifdialog.findViewById(R.id.buttonhapus);
                     btndelete.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -138,7 +141,7 @@ public class Dashboard extends AppCompatActivity {
                     verifdialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                     verifdialog.show();
 
-                }else {
+                } else {
                     startActivity(new Intent(Dashboard.this, Add_Proyek.class));
                 }
 
@@ -153,11 +156,11 @@ public class Dashboard extends AppCompatActivity {
                 Intent Profile = (new Intent(Dashboard.this, Profile.class)
                         .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
                 Bundle setData = new Bundle();
-                setData.putString("idproyek",stringid);
+                setData.putString("idproyek", stringid);
                 Profile.putExtras(setData);
 
                 startActivity(Profile);
-                customType(Dashboard.this,"bottom-to-up");
+                customType(Dashboard.this, "bottom-to-up");
 
 
             }
@@ -171,45 +174,51 @@ public class Dashboard extends AppCompatActivity {
             }
         });
     }
-private void setupfilter(){
+
+    private void setupfilter() {
         RecyclerView recyclerView = findViewById(R.id.rv_proyek);
         recyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
-        proyek_adapter = new Proyek_adapter(mContext,proyekModels);
+        proyek_adapter = new Proyek_adapter(mContext, proyekModels);
 
         recyclerView.setLayoutManager((layoutManager));
         recyclerView.setAdapter(proyek_adapter);
 
-}
+    }
+
     @Override
     protected void onResume() {
+
         super.onResume();
         getProyek();
     }
-    private void getProyek() {
+
+     private void getProyek() {
         String apiKey = "oa00000000app";
         if (!TextUtils.isEmpty(stringid) && TextUtils.isDigitsOnly(stringid)) {
             PengembangID = Integer.parseInt(stringid);
         } else {
-            PengembangID =0;
+            PengembangID = 0;
         }
 
-        Call <ResponseModel> call = ApiClient.getRequestInterface().getProyek(PengembangID,apiKey,token);
+        Call<ResponseModel> call = ApiClient.getRequestInterface().getProyek(PengembangID, apiKey, token);
         call.enqueue(new Callback<ResponseModel>() {
             @Override
             public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
+
                 swipeRefreshLayout.setRefreshing(false);
 //                String message = response.body().getMessage();
-                if (response.code() == 200 ) {
+                if (response.code() == 200) {
+                    pd.hide();
                     final List<Proyek_model> proyekModels = response.body().getProyek();
                     Integer ids = response.body().getId();
 
                     if (proyekModels == null) {
                         datanull.setText("Data Proyek Masih Kosong");
-                    }else{
+                    } else {
                         datanull.setText(null);
                     }
-                    mRecyclerView.setAdapter(new Proyek_adapter(mContext,proyekModels));
+                    mRecyclerView.setAdapter(new Proyek_adapter(mContext, proyekModels));
                     proyek_adapter.notifyDataSetChanged();
                     Log.d(TAG, "Tes" + proyek_adapter);
 
@@ -219,6 +228,7 @@ private void setupfilter(){
 
                 }
             }
+
             @Override
             public void onFailure(Call<ResponseModel> call, Throwable t) {
                 swipeRefreshLayout.setRefreshing(false);
@@ -230,8 +240,10 @@ private void setupfilter(){
 
     }
 
+
+
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main,menu);
+        getMenuInflater().inflate(R.menu.menu_main, menu);
         MenuItem item = menu.findItem(R.id.app_bar_search);
         SearchView searchView = (SearchView) item.getActionView();
         searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
@@ -243,13 +255,54 @@ private void setupfilter(){
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                proyek_adapter.getFilter().filter(newText);
+
+                    String apiKey = "oa00000000app";
+                    if (!TextUtils.isEmpty(stringid) && TextUtils.isDigitsOnly(stringid)) {
+                        PengembangID = Integer.parseInt(stringid);
+                    } else {
+                        PengembangID = 0;
+                    }
+                    HashMap<String, String> map = sm.getDetailLogin();
+                    map.put("nama_proyek1",newText);
+                    Call<ResponseModel> call = ApiClient.getRequestInterface().actionSearch(PengembangID, apiKey, token,map);
+                    call.enqueue(new Callback<ResponseModel>() {
+                        @Override
+                        public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
+                            swipeRefreshLayout.setRefreshing(false);
+//                String message = response.body().getMessage();
+                            if (response.code() == 200) {
+                                final List<Proyek_model> proyekModels = response.body().getProyek();
+                                Integer ids = response.body().getId();
+
+                                if (proyekModels == null) {
+                                    datanull.setText("Data Proyek Masih Kosong");
+                                } else {
+                                    datanull.setText(null);
+                                }
+                                mRecyclerView.setAdapter(new Proyek_adapter(mContext, proyekModels));
+                                proyek_adapter.notifyDataSetChanged();
+                                Log.d(TAG, "Tes" + proyek_adapter);
+
+                            } else if (response.code() == 422) {
+                                Toast.makeText(Dashboard.this, "Something wrong!",
+                                        Toast.LENGTH_SHORT).show();
+
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<ResponseModel> call, Throwable t) {
+                            swipeRefreshLayout.setRefreshing(false);
+                            Toast.makeText(Dashboard.this, "Oops! Something went wrong!" + t.getMessage(),
+                                    Toast.LENGTH_SHORT).show();
+
+                        }
+                    });
                 return false;
             }
         });
         return true;
 
     }
-
-
 }
+

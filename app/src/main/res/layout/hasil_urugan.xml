@@ -22,7 +22,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Volume bidang anda : "
+            android:text="Volume urugan anda : "
             android:textColor="#FA575656" />
 
         <TextView

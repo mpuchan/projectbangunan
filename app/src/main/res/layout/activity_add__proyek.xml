@@ -51,7 +51,7 @@
             android:id="@+id/luastanah"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Luas Tanah"
+            android:hint="Luas Tanah (m2)"
             android:inputType="number"
             android:paddingBottom="16dp" />
 
@@ -65,7 +65,7 @@
             android:id="@+id/luasbangunan"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Luas Bangunan"
+            android:hint="Luas Bangunan (m2)"
             android:inputType="number"
             android:paddingBottom="16dp" />
 
@@ -105,7 +105,8 @@
             android:layout_weight="1"
             android:background="@drawable/redcornered"
             android:text="Batal"
-            android:textColor="@android:color/white" />
+            android:textColor="@android:color/white"
+            android:visibility="invisible" />
 
         <Button
             android:id="@+id/add_proyek"

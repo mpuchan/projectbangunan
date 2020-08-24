@@ -48,12 +48,13 @@
                     android:background="@android:color/white"
                     android:orientation="vertical"
                     >
+
                     <TextView
                         android:id="@+id/textView4"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="0"
-                        android:text="Menghitung luas area Pondasi"
+                        android:text="Menghitung volume pondasi"
                         android:textColor="#FA575656" />
 
                     <TextView
@@ -186,6 +187,7 @@
                                 android:id="@+id/volume"
                                 android:layout_width="137dp"
                                 android:layout_height="wrap_content"
+                                android:enabled="false"
                                 android:hint="volume"
                                 android:inputType="text"
                                 android:paddingBottom="16dp" />

@@ -4,6 +4,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -20,6 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.bangunankita.Model.Campuran;
+import com.example.bangunankita.Model.Jenispengerjaan;
 import com.example.bangunankita.Model.Material;
 import com.example.bangunankita.Model.ResponseMaterial;
 import com.example.bangunankita.Retrovit.ApiClient;
@@ -50,6 +52,7 @@ public class Editpondasi extends AppCompatActivity {
     private int numberbatako,numberpasir,numbersemen,numbertotal,numberbatu;
     private String totbatako,totsemen1,totpasir1,tothitungan,totbatu;
     float hasilm,vol1;
+    ProgressDialog pd;
     float totpasir;
     float htotbatu,hasilbt;
     float hargasementot,hargapasirparse,hargasemenparse,hargabatuparse;
@@ -59,19 +62,17 @@ public class Editpondasi extends AppCompatActivity {
     private List<Material> Batu = new ArrayList<>();
     private List<Material> Semen = new ArrayList<>();
     private List<Material> Pasir = new ArrayList<>();
+    private List<Campuran> Campuran1 = new ArrayList<>();
     Context mContext;
-    Campuran[] campurans ={
-            new Campuran("1:3", 202,0.485,0),
-            new Campuran("1:4", 163, 0.52,0),
-            new Campuran("1:5", 136,0.544,0),
-            new Campuran("1:6", 117,0.561,0),
-            new Campuran("1:8", 91,0.584,0)
-    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_editpondasi);
         init();
+        pd = new ProgressDialog(this);
+        pd.setMessage("loading");
+        pd.show();
         initSpinnerBatu();
         initSpinnerSemen();
         initSpinnerPasir();
@@ -105,9 +106,16 @@ public class Editpondasi extends AppCompatActivity {
                 float t2 = Float.parseFloat(t1);
                 float p2 = Float.parseFloat(p1);
                 hasil = (((a2+b2)*t2)/2)*p2;
-                volume.setText(String.valueOf(hasil));
-                String vol = volume.getText().toString().trim();
-                vol1 = Float.parseFloat(vol);
+
+                DecimalFormat df = new DecimalFormat("#.##");
+                df.setRoundingMode(RoundingMode.CEILING);
+                float d = hasil;
+                String n = df.format(d);
+                String result = null;
+                result = n.replace(",",".");
+
+                volume.setText(result);
+
 
             }
         });
@@ -179,7 +187,7 @@ public class Editpondasi extends AppCompatActivity {
                 }
 
 
-                Toast.makeText(mContext, "Kamu memilih Pasir " + hpasir, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(mContext, "Kamu memilih Pasir " + hpasir, Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -191,10 +199,10 @@ public class Editpondasi extends AppCompatActivity {
 
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Campuran obj = (Campuran) (parent.getItemAtPosition(position));
-                pp = String.valueOf(obj.getPp());
-                pc = String.valueOf(obj.getPc());
-                metode = String.valueOf(obj.getCampuran());
+                String selectedName = parent.getItemAtPosition(position).toString();
+                pp = String.valueOf(Campuran1.get(position).getPp());
+                pc = String.valueOf(Campuran1.get(position).getPc());
+                metode = String.valueOf(Campuran1.get(position).getCampuran());
 
 //                Toast.makeText(mContext, "Kamu memilih Campuran " + pc, Toast.LENGTH_SHORT).show();
             }
@@ -208,6 +216,8 @@ public class Editpondasi extends AppCompatActivity {
         hitung.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String vol = volume.getText().toString().trim();
+                vol1 = Float.parseFloat(vol);
                 String hargapasir = hargap.getText().toString().trim();
                 hargapasirparse = Float.parseFloat(hargapasir);
 //                hasilbid.setText(String.valueOf(hasil));
@@ -251,7 +261,6 @@ public class Editpondasi extends AppCompatActivity {
         numberpasir = Integer.parseInt(totpasir1);
         DecimalFormat formatter = new DecimalFormat("#,###.##");
         String totalbiaya = formatter.format(numberpasir);
-        Toast.makeText(mContext, "Gagal mengambil data"+ppasir, Toast.LENGTH_SHORT).show();
         hasilpas2.setText(totalbiaya);
         hasilpas1.setText(Float.toString(hitungp));
         hasilpas.setText(Float.toString(hitungp));
@@ -269,7 +278,11 @@ public class Editpondasi extends AppCompatActivity {
         result = n.replace(",",".");
         float hitungs = Float.parseFloat(result);
         float totpc = hitungs/beratsemen;
-        hargasementot = totpc*hargasemenparse;
+        String totpc1 = df.format(totpc);
+        String resul1 = null;
+        resul1 = totpc1.replace(",",".");
+        float totpcsak = Float.parseFloat(resul1);
+        hargasementot = totpcsak*hargasemenparse;
         DecimalFormat df1 = new DecimalFormat("#");
         totsemen1 = df1.format(hargasementot);
         numbersemen = Integer.parseInt(totsemen1);
@@ -277,7 +290,7 @@ public class Editpondasi extends AppCompatActivity {
         String totalbiaya = formatter.format(numbersemen);
 
         hasilse.setText(Float.toString(hitungs));
-        hasilse1.setText(Float.toString(totpc));
+        hasilse1.setText(Float.toString(totpcsak));
         hasilse2.setText(totalbiaya);
     }
 
@@ -309,6 +322,7 @@ public class Editpondasi extends AppCompatActivity {
             @Override
             public void onResponse(Call<ResponseMaterial> call, Response<ResponseMaterial> response) {
                 if (response.code() == 200) {
+                    pd.hide();
                     Semen = response.body().getMaterials();
                     int i = 0;
                     List<String> listSpinner = new ArrayList<String>();
@@ -342,6 +356,7 @@ public class Editpondasi extends AppCompatActivity {
             @Override
             public void onResponse(Call<ResponseMaterial> call, Response<ResponseMaterial> response) {
                 if (response.code() == 200) {
+                    pd.hide();
                     Pasir = response.body().getMaterials();
                     int i = 0;
                     List<String> listSpinner = new ArrayList<String>();
@@ -371,10 +386,11 @@ public class Editpondasi extends AppCompatActivity {
     }
 
     private void initSpinnerBatu() {
-        ApiClient.getRequestInterface().getallbatako().enqueue(new Callback<ResponseMaterial>() {
+        ApiClient.getRequestInterface().getallbatu().enqueue(new Callback<ResponseMaterial>() {
             @Override
             public void onResponse(Call<ResponseMaterial> call, Response<ResponseMaterial> response) {
                 if (response.code() == 200) {
+                    pd.hide();
                     Batu = response.body().getMaterials();
                     int i = 0;
                     List<String> listSpinner = new ArrayList<String>();
@@ -411,6 +427,7 @@ public class Editpondasi extends AppCompatActivity {
         item.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
+                pd.show();
                 String apiKey = "oa00000000app";
                 initvalidation();
                 HashMap<String, String> map = new HashMap<>();
@@ -443,6 +460,7 @@ public class Editpondasi extends AppCompatActivity {
                     @Override
                     public void onResponse(Call<Void> call, Response<Void> response) {
                         if (response.code() == 201) {
+                            pd.hide();
                             Intent Perhitunganpondasi = (new Intent(Editpondasi.this, PerhitunganPondasi.class)
                                     .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
                             Bundle setData = new Bundle();
@@ -474,6 +492,9 @@ public class Editpondasi extends AppCompatActivity {
     }
 
     private void initvalidation() {
+        if (namapengerjaan.getText().toString().length() == 0) {
+            namapengerjaan.setError("Data ini harus diisi");
+        }
         if (a.getText().toString().length() == 0) {
             a.setError("Data ini harus diisi");
             a1 = "0";
@@ -490,7 +511,7 @@ public class Editpondasi extends AppCompatActivity {
             p.setError("Data ini harus diisi");
             p1 = "0";
 
-        } else if (hasilbat1.getText().toString().length() == 0) {
+        } else if (hasilse.getText().toString().length() == 0) {
             hitung.setError("");
             AlertDialog.Builder builder1 = new AlertDialog.Builder(Editpondasi.this);
             builder1.setTitle("Pesan Error");
@@ -553,10 +574,6 @@ public class Editpondasi extends AppCompatActivity {
         totalbiaya= findViewById(R.id.totalbiaya);
         hasilvol = findViewById(R.id.hasilvol);
 
-        Campuran_adapter campuran_adapter =
-                new Campuran_adapter(Editpondasi.this,
-                        android.R.layout.simple_spinner_item, campurans);
-        campuran.setAdapter(campuran_adapter);
 
         Bundle bundle = getIntent().getExtras();
         if (bundle != null)
@@ -572,6 +589,7 @@ public class Editpondasi extends AppCompatActivity {
         b.setText(bundle.getString("b"));
         t.setText(bundle.getString("t"));
         p.setText(bundle.getString("p"));
+        metode = bundle.getString("metode");
         volume.setText(bundle.getString("luas"));
         hasilvol.setText(bundle.getString("luas"));
         namasemen1=bundle.getString("namasemen");
@@ -619,6 +637,26 @@ public class Editpondasi extends AppCompatActivity {
         totalsemua = formatter3.format(numbertotal);
         totalbiaya.setText(totalsemua);
 
+        Campuran1.add(new Campuran("1:3", 202,0.485,0));
+        Campuran1.add(new Campuran("1:4", 163, 0.52,0));
+        Campuran1.add(new Campuran("1:5", 136,0.544,0));
+        Campuran1.add(new Campuran("1:6", 117,0.561,0));
+        Campuran1.add(new Campuran("1:8", 91,0.584,0));
+
+        int i = 0;
+        List<String> listSpinner = new ArrayList<String>();
+        String data = metode;
+        for (int j = 0; j <Campuran1.size(); j++) {
+            if (data.equalsIgnoreCase(String.valueOf(Campuran1.get(j).getCampuran()))) {
+                i = j;
+            }
+            listSpinner.add(String.valueOf(Campuran1.get(j).getCampuran()));
+        }
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(mContext,
+                android.R.layout.simple_spinner_item, listSpinner);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        campuran.setAdapter(adapter);
+        campuran.setSelection(i);
         float luas;
         btnproses = findViewById(R.id.prosesbtn);
 

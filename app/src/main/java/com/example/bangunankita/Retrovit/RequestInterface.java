@@ -2,6 +2,7 @@ package com.example.bangunankita.Retrovit;
 
 import com.example.bangunankita.Model.Pengembang_model;
 import com.example.bangunankita.Model.ResponseAcian;
+import com.example.bangunankita.Model.ResponseAtap;
 import com.example.bangunankita.Model.ResponseBeton;
 import com.example.bangunankita.Model.ResponseBidang;
 import com.example.bangunankita.Model.ResponseLantai;
@@ -44,6 +45,12 @@ public interface RequestInterface {
                                       @Query("apiKey") String apiKey,
                                       @Query("accessToken")String accessToken,
                                       @Body HashMap<String, String> map);
+        @PUT("pengembang/changepw/{id}")
+        Call<Void>actionUpdatepassword(@Path("id") int id,
+                                      @Query("apiKey") String apiKey,
+                                      @Query("accessToken")String accessToken,
+                                      @Body HashMap<String, String> map);
+
 
 
         //GET DATA MATERIAL
@@ -77,7 +84,10 @@ public interface RequestInterface {
         Call<ResponseMaterial> getallpaku();
         @GET("viewpengikat")
         Call<ResponseMaterial> getallpengikat();
+        @GET("viewbubungan")
+        Call<ResponseMaterial> getallbubungan();
         //CRUD PROYEK
+
 
         @GET("proyek/{PengembangId}/")
         Call<ResponseModel> getProyek(@Path("PengembangId") int PengembangId,
@@ -104,6 +114,11 @@ public interface RequestInterface {
         Call<Void>actionDeleteProyek(@Path("id") int id,
                                               @Query("apiKey") String apiKey,
                                               @Query("accessToken")String accessToken);
+
+        @POST("proyek/{PengembangId}")
+        Call<ResponseModel>actionSearch(@Path("PengembangId") int PengembangId,@Query("apiKey") String apiKey,
+                                     @Query("accessToken")String accessToken,
+                                     @Body HashMap<String, String> map);
 
 
         //CRUD PERHITUNGAN BIDANG BANGUNAN
@@ -297,5 +312,26 @@ public interface RequestInterface {
         Call<Void>actionDeletePerhitunganplafon(@Path("id") int id,
                                                @Query("apiKey") String apiKey,
                                                @Query("accessToken")String accessToken);
+
+        //CRUD PERHITUNGAN Atap
+        @GET("perhitunganatap/{ProyekId}/")
+        Call<ResponseAtap> getPerhitunganatap(@Path("ProyekId") int ProyekId,
+                                              @Query("apiKey") String apiKey,
+                                              @Query("accessToken")String accessToken);
+        @POST("perhitunganatap/")
+        Call<Void>actionCreateatap(@Query("apiKey") String apiKey,
+                                     @Query("accessToken")String accessToken,
+                                     @Body HashMap<String, String> map);
+
+        @PUT("perhitunganatap/{id}")
+        Call<Void>actionPutPerhitunganatap(@Path("id") int id,
+                                             @Query("apiKey") String apiKey,
+                                             @Query("accessToken")String accessToken,
+                                             @Body HashMap<String, String> map);
+
+        @DELETE("perhitunganatap/{id}/")
+        Call<Void>actionDeletePerhitunganatap(@Path("id") int id,
+                                                @Query("apiKey") String apiKey,
+                                                @Query("accessToken")String accessToken);
 
 }

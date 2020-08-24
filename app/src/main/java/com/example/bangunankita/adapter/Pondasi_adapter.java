@@ -72,6 +72,7 @@ public class Pondasi_adapter extends RecyclerView.Adapter<Pondasi_adapter.ViewHo
         final String Hargasemen = String.valueOf(pondasis.get(i).getHargasemen());
         final String Hargasementotal= String.valueOf(pondasis.get(i).getHargasementotal());
         final String Hargatotal = String.valueOf(pondasis.get(i).getHargatotal());
+        final String Campuran = String.valueOf(pondasis.get(i).getMetode());
 
         float total1 = Float.parseFloat(Hargatotal);
         DecimalFormat df = new DecimalFormat("#");
@@ -100,6 +101,7 @@ public class Pondasi_adapter extends RecyclerView.Adapter<Pondasi_adapter.ViewHo
                 setData.putString("p", p);
                 setData.putString("luas",luas);
                 setData.putString("namasemen", Namasemen);
+                setData.putString("metode", Campuran);
                 setData.putString("namabatu", Namabatu);
                 setData.putString("namapasir", Namapasir);
                 setData.putString("jumlahbatu", Jumlahbatu);
@@ -142,25 +144,58 @@ public class Pondasi_adapter extends RecyclerView.Adapter<Pondasi_adapter.ViewHo
                 TextView hargap= detaildialog.findViewById(R.id.hargap);
                 TextView Pasir1 = detaildialog.findViewById(R.id.pasir);
                 TextView totalbiaya = detaildialog.findViewById(R.id.totalbiaya);
+                float total1 = Float.parseFloat(Hargabatukali);
+                float total2 = Float.parseFloat(Hargabatutotal);
+                float total3 = Float.parseFloat(Hargasemen);
+                float total4 = Float.parseFloat(Hargasementotal);
+                float total5 = Float.parseFloat(Hargapasir);
+                float total6 = Float.parseFloat(Hargapasirtotal);
+                float total7 = Float.parseFloat(Hargatotal);
+                DecimalFormat df = new DecimalFormat("#");
+                String tothitungan = df.format(total1);
+                String tothitungan1 = df.format(total2);
+                String tothitungan2 = df.format(total3);
+                String tothitungan3 = df.format(total4);
+                String tothitungan4 = df.format(total5);
+                String tothitungan5 = df.format(total6);
+                String tothitungan6 = df.format(total7);
+                int numbertotal = Integer.parseInt(tothitungan);
+                int numbertotal1 = Integer.parseInt(tothitungan1);
+                int numbertotal2 = Integer.parseInt(tothitungan2);
+                int numbertotal3 = Integer.parseInt(tothitungan3);
+                int numbertotal4 = Integer.parseInt(tothitungan4);
+                int numbertotal5 = Integer.parseInt(tothitungan5);
+                int numbertotal6 = Integer.parseInt(tothitungan6);
+
+                DecimalFormat formatter = new DecimalFormat("#,###.##");
+                String totals = formatter.format(numbertotal);
+                String totals1 = formatter.format(numbertotal1);
+                String totals2 = formatter.format(numbertotal2);
+                String totals3 = formatter.format(numbertotal3);
+                String totals4 = formatter.format(numbertotal4);
+                String totals5 = formatter.format(numbertotal5);
+                String totals6 = formatter.format(numbertotal6);
+
+
                 nama.setText(Nama);
                 luaspondasi.setText("a = "+a+"m "+",b = "+b+"m "+"" +
                         ",t = "+t+"m "+",p = "+p+"m "+
                         "Volume Pondasi "+luas+"m3 ");
                 namabatu1.setText(Namabatu);
-                HargaBatu.setText("Rp."+Hargabatukali);
-                TotalBatu.setText("Rp."+Hargabatutotal);
+                HargaBatu.setText("Rp."+totals);
+                TotalBatu.setText("Rp."+totals1);
 
                 namasemen1.setText(Namasemen);
                 jumlahsemen1.setText(Jumlahsemendalamsak+"sak");
-                hargasemen1.setText("Rp."+Hargasemen);
+                hargasemen1.setText("Rp."+totals2);
                 namapasir.setText(Namapasir);
                 jumlah1.setText(Jumlahpasir+"m3");
-                hargap.setText("Rp."+Hargapasir);
+                hargap.setText("Rp."+totals4);
 
-                Semen1.setText("Rp."+Hargasementotal);
-                Pasir1.setText("Rp."+ Hargapasirtotal);
+                Semen1.setText("Rp."+totals3);
+                Pasir1.setText("Rp."+ totals5);
                 Batu1.setText(Jumlahbatu+"m3");
-                totalbiaya.setText("Rp."+Hargatotal);
+                totalbiaya.setText("Rp."+totals6);
 
                 detaildialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 detaildialog.show();

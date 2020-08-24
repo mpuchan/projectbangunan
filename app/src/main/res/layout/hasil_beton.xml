@@ -142,7 +142,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingLeft="5dp"
-            android:text="m3, "
+            android:text="kg, "
             android:textColor="#FA575656" />
 
         <TextView
@@ -169,7 +169,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:paddingLeft="5dp"
-            android:text="truk"
+            android:text="m3"
             android:textColor="#FA575656" />
 
         <TextView
@@ -215,7 +215,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:paddingLeft="5dp"
-            android:text="m3"
+            android:text="kg"
             android:textColor="#FA575656" />
         <TextView
             android:id="@+id/hasilbd12"
@@ -234,21 +234,14 @@
             android:paddingLeft="5dp"
             android:text=" "
             android:textColor="#FA575656" />
-        <TextView
-            android:id="@+id/hasilbaat"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:paddingLeft="5dp"
-            android:text="atau"
-            android:textColor="#FA575656" />
+
         <TextView
             android:id="@+id/hasilkerd2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:paddingLeft="5dp"
-            android:text="truk"
+            android:text="m3"
             android:textColor="#FA575656" />
 
         <TextView

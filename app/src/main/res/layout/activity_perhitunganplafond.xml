@@ -121,7 +121,7 @@
                                 android:gravity="center">
 
                                 <ImageView
-                                    android:id="@+id/gold"
+                                    android:id="@+id/rincianplafon"
                                     android:layout_width="40dp"
                                     android:layout_height="40dp"
                                     android:layout_centerHorizontal="true"
@@ -130,9 +130,9 @@
                                 <TextView
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:layout_below="@id/gold"
+                                    android:layout_below="@id/rincianplafon"
                                     android:gravity="center"
-                                    android:text="Rincian Data Bidang"
+                                    android:text="Rincian Data Plafon"
                                     android:textColor="#000"
                                     android:textSize="12dp" />
 
@@ -147,7 +147,7 @@
                                 android:gravity="center">
 
                                 <ImageView
-                                    android:id="@+id/elixir"
+                                    android:id="@+id/panduanplafon"
                                     android:layout_width="40dp"
                                     android:layout_height="40dp"
                                     android:layout_centerHorizontal="true"
@@ -157,7 +157,7 @@
 
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:layout_below="@id/elixir"
+                                    android:layout_below="@id/panduanplafon"
                                     android:gravity="center"
                                     android:text="Panduan Aplikasi"
                                     android:textColor="#000"

@@ -2,6 +2,7 @@ package com.example.bangunankita;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -24,11 +25,13 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class Register extends AppCompatActivity {
     private Button regi1,cancel;
     private EditText nama,email,notelp,username,password,repass;
+    ProgressDialog pd;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         init();
+        pd = new ProgressDialog(this);
 
         regi1.setOnClickListener(new View.OnClickListener() {
             @Override

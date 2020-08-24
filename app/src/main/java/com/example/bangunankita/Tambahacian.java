@@ -4,6 +4,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -46,8 +47,10 @@ public class Tambahacian extends AppCompatActivity {
     float hasil,luasba,totpasir,hargasementot,psemen;
     Context mContext;
     SessionManager sm;
+
     String token,nama,p,t,namapengerjaan,namasemen1,jenis;
     String mId,Ju;
+    ProgressDialog pd;
     int ProyekID;
     public String hs,ids,hp,idp,berats,pc,pp;
     private int numbersemen;
@@ -68,6 +71,9 @@ public class Tambahacian extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         mContext = this;
+        pd = new ProgressDialog(this);
+        pd.setMessage("loading");
+        pd.show();
         spinsemen = findViewById(R.id.spinsemen);
         spindinding = findViewById(R.id.spindinding);
         panjang = findViewById(R.id.panjangpl);
@@ -202,6 +208,7 @@ public class Tambahacian extends AppCompatActivity {
             @Override
             public void onResponse(Call<ResponseMaterial> call, Response<ResponseMaterial> response) {
                 if (response.code() == 200) {
+                    pd.hide();
                     Semen = response.body().getMaterials();
                     List<String> listSpinner = new ArrayList<String>();
                     for (int i = 0; i < Semen.size(); i++){
@@ -254,6 +261,7 @@ public class Tambahacian extends AppCompatActivity {
                 @Override
                 public void onResponse(Call<ResponseBidang> call, Response<ResponseBidang> response) {
                     if (response.code() == 200 ) {
+                        pd.hide();
                         BidangModel = response.body().getPerhitunganbidang();
                         List<String> listSpinner = new ArrayList<String>();
                         for (int i = 0; i < BidangModel.size(); i++){
@@ -286,6 +294,7 @@ public class Tambahacian extends AppCompatActivity {
             public boolean onMenuItemClick(MenuItem item) {
                 String apiKey = "oa00000000app";
                 initvalidation();
+                pd.show();
                 HashMap<String, String> map = new HashMap<>();
                 map.put("ProyekId", mId);
                 map.put("nama", namapengerjaan);
@@ -306,6 +315,7 @@ public class Tambahacian extends AppCompatActivity {
                     @Override
                     public void onResponse(Call<Void> call, Response<Void> response) {
                         if (response.code() == 200) {
+                            pd.hide();
                             Intent Perhitunganacian = (new Intent(Tambahacian.this, Perhitunganacian.class)
                                     .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
                             Bundle setData = new Bundle();

@@ -53,7 +53,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="0"
-                        android:text="Menghitung luas area Pondasi"
+                        android:text="Menghitung volume pondasi"
                         android:textColor="#FA575656" />
 
                     <TextView

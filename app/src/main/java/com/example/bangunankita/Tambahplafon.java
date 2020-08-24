@@ -3,6 +3,7 @@ package com.example.bangunankita;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -38,6 +39,7 @@ public class Tambahplafon extends AppCompatActivity {
     private TextView hasilpaku,hasilpaku1,hasilkayu,hasilkayu1,total,hasilkayu2,luas_plafon,hasiltriplek,hasiltriplek1,hasiltriplek2;
     private Button Hitungb,proses;
     String token;
+    ProgressDialog pd;
     private String harpaku,hartriplek,harreng,namapaku,namatriplek,namareng;
     String mId,Ju;
     int ProyekID;
@@ -59,6 +61,9 @@ public class Tambahplafon extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         mContext = this;
+        pd = new ProgressDialog(this);
+        pd.setMessage("loading");
+        pd.show();
         proses = findViewById(R.id.prosesbtn);
         hasilpaku = findViewById(R.id.hasilpaku);
         hasilpaku1 = findViewById(R.id.hasilpaku1);
@@ -108,7 +113,6 @@ public class Tambahplafon extends AppCompatActivity {
                 float lb = Float.parseFloat(lebar1);
                 hasil = (pb*lb);
                 Luasplafon.setText(String.valueOf(hasil));
-                luas1 = Luasplafon.getText().toString().trim();
 
             }
         });
@@ -181,7 +185,8 @@ public class Tambahplafon extends AppCompatActivity {
         Hitungb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                luasba = Float.parseFloat(luas1);
+                String luas = Luasplafon.getText().toString().trim();
+                luasba = Float.parseFloat(luas);
                 luas_plafon.setText(String.valueOf(luasba));
                 hitungtriplek();
                 hitungkayu();
@@ -338,13 +343,13 @@ public class Tambahplafon extends AppCompatActivity {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 String apiKey = "oa00000000app";
-//                initvalidation();
+                initvalidation();
                 HashMap<String, String> map = new HashMap<>();
                 map.put("ProyekId", mId);
                 map.put("nama", Namapengerjaan.getText().toString());
                 map.put("panjang", Panjang.getText().toString());
                 map.put("lebar", Lebar.getText().toString());
-                map.put("luas",luas1);
+                map.put("luas",Luasplafon.getText().toString().trim());
                 map.put("namapaku", namapaku);
                 map.put("namareng", namareng);
                 map.put("namatriplek", namatriplek);
@@ -394,5 +399,8 @@ public class Tambahplafon extends AppCompatActivity {
         });
         return super.onCreateOptionsMenu(menu);
 
+    }
+
+    private void initvalidation() {
     }
 }

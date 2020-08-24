@@ -234,7 +234,7 @@
                                 android:id="@+id/luasbidang"
                                 android:layout_width="137dp"
                                 android:layout_height="wrap_content"
-                                android:enabled="false"
+
                                 android:hint="Luas bidang"
                                 android:inputType="text"
                                 android:paddingBottom="16dp" />

@@ -84,11 +84,11 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="0"
-                                android:text="Pasir : "
+                                android:text="plafon : "
                                 android:textColor="#FF292929" />
 
                             <TextView
-                                android:id="@+id/pasir"
+                                android:id="@+id/plafon"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Pasir"
@@ -113,7 +113,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:text="Reng : "
+                                android:text="Reng/hollow : "
                                 android:textColor="#FF292929" />
 
                             <TextView
@@ -124,6 +124,28 @@
                                 android:textColor="#FF292929" />
                         </LinearLayout>
 
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/textViewdd23"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="0"
+                                android:text="Harga total : "
+                                android:textColor="#FF292929"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/detailtotal"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Semen"
+                                android:textColor="#FF292929"
+                                android:textStyle="bold" />
+                        </LinearLayout>
                     </LinearLayout>
 
                 </LinearLayout>

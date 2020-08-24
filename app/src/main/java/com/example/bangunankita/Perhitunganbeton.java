@@ -6,8 +6,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import static maes.tech.intentanim.CustomIntent.customType;
+
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -25,6 +30,7 @@ import com.example.bangunankita.adapter.Beton_adapter;
 import com.example.bangunankita.adapter.Pengecatan_adapter;
 import com.github.andreilisun.swipedismissdialog.SwipeDismissDialog;
 
+import java.io.ByteArrayOutputStream;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -37,6 +43,7 @@ import retrofit2.Response;
 public class Perhitunganbeton extends AppCompatActivity {
     private ImageView tambahbeton,print;
     private TextView totalharga;
+    ImageView rincian,panduanbeton;
     int ProyekID;
     String Ju,mId;
     SessionManager sm;
@@ -45,15 +52,22 @@ public class Perhitunganbeton extends AppCompatActivity {
     private List<Perhitunganbeton1> BetonModel = new ArrayList<>();
     private RecyclerView mRecyclerView;
     String token;
+    String nama;
     String stringid;
+    ProgressDialog pd;
     SwipeRefreshLayout swipeRefreshLayout;
     SwipeDismissDialog swipeDismissDialog;
     Context mContext;
+    String desk;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_perhitunganbeton);
         tambahbeton = findViewById(R.id.tambahbeton);
+        pd = new ProgressDialog(this);
+        pd.setMessage("loading");
+        nama = "beton";
+        pd.show();
         totalharga = findViewById(R.id.totalharga);
         sm= new SessionManager(Perhitunganbeton.this);
         mRecyclerView = findViewById(R.id.rv_beton);
@@ -66,11 +80,14 @@ public class Perhitunganbeton extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         mId = bundle.getString("idproyek");
 
-        Toast.makeText(Perhitunganbeton.this, "Proyek Id"+mId,
-                Toast.LENGTH_SHORT).show();
+//        Toast.makeText(Perhitunganbeton.this, "Proyek Id"+mId,
+//                Toast.LENGTH_SHORT).show();
         Ju = mId;
+        rincian = findViewById(R.id.rincianbeton);
+        panduanbeton = findViewById(R.id.panduanbeton);
         mContext = this;
         getperhitunganbeton();
+        deskripsi();
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -79,6 +96,37 @@ public class Perhitunganbeton extends AppCompatActivity {
                 startActivity(getIntent());
                 customType(Perhitunganbeton.this,"fadein-to-fadeout");
                 swipeRefreshLayout.setRefreshing(false);
+            }
+        });
+        rincian.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String apiKey = "oa00000000app";
+                if (!TextUtils.isEmpty(Ju) && TextUtils.isDigitsOnly(Ju)) {
+                    ProyekID = Integer.parseInt(Ju);
+                } else {
+                    ProyekID =0;
+                }
+                Uri uri = Uri.parse("https://bangunankita.herokuapp.com/api/v1/perhitunganbidang/export/"+ProyekID+"/?apiKey="+apiKey+"&accessToken="+token);
+                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                startActivity(intent);
+            }
+        });
+        panduanbeton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent panduan = (new Intent(Perhitunganbeton.this, Panduanapl.class)
+                        .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
+                Bundle setData = new Bundle();
+                Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.drawable.beton);
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                bmp.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                byte[] byteArray = stream.toByteArray();
+                setData.putString("ini",nama);
+                setData.putString("deskripsi",desk);
+                panduan.putExtra("picture", byteArray);
+                panduan.putExtras(setData);
+                startActivity(panduan);
             }
         });
         tambahbeton.setOnClickListener(new View.OnClickListener() {
@@ -90,14 +138,17 @@ public class Perhitunganbeton extends AppCompatActivity {
                 Bundle setData = new Bundle();
                 setData.putString("idproyek1",mId);
                 tambahbeton.putExtras(setData);
-
                 startActivity(tambahbeton);
                 customType(Perhitunganbeton.this,"fadein-to-fadeout");
 
             }
         });
     }
-
+    private void deskripsi() {
+        desk = "Penggunaan Aplikasi \n"+"\n"+"1. Untuk mengetahui jumlah material yang diperlukan adalah dengan cara memasukan data Luas keseluruhan atap " +
+                ".masukan panjang nok yang sudah dijumlahkan"+"\n" +"\n"+
+                "2. Hasil perhitungan akan keluar setelah menekan tombol hitung  pada bagian bawah inputan.";
+    }
     private void getperhitunganbeton() {
         String apiKey = "oa00000000app";
         if (!TextUtils.isEmpty(Ju) && TextUtils.isDigitsOnly(Ju)) {
@@ -114,6 +165,7 @@ public class Perhitunganbeton extends AppCompatActivity {
 //                swipeRefreshLayout.setRefreshing(false);
 //                String message = response.body().getMessage();
                 if (response.code() == 200 ) {
+                    pd.hide();
                     BetonModel = response.body().getPerhitunganbeton();
 
                     for (int i = 0; i<BetonModel.size(); i++) {

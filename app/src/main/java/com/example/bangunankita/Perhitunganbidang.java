@@ -6,8 +6,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import static maes.tech.intentanim.CustomIntent.customType;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
@@ -49,6 +52,7 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 
 import java.io.BufferedOutputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -75,7 +79,9 @@ public class Perhitunganbidang extends AppCompatActivity {
     SwipeRefreshLayout swipeRefreshLayout;
     String token;
     String stringid;
+    String namabidang;
     String nama;
+    ProgressDialog pd;
     private Bidang_adapter bidang_adapter;
     private List<Perhitunganbidang1> BidangModel = new ArrayList<>();
     private RecyclerView mRecyclerView;
@@ -88,6 +94,7 @@ public class Perhitunganbidang extends AppCompatActivity {
     int totalhargasemen =0;
     int totalhargapasir = 0;
     String mId;
+    String desk;
     SwipeDismissDialog swipeDismissDialog;
 
     @Override
@@ -96,9 +103,13 @@ public class Perhitunganbidang extends AppCompatActivity {
         setContentView(R.layout.activity_perhitunganbidang);
         rician = findViewById(R.id.rician);
         totalharga = findViewById(R.id.totalharga);
+        pd = new ProgressDialog(this);
+        pd.setMessage("loading");
+        pd.show();
+        namabidang = "Panduan Perhitungan Bidang";
         swipeRefreshLayout = findViewById(R.id.swiperf);
         print = findViewById(R.id.print);
-        ricaian =findViewById(R.id.panduan);
+        ricaian =findViewById(R.id.panduanbidang);
         sm= new SessionManager(Perhitunganbidang.this);
         mRecyclerView = findViewById(R.id.rv_bidang);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -110,18 +121,30 @@ public class Perhitunganbidang extends AppCompatActivity {
         mId = bundle.getString("idproyek");
 
 
-        Toast.makeText(Perhitunganbidang.this, "Proyek Id"+mId,
-                Toast.LENGTH_SHORT).show();
+
+//        Toast.makeText(Perhitunganbidang.this, "Proyek Id"+mId,
+//                Toast.LENGTH_SHORT).show();
         Ju = mId;
         mContext = this;
+        deskripsi();
         getperhitunganbidang();
 
         ricaian.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-
-
+                Intent panduanbidang = (new Intent(Perhitunganbidang.this, Panduanapl.class)
+                        .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
+                Bundle setData = new Bundle();
+                Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.drawable.bidang);
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                bmp.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                byte[] byteArray = stream.toByteArray();
+                setData.putString("ini",namabidang);
+                setData.putString("deskripsi",desk);
+                panduanbidang.putExtra("picture", byteArray);
+                panduanbidang.putExtras(setData);
+                startActivity(panduanbidang);
             }
         });
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -152,32 +175,34 @@ public class Perhitunganbidang extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                View detaildialog = LayoutInflater.from(getBaseContext()).inflate(R.layout.dialogdetailbidang, null);
-                TextView nama1 = detaildialog.findViewById(R.id.namabatako);
-                ImageView print = detaildialog.findViewById(R.id.print);
-                swipeDismissDialog = new SwipeDismissDialog.Builder(Perhitunganbidang.this)
-                        .setView(detaildialog)
-                        .setOnSwipeDismissListener(new OnSwipeDismissListener() {
-                            @Override
-                            public void onSwipeDismiss(View view, SwipeDismissDirection direction) {
-                            }
-                        })
-                        .build()
-                        .show();
-                print.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        String apiKey = "oa00000000app";
-                        if (!TextUtils.isEmpty(Ju) && TextUtils.isDigitsOnly(Ju)) {
-                            ProyekID = Integer.parseInt(Ju);
-                        } else {
-                            ProyekID =0;
-                        }
-                        Uri uri = Uri.parse("http://192.168.43.163:3000/api/v1/perhitunganbidang/export/"+ProyekID+"/?apiKey="+apiKey+"&accessToken="+token);
-                        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-                        startActivity(intent);
-                    }
-                });
+                String apiKey = "oa00000000app";
+                if (!TextUtils.isEmpty(Ju) && TextUtils.isDigitsOnly(Ju)) {
+                    ProyekID = Integer.parseInt(Ju);
+                } else {
+                    ProyekID =0;
+                }
+                Uri uri = Uri.parse("https://bangunankita.herokuapp.com/api/v1/perhitunganbidang/export/"+ProyekID+"/?apiKey="+apiKey+"&accessToken="+token);
+                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                startActivity(intent);
+
+//                View detaildialog = LayoutInflater.from(getBaseContext()).inflate(R.layout.dialogdetailbidang, null);
+//                TextView nama1 = detaildialog.findViewById(R.id.namabatako);
+//                ImageView print = detaildialog.findViewById(R.id.print);
+//                swipeDismissDialog = new SwipeDismissDialog.Builder(Perhitunganbidang.this)
+//                        .setView(detaildialog)
+//                        .setOnSwipeDismissListener(new OnSwipeDismissListener() {
+//                            @Override
+//                            public void onSwipeDismiss(View view, SwipeDismissDirection direction) {
+//                            }
+//                        })
+//                        .build()
+//                        .show();
+//                print.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//
+//                    }
+//                });
         }
         });
     }
@@ -186,6 +211,11 @@ public class Perhitunganbidang extends AppCompatActivity {
 //        super.onResume();
 //        bidang_adapter.notifyDataSetChanged();
 //    }
+private void deskripsi() {
+    desk = "Penggunaan Aplikasi \n"+"\n"+"1. Untuk mengetahui jumlah material yang diperlukan adalah dengan cara memasukan data Luas keseluruhan atap " +
+            ".masukan panjang nok yang sudah dijumlahkan"+"\n" +"\n"+
+            "2. Hasil perhitungan akan keluar setelah menekan tombol hitung  pada bagian bawah inputan.";
+}
     private void getperhitunganbidang() {
         String apiKey = "oa00000000app";
         if (!TextUtils.isEmpty(Ju) && TextUtils.isDigitsOnly(Ju)) {
@@ -202,6 +232,7 @@ public class Perhitunganbidang extends AppCompatActivity {
                 swipeRefreshLayout.setRefreshing(false);
 //                String message = response.body().getMessage();
                 if (response.code() == 200 ) {
+                    pd.hide();
                     BidangModel = response.body().getPerhitunganbidang();
 
                     for (int i = 0; i<BidangModel.size(); i++)

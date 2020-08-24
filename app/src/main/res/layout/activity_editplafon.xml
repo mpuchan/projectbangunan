@@ -135,7 +135,8 @@
                         <com.google.android.material.textfield.TextInputLayout
                             style="@style/Theme.AppCompat.Light.DarkActionBar"
                             android:layout_width="141dp"
-                            android:layout_height="wrap_content">
+                            android:layout_height="wrap_content"
+                            android:enabled="false">
 
                             <com.google.android.material.textfield.TextInputEditText
                                 android:id="@+id/luasplafon"

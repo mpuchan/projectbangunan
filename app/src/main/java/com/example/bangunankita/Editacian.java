@@ -3,6 +3,7 @@ package com.example.bangunankita;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -27,6 +28,7 @@ import com.example.bangunankita.Retrovit.ApiClient;
 import com.example.bangunankita.Util.SessionManager;
 import com.example.bangunankita.adapter.Bidang_adapter;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -44,7 +46,9 @@ public class Editacian extends AppCompatActivity {
     Context mContext;
     SessionManager sm;
     String token,nama,p,t,namapengerjaan,namasemen1,namapenger,idperhitunganacian,namasemen,panjang1,tinggi1,hargasemen1;
-    String mId,Ju;
+    String mId,Ju,totsemen1;
+    private int numbersemen;
+    ProgressDialog pd;
     int ProyekID,idacian;
     public String hs,ids,hp,idp,berats,pc,pp;
     private List<Perhitunganbidang1> BidangModel = new ArrayList<>();
@@ -54,6 +58,9 @@ public class Editacian extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_editacian);
         init();
+        pd = new ProgressDialog(this);
+        pd.setMessage("loading");
+        pd.show();
         initSpinnerDinding();
         initSpinnerSemen();
 
@@ -141,6 +148,7 @@ public class Editacian extends AppCompatActivity {
             @Override
             public void onResponse(Call<ResponseMaterial> call, Response<ResponseMaterial> response) {
                 if (response.code() == 200) {
+                    pd.hide();
                     Semen = response.body().getMaterials();
                     int i = 0;
                     List<String> listSpinner = new ArrayList<String>();
@@ -182,6 +190,7 @@ public class Editacian extends AppCompatActivity {
             @Override
             public void onResponse(Call<ResponseBidang> call, Response<ResponseBidang> response) {
                 if (response.code() == 200 ) {
+                    pd.hide();
                     BidangModel = response.body().getPerhitunganbidang();
                     int i = 0;
                     List<String> listSpinner = new ArrayList<String>();
@@ -221,11 +230,15 @@ public class Editacian extends AppCompatActivity {
         float hitpc = psemen*luasba;
         float totpc = hitpc/beratsemen;
         hargasementot = totpc*hargasemen;
-
+        DecimalFormat df1 = new DecimalFormat("#");
+        totsemen1 = df1.format(hargasementot);
+        numbersemen = Integer.parseInt(totsemen1);
+        DecimalFormat formatter = new DecimalFormat("#,###.##");
+        String totalbiaya = formatter.format(numbersemen);
         hasilse.setText(Float.toString(hitpc));
         hasilse1.setText(Float.toString(totpc));
-        hasilse2.setText(Float.toString(hargasementot));
-        hasilb.setText(Float.toString(hargasementot));
+        hasilse2.setText(totalbiaya);
+        hasilb.setText(totalbiaya);
     }
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_mainsavebidang,menu);
@@ -233,6 +246,8 @@ public class Editacian extends AppCompatActivity {
         item.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
+                pd.setMessage("loading");
+                pd.show();
                 idacian = Integer.parseInt(idperhitunganacian);
                 String apiKey = "oa00000000app";
                 HashMap<String, String> map = new HashMap<>();
@@ -247,14 +262,14 @@ public class Editacian extends AppCompatActivity {
                 map.put("jumlahdalamsak", hasilse1.getText().toString());
                 map.put("metode", String.valueOf(psemen));
                 map.put("hargasemen", hargasemen.getText().toString());
-                map.put("hargasementotal", hasilse2.getText().toString());
-                map.put("hargatotal", hasilse2.getText().toString());
+                map.put("hargasementotal", String.valueOf(numbersemen));
+                map.put("hargatotal", String.valueOf(numbersemen));
                 Call<Void> call = ApiClient.getRequestInterface().actionPutPerhitunganacian(idacian,apiKey,token,map);
                 call.enqueue(new Callback<Void>() {
                     @Override
                     public void onResponse(Call<Void> call, Response<Void> response) {
                         if (response.code() == 201) {
-
+                            pd.hide();
                             Intent perhitunganacian = (new Intent(Editacian.this, Perhitunganacian.class)
                                     .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
                             Bundle setData = new Bundle();
@@ -329,10 +344,17 @@ public class Editacian extends AppCompatActivity {
         hasilse1.setText(bundle.getString("jumlahdalamsak"));
         hargasemen1=bundle.getString("hargasemen");
         namasemen= bundle.getString("nama_semen");
-        hasilse2.setText(bundle.getString("hargasementotal"));
 
-        hasilb.setText(bundle.getString("totalbiaya"));
+        hargasementot = Float.parseFloat(bundle.getString("hargasementotal"));
+        DecimalFormat df1 = new DecimalFormat("#");
+        totsemen1 = df1.format(hargasementot);
+        numbersemen = Integer.parseInt(totsemen1);
+        DecimalFormat formatter = new DecimalFormat("#,###.##");
+        String totalbiaya = formatter.format(numbersemen);
+        hasilse2.setText(totalbiaya);
+        hasilb.setText(totalbiaya);
         hasilvol.setText(bundle.getString("luas_acian"));
+
 
 
     }

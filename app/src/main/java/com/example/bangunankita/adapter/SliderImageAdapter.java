@@ -37,49 +37,49 @@ public class SliderImageAdapter extends SliderViewAdapter<SliderImageAdapter.Sli
     @Override
     public void onBindViewHolder(SliderAdapterVH viewHolder, final int position) {
 
-        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                switch (position) {
-                    case 0:
-                        Intent browserIntent_1 = new Intent(
-                                Intent.ACTION_VIEW,
-                                Uri.parse("#"));
-                        context.startActivity(browserIntent_1);
-                        break;
-                    case 1:
-                        Intent browserIntent_2 = new Intent(
-                                Intent.ACTION_VIEW,
-                                Uri.parse("#"));
-                        context.startActivity(browserIntent_2);
-                        break;
-                    case 2:
-                        Intent browserIntent_3 = new Intent(
-                                Intent.ACTION_VIEW,
-                                Uri.parse("#"));
-                        context.startActivity(browserIntent_3);
-                        break;
-
-                }
-            }
-        });
+//        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                switch (position) {
+//                    case 0:
+//                        Intent browserIntent_1 = new Intent(
+//                                Intent.ACTION_VIEW,
+//                                Uri.parse("#"));
+//                        context.startActivity(browserIntent_1);
+//                        break;
+//                    case 1:
+//                        Intent browserIntent_2 = new Intent(
+//                                Intent.ACTION_VIEW,
+//                                Uri.parse("#"));
+//                        context.startActivity(browserIntent_2);
+//                        break;
+//                    case 2:
+//                        Intent browserIntent_3 = new Intent(
+//                                Intent.ACTION_VIEW,
+//                                Uri.parse("#"));
+//                        context.startActivity(browserIntent_3);
+//                        break;
+//
+//                }
+//            }
+//        });
 
         switch (position) {
             case 0:
                 Glide.with(viewHolder.itemView)
-                        .load("https://i.ytimg.com/vi/UpmMVyOmZsI/hqdefault.jpg")
+                        .load("https://1.bp.blogspot.com/-Yv4FieWeFro/XyhVL4j9TkI/AAAAAAAAApI/fJULS-21pBkLtpgMnbwWwgfm4jmXCSdDACLcBGAsYHQ/s320/jis.jpeg")
                         .fitCenter()
                         .into(viewHolder.imageViewBackground);
                 break;
             case 1:
                 Glide.with(viewHolder.itemView)
-                        .load("https://www.citralandsurabaya.com/upload/header/PEACH.jpg")
+                        .load("https://1.bp.blogspot.com/-wZvoqxBM9ac/XzQOBRzCpbI/AAAAAAAAAp4/3uOhiojx6yoCGLGZEYsGJ3DU8EavYGrXwCLcBGAsYHQ/s640/WhatsApp%2BImage%2B2020-08-12%2Bat%2B10.33.12.jpeg")
                         .fitCenter()
                         .into(viewHolder.imageViewBackground);
                 break;
             case 2:
                 Glide.with(viewHolder.itemView)
-                        .load("https://www.citralandsurabaya.com/upload/header/MAPLE.jpg")
+                        .load("https://1.bp.blogspot.com/-BJ73s05VxTI/XzdlRjN19DI/AAAAAAAAAqY/KkjaPqsJAT4NFkHv3PyHSoao0NIGyDagACLcBGAsYHQ/s640/WhatsApp%2BImage%2B2020-08-15%2Bat%2B09.52.13.jpeg")
                         .fitCenter()
                         .into(viewHolder.imageViewBackground);
                 break;

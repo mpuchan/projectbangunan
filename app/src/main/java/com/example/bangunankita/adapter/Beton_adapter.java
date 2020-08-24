@@ -165,31 +165,95 @@ public class Beton_adapter  extends RecyclerView.Adapter<Beton_adapter.ViewHolde
 
             }
         });
-//        viewHolder.detailbeton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Dialog detaildialog = new Dialog(context);
-//                detaildialog.setContentView(R.layout.detail_beton);
-//                TextView nama = detaildialog.findViewById(R.id.nama);
-//                TextView luasbeton = detaildialog.findViewById(R.id.luasbeton);
-//                TextView Batako1 = detaildialog.findViewById(R.id.Batako);
-//                TextView Semen1 = detaildialog.findViewById(R.id.semen1);
-//                TextView Pasir1 = detaildialog.findViewById(R.id.pasir);
-//                TextView totalbiaya = detaildialog.findViewById(R.id.totalbiaya);
-//                nama.setText(Name);
-//                luasbeton.setText("Panjang "+Panjangbid+"m "+",Tinggi "+Tinggibid+"m "+"" +
-//                        ",Panjang panel pintu "+Panjangpin+"m "+",Tinggi panel pintu "+Tinggipin+
-//                        ",Panjang panel jendela "+Panjangjen+"m "+",Tinggi panel jendela "+Tinggijen+"m "+
-//                        ",Luas beton "+Luas+"m ");
-//                Batako1.setText("Jumlah "+Batako+"buah"+",Harga Rp."+Hargabatako);
-//                Semen1.setText("Berat "+Semen+"kg"+",Harga Rp."+Hargasemen);
-//                Pasir1.setText("Jumlah "+Pasir+"m3"+",Harga Rp."+Hargapasir);
-//                totalbiaya.setText(",Harga Rp."+Totalbiaya);
-//
-//                detaildialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-//                detaildialog.show();
-//            }
-//        });
+        viewHolder.detailbeton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Dialog detaildialog = new Dialog(context);
+                detaildialog.setContentView(R.layout.detail_beton);
+                TextView nama = detaildialog.findViewById(R.id.nama);
+                TextView panjangbeton = detaildialog.findViewById(R.id.panjangbeton);
+                TextView namapapan = detaildialog.findViewById(R.id.namapapan);
+                TextView hargapapan = detaildialog.findViewById(R.id.hargapapan);
+                TextView jumlahpapan = detaildialog.findViewById(R.id.jumlahpapan);
+                TextView hargatotalpapan = detaildialog.findViewById(R.id.hargatotalpapan);
+                TextView namapaku = detaildialog.findViewById(R.id.namamurbaut);
+                TextView hargapakumur = detaildialog.findViewById(R.id.hargamurpaku);
+                TextView jumlahpakumur = detaildialog.findViewById(R.id.jumlahmurbaut);
+                TextView hargatotalmur = detaildialog.findViewById(R.id.hargatotalmurbaut);
+                TextView namabatu1 = detaildialog.findViewById(R.id.namabatu);
+                TextView Batu1 = detaildialog.findViewById(R.id.jumlahbatu);
+                TextView HargaBatu= detaildialog.findViewById(R.id.hargabatu);
+                TextView TotalBatu= detaildialog.findViewById(R.id.totalbatu);
+//                Button keluar = detaildialog.findViewById(R.id.keluar);
+//                ImageView exit = detaildialog.findViewById(R.id.exit);
+                TextView namasemen1 = detaildialog.findViewById(R.id.namasemen);
+                TextView jumlahsemen1 = detaildialog.findViewById(R.id.jumlahsemen);
+                TextView hargasemen1 = detaildialog.findViewById(R.id.hargas);
+                TextView Semen1 = detaildialog.findViewById(R.id.semen1);
+                TextView namapasir = detaildialog.findViewById(R.id.namapasir);
+                TextView jumlah1 = detaildialog.findViewById(R.id.jumlahpasir);
+                TextView hargap= detaildialog.findViewById(R.id.hargap);
+                TextView Pasir1 = detaildialog.findViewById(R.id.pasir);
+                TextView namabesi = detaildialog.findViewById(R.id.namabesi);
+                TextView hargabesi = detaildialog.findViewById(R.id.hargabesi);
+                TextView jumlahbesi = detaildialog.findViewById(R.id.jumlahbesi);
+                TextView hargatotalbesi = detaildialog.findViewById(R.id.hargatotalbesi);
+                TextView namabesi1 = detaildialog.findViewById(R.id.namabesi1);
+                TextView hargabesi1 = detaildialog.findViewById(R.id.hargabesi1);
+                TextView jumlahbesi1= detaildialog.findViewById(R.id.jumlahbesi1);
+                TextView hargatotalbesi1 = detaildialog.findViewById(R.id.hargatotalbesi1);
+                TextView namakawat = detaildialog.findViewById(R.id.namakawat);
+                TextView hargakawat = detaildialog.findViewById(R.id.hargakawat);
+                TextView jumlahkawat= detaildialog.findViewById(R.id.jumlahkawat);
+                TextView hargatotalkawat = detaildialog.findViewById(R.id.hargatotalkawat);
+                TextView totalbiaya = detaildialog.findViewById(R.id.totalbiaya);
+
+
+
+                namabatu1.setText(Namabatu);
+                nama.setText(Name);
+                panjangbeton.setText("Panjang beton "+Pilihanbeton +": "+Panjangbeton+ "m");
+                namapapan.setText(Namapapan);
+                HargaBatu.setText("Rp."+Hargabatu);
+                TotalBatu.setText("Rp."+Hargatotbatu);
+
+                namasemen1.setText(Namasemen);
+                jumlahsemen1.setText(Jumlahsemendalamsak+"sak");
+                hargasemen1.setText("Rp."+Hargasemen);
+                namapasir.setText(Namapasir);
+                jumlah1.setText(Jumlahpasir+"m3");
+                hargap.setText("Rp."+Hargapasir);
+
+                Semen1.setText("Rp."+Hargatotsemen);
+                Pasir1.setText("Rp."+ Hargatotpasir);
+                Batu1.setText(Jumlahbatu+"m3");
+                totalbiaya.setText("Rp."+Hargatotal);
+
+                namapaku.setText(Namapaku);
+                hargapapan.setText("Rp"+Hargapapan);
+                hargapakumur.setText("Rp"+Hargapaku);
+                jumlahpapan.setText(Jumlahpapan +"buah");
+                jumlahpakumur.setText(Jumlahpaku+"kg");
+                hargatotalpapan.setText("Rp."+Hargatotpapan);
+                hargatotalmur.setText("Rp."+Hargatotpaku);
+
+                namabesi.setText(Namabesi);
+                hargabesi.setText("Rp"+Hargabesi);
+                jumlahbesi.setText(Jumlahpapan +"lonjor");
+                jumlahbesi1.setText(Jumlahpapan +"lonjor");
+                hargatotalbesi.setText("Rp."+Hargatotbesi);
+                hargatotalbesi1.setText("Rp."+Hargatotbegel);
+                hargabesi1.setText("Rp"+Hargabegel);
+                namabesi1.setText(Namabegel);
+                namakawat.setText(Namakawat);
+                jumlahkawat.setText(Jumlahkawat);
+                hargakawat.setText("Rp."+Hargakawat);
+                hargatotalkawat.setText("Rp."+Hargatotkawat);
+
+                detaildialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                detaildialog.show();
+            }
+        });
         viewHolder.deletebeton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

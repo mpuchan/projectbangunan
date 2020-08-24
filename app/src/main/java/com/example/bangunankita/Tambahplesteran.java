@@ -4,6 +4,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -47,7 +48,7 @@ public class Tambahplesteran extends AppCompatActivity {
     TextView hasilpas,hasilpas1,hasilpas2,hasilse,hasilse1,hasilse2,hasilb,hasilvol;
     Button prosesbtn,hitung;
     float hasil,luasba,totpasir,hargasementot;
-
+    ProgressDialog pd;
     Context mContext;
     SessionManager sm;
     String token,nama,p,t,namadinding,jenis,namasemen,namapasir,metode;
@@ -81,6 +82,9 @@ public class Tambahplesteran extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tambahplesteran);
         init();
+        pd = new ProgressDialog(this);
+        pd.setMessage("loading");
+        pd.show();
         initSpinnerDinding();
         initSpinnerSemen();
         initSpinnerPasir();

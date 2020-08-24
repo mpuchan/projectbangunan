@@ -4,6 +4,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -44,6 +45,7 @@ public class Tambahlantai extends AppCompatActivity {
     TextView luaslan,hasilse,hasilse1,hasilse2,hasilpas,hasilpas1,hasilpas2,total,
             hasilker,hasilker1,hasilnat,hasilnat1,hasilker2,hasilbid;
     Button prosesbtn,hitung;
+    ProgressDialog pd;
     float hasil,luasba,hargapasirparse,hargakeramikparse,harganatparse,hargasemenparse,kebutuhansemensak,kebutuhanpasir,kebutuhannat,hargasemen1,
             hargapasir1,hargakeramik1,harganat1,totpasir,hargasementot,getluaskeramik,kebutuhankeramik,kebutuhansemen,keb1kardus;
     Context mContext;
@@ -84,6 +86,9 @@ public class Tambahlantai extends AppCompatActivity {
         HashMap<String,String> map = sm.getDetailLogin();
         token=(map.get(sm.KEY_TOKEN));
         sm.checkLogin();
+        pd = new ProgressDialog(this);
+        pd.setMessage("loading");
+        pd.show();
         hasilbid = findViewById(R.id.hasilbid);
         nama_pengerjaan = findViewById(R.id.nama_pengerjaan1);
         spinkeramik = findViewById(R.id.spinkeramik);
@@ -393,6 +398,7 @@ public class Tambahlantai extends AppCompatActivity {
             @Override
             public void onResponse(Call<ResponseMaterial> call, Response<ResponseMaterial> response) {
                 if (response.code() == 200) {
+                    pd.hide();
                     Keramik = response.body().getMaterials();
                     List<String> listSpinner = new ArrayList<String>();
                     for (int i = 0; i < Keramik.size(); i++) {
@@ -421,6 +427,7 @@ public class Tambahlantai extends AppCompatActivity {
             @Override
             public void onResponse(Call<ResponseMaterial> call, Response<ResponseMaterial> response) {
                 if (response.code() == 200) {
+                    pd.hide();
                     Semennat = response.body().getMaterials();
                     List<String> listSpinner = new ArrayList<String>();
                     for (int i = 0; i < Semennat.size(); i++) {
@@ -449,6 +456,7 @@ public class Tambahlantai extends AppCompatActivity {
             @Override
             public void onResponse(Call<ResponseMaterial> call, Response<ResponseMaterial> response) {
                 if (response.code() == 200) {
+                    pd.hide();
                     Semen = response.body().getMaterials();
                     List<String> listSpinner = new ArrayList<String>();
                     for (int i = 0; i < Semen.size(); i++) {

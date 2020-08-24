@@ -61,7 +61,7 @@ public class Lantai_adapter extends RecyclerView.Adapter<Lantai_adapter.ViewHold
         final String Hargapasir = String.valueOf(lantais.get(i).getHargapasir());
         final String Hargasemen = String.valueOf(lantais.get(i).getHargasemen());
         final String Namasemen = String.valueOf(lantais.get(i).getNamaSemen());
-        final String  Namasemennat= String.valueOf(lantais.get(i).getNamaSemennat());
+        final String Namasemennat= String.valueOf(lantais.get(i).getNamaSemennat());
         final String Namapasir = String.valueOf(lantais.get(i).getNamaPasir());
         final String Namakeramik = String.valueOf(lantais.get(i).getNamaKeramik());
         final String Harganat = String.valueOf(lantais.get(i).getHarganat());
@@ -90,8 +90,6 @@ public class Lantai_adapter extends RecyclerView.Adapter<Lantai_adapter.ViewHold
         viewHolder.semen.setText(Jumlahdalamsak+"sak");
         viewHolder.keramik.setText(Keramikdus+"dus");
         viewHolder.detailtotal.setText("Rp."+totals);
-
-
 
         viewHolder.editlantai.setOnClickListener(new View.OnClickListener() {
             @Override

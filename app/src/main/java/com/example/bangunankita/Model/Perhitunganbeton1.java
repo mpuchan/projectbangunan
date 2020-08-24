@@ -19,7 +19,7 @@ public class Perhitunganbeton1 {
     private Double panjangbeton;
     @SerializedName("pilihanbeton")
     @Expose
-    private Double pilihanbeton;
+    private String pilihanbeton;
     @SerializedName("namapapan")
     @Expose
     private String namapapan;
@@ -170,11 +170,11 @@ public class Perhitunganbeton1 {
         this.panjangbeton = panjangbeton;
     }
 
-    public Double getPilihanbeton() {
+    public String getPilihanbeton() {
         return pilihanbeton;
     }
 
-    public void setPilihanbeton(Double pilihanbeton) {
+    public void setPilihanbeton(String pilihanbeton) {
         this.pilihanbeton = pilihanbeton;
     }
 

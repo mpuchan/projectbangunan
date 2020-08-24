@@ -4,6 +4,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -45,6 +46,7 @@ public class Tambahurugan extends AppCompatActivity {
     Context mContext;
     SessionManager sm;
     String token,nama1,p,t,jenis;
+    ProgressDialog pd;
     String mId,Ju;
     int ProyekID;
     private int numberpasir;
@@ -62,6 +64,9 @@ public class Tambahurugan extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tambahurugan);
         init();
+        pd = new ProgressDialog(this);
+        pd.setMessage("loading");
+        pd.show();
         initSpinnerPasir();
         prosesbtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -165,6 +170,7 @@ public class Tambahurugan extends AppCompatActivity {
             @Override
             public void onResponse(Call<ResponseMaterial> call, Response<ResponseMaterial> response) {
                 if (response.code() == 200) {
+                    pd.hide();
                     Pasir = response.body().getMaterials();
                     List<String> listSpinner = new ArrayList<String>();
                     for (int i = 0; i < Pasir.size(); i++) {
@@ -175,7 +181,7 @@ public class Tambahurugan extends AppCompatActivity {
                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     spinurugan.setAdapter(adapter);
                 } else {
-                    Toast.makeText(mContext, "Gagal mengambil data Batako", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mContext, "Gagal mengambil data Pasir", Toast.LENGTH_SHORT).show();
                 }
 
             }
@@ -192,6 +198,7 @@ public class Tambahurugan extends AppCompatActivity {
         item.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
+                pd.show();
                 String apiKey = "oa00000000app";
                 initvalidation();
                 HashMap<String, String> map = new HashMap<>();
@@ -214,6 +221,7 @@ public class Tambahurugan extends AppCompatActivity {
                     @Override
                     public void onResponse(Call<Void> call, Response<Void> response) {
                         if (response.code() == 200) {
+                            pd.hide();
                             Intent Perhitunganurugan = (new Intent(Tambahurugan.this, Perhitunganurugan.class)
                                     .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
                             Bundle setData = new Bundle();
@@ -221,7 +229,7 @@ public class Tambahurugan extends AppCompatActivity {
                             Perhitunganurugan.putExtras(setData);
                             startActivity(Perhitunganurugan);
                             Toast.makeText(Tambahurugan.this,
-                                    "Tambah Data Perhitungan Plesteran Berhasil",
+                                    "Tambah Data Perhitungan Urugan Berhasil",
                                     Toast.LENGTH_LONG).show();
 
                         } else if (response.code() == 422) {
@@ -320,8 +328,8 @@ public class Tambahurugan extends AppCompatActivity {
         }else{
             mId = "0";
         }
-        Toast.makeText(Tambahurugan.this, "Proyek Id"+mId,
-                Toast.LENGTH_SHORT).show();
+//        Toast.makeText(Tambahurugan.this, "Proyek Id"+mId,
+//                Toast.LENGTH_SHORT).show();
 
     }
 

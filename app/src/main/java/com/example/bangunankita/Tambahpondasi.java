@@ -4,6 +4,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -28,6 +29,7 @@ import com.example.bangunankita.Util.SessionManager;
 import com.example.bangunankita.adapter.Campuran_adapter;
 
 import java.math.RoundingMode;
+import java.nio.channels.FileLock;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -40,9 +42,10 @@ import retrofit2.Response;
 public class Tambahpondasi extends AppCompatActivity {
     private EditText a,b,t,p,volume;
     private EditText hargab,hargas,hargap,namapengerjaan;
-    private TextView hasilb,hasilbid,hasilbat2,hasilbat,hasilbat1,hasilse,hasilse1,
+    private TextView hasilb,hasilbid,hasilbat2,hasilbat,hasilvol,hasilbat1,hasilse,hasilse1,
             hasilse2,hasilpas,hasilpas1,hasilpas2,totalbiaya;
     private Button btnproses,hitung;
+    ProgressDialog pd;
     private Spinner spinbatu,campuran,spinsemen,spinpasir;
     public String hb,idb,hs,ids,hp,idp,berats,pc,pp,jenis,token,metode,mId,namasemen,namapasir,namabatu;
     public String a1,b1,t1,p1,vol;
@@ -70,6 +73,9 @@ public class Tambahpondasi extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tambahpondasi);
         init();
+        pd = new ProgressDialog(this);
+        pd.setMessage("loading");
+        pd.show();
         initSpinnerBatu();
         initSpinnerSemen();
         initSpinnerPasir();
@@ -120,7 +126,7 @@ public class Tambahpondasi extends AppCompatActivity {
                 namabatu = String.valueOf(Batu.get(position).getNama());
                 hargab.setText(hb);
 
-                Toast.makeText(mContext, "Kamu memilih Batako " + selectedName, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(mContext, "Kamu memilih Batako " + selectedName, Toast.LENGTH_SHORT).show();
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
@@ -138,7 +144,7 @@ public class Tambahpondasi extends AppCompatActivity {
                 ids = String.valueOf(Semen.get(position).getId());
                 hargas.setText(hs);
 
-                Toast.makeText(mContext, "Kamu memilih Semen " + selectedName, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(mContext, "Kamu memilih Semen " + selectedName, Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -156,7 +162,7 @@ public class Tambahpondasi extends AppCompatActivity {
                 namapasir = String.valueOf(Pasir.get(position).getNama());
                 hargap.setText(hp);
 
-                Toast.makeText(mContext, "Kamu memilih Pasir " + selectedName, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(mContext, "Kamu memilih Pasir " + selectedName, Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -173,7 +179,7 @@ public class Tambahpondasi extends AppCompatActivity {
                 pc = String.valueOf(obj.getPc());
                 metode = String.valueOf(obj.getCampuran());
 
-                Toast.makeText(mContext, "Kamu memilih Campuran " + pc, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(mContext, "Kamu memilih Campuran " + pc, Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -185,6 +191,9 @@ public class Tambahpondasi extends AppCompatActivity {
         hitung.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String vol = volume.getText().toString().trim();
+                vol1 = Float.parseFloat(vol);
+                hasilvol.setText(vol);
                 String hargapasir = hargap.getText().toString().trim();
                 hargapasirparse = Float.parseFloat(hargapasir);
 //                hasilbid.setText(String.valueOf(hasil));
@@ -228,7 +237,7 @@ public class Tambahpondasi extends AppCompatActivity {
         numberpasir = Integer.parseInt(totpasir1);
         DecimalFormat formatter = new DecimalFormat("#,###.##");
         String totalbiaya = formatter.format(numberpasir);
-        Toast.makeText(mContext, "Gagal mengambil data"+ppasir, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(mContext, "Gagal mengambil data"+ppasir, Toast.LENGTH_SHORT).show();
         hasilpas2.setText(totalbiaya);
         hasilpas1.setText(Float.toString(hitungp));
         hasilpas.setText(Float.toString(hitungp));
@@ -286,6 +295,7 @@ public class Tambahpondasi extends AppCompatActivity {
             @Override
             public void onResponse(Call<ResponseMaterial> call, Response<ResponseMaterial> response) {
                 if (response.code() == 200) {
+                    pd.hide();
                     Semen = response.body().getMaterials();
                     List<String> listSpinner = new ArrayList<String>();
                     for (int i = 0; i < Semen.size(); i++){
@@ -313,6 +323,7 @@ public class Tambahpondasi extends AppCompatActivity {
             @Override
             public void onResponse(Call<ResponseMaterial> call, Response<ResponseMaterial> response) {
                 if (response.code() == 200) {
+                    pd.hide();
                     Pasir = response.body().getMaterials();
                     List<String> listSpinner = new ArrayList<String>();
                     for (int i = 0; i < Pasir.size(); i++){
@@ -336,10 +347,11 @@ public class Tambahpondasi extends AppCompatActivity {
     }
 
     private void initSpinnerBatu() {
-        ApiClient.getRequestInterface().getallbatako().enqueue(new Callback<ResponseMaterial>() {
+        ApiClient.getRequestInterface().getallbatu().enqueue(new Callback<ResponseMaterial>() {
             @Override
             public void onResponse(Call<ResponseMaterial> call, Response<ResponseMaterial> response) {
                 if (response.code() == 200) {
+                    pd.hide();
                     Batu = response.body().getMaterials();
 
                     List<String> listSpinner = new ArrayList<String>();
@@ -371,6 +383,7 @@ public class Tambahpondasi extends AppCompatActivity {
         item.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
+                pd.show();
                 String apiKey = "oa00000000app";
                 initvalidation();
                 HashMap<String, String> map = new HashMap<>();
@@ -402,7 +415,9 @@ public class Tambahpondasi extends AppCompatActivity {
                 call.enqueue(new Callback<Void>() {
                     @Override
                     public void onResponse(Call<Void> call, Response<Void> response) {
+
                         if (response.code() == 200) {
+                            pd.hide();
                             Intent Perhitunganbidang = (new Intent(Tambahpondasi.this, PerhitunganPondasi.class)
                                     .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
                             Bundle setData = new Bundle();
@@ -511,7 +526,7 @@ public class Tambahpondasi extends AppCompatActivity {
         hasilbat1 = findViewById(R.id.hasilbatu1);
         hasilbat2 = findViewById(R.id.hasilbatu2);
          totalbiaya= findViewById(R.id.totalbiaya);
-
+        hasilvol = findViewById(R.id.hasilvol);
         Campuran_adapter campuran_adapter =
                 new Campuran_adapter(Tambahpondasi.this,
                         android.R.layout.simple_spinner_item, campurans);

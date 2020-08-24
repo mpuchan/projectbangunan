@@ -33,9 +33,16 @@ import com.example.bangunankita.R;
 import com.example.bangunankita.Retrovit.ApiClient;
 import com.example.bangunankita.Util.SessionManager;
 
+import java.text.DateFormat;
+import java.text.DecimalFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Random;
 
 import retrofit2.Call;
@@ -86,7 +93,7 @@ public class Proyek_adapter extends RecyclerView.Adapter<Proyek_adapter.ViewHold
         final String luastanah = String.valueOf(proyeks.get(i).getLuas_tanah());
         final String luasbangunan = String.valueOf(proyeks.get(i).getLuas_bangunan());
         final String lokasi =proyeks.get(i).getLokasi();
-        final String tanggal =proyeks.get(i).getTanggal();
+        final String Tanggal =proyeks.get(i).getTanggal();
 
         String firstCharNamaProyek= nama_proyek.substring(0,1);
         TextDrawable drawable = TextDrawable.builder().beginConfig()
@@ -96,7 +103,19 @@ public class Proyek_adapter extends RecyclerView.Adapter<Proyek_adapter.ViewHold
         viewHolder.image.setImageDrawable(drawable);
         viewHolder.nama_proyek.setText(nama_proyek);
         viewHolder.lokasi_proyek.setText(lokasi);
-//        viewHolder.tanggal.setText(tanggal);
+
+        DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd");
+        DateFormat outputFormat = new SimpleDateFormat("dd/MMM/yyyy");
+        String inputDateStr=Tanggal;
+        Date date = null;
+        try {
+            date = inputFormat.parse(inputDateStr);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        String outputDateStr = outputFormat.format(date);
+
+        viewHolder.tanggal.setText(outputDateStr);
 
         viewHolder.edit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -109,6 +128,7 @@ public class Proyek_adapter extends RecyclerView.Adapter<Proyek_adapter.ViewHold
                 setData.putString("luastanah",luastanah);
                 setData.putString("luasbangunan",luasbangunan);
                 setData.putString("lokasi",lokasi);
+                setData.putString("tanggal",Tanggal );
                 edit.putExtras(setData);
                 context.startActivity(edit);
 
@@ -235,12 +255,14 @@ private Filter proyekfilter = new Filter() {
         private ImageView image;
         private CardView list;
         Dialog deletedialog;
+        private SimpleDateFormat dateFormatter;
 
         public ViewHolder(View view) {
             super(view);
+
             nama_proyek = (TextView)view.findViewById(R.id.nameproyek);
             lokasi_proyek = (TextView)view.findViewById(R.id.lokasiproyek);
-            tanggal = view.findViewById(R.id.tanggal);
+            tanggal = view.findViewById(R.id.dateproyek);
             image = view.findViewById(R.id.picture1);
             edit = view.findViewById(R.id.editproyek);
             delete = view.findViewById(R.id.hapusproyek);

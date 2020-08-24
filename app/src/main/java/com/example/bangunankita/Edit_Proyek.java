@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.animation.Animator;
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Build;
@@ -45,6 +46,7 @@ public class Edit_Proyek extends AppCompatActivity {
     String mId,nama_proyek,lokasi_;
     SessionManager sm;
     int IdProyek;
+    ProgressDialog pd;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,10 +58,12 @@ public class Edit_Proyek extends AppCompatActivity {
                 showDateDialog();
             }
         });
+        pd = new ProgressDialog(Edit_Proyek.this);
         lokasi.setText(lokasi_);
         namaproyek.setText(nama_proyek);
 
         tambah.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
                 if (!TextUtils.isEmpty(mId) && TextUtils.isDigitsOnly(mId)) {
@@ -75,13 +79,16 @@ public class Edit_Proyek extends AppCompatActivity {
                 map.put("luas_bangunan", luasbangunan.getText().toString());
                 map.put("luas_tanah", luastanah.getText().toString());
                 map.put("PengembangId", idpengembang.getText().toString());
-
+                pd.setMessage("loading");
+                pd.show();
 
                 Call<Void> call = ApiClient.getRequestInterface().actionPutProyek(IdProyek,apiKey,token,map);
                 call.enqueue(new Callback<Void>() {
                     @Override
                     public void onResponse(Call<Void> call, Response<Void> response) {
                         if (response.code() == 201) {
+                            pd.setMessage("loading");
+                            pd.show();
                             Toast.makeText(Edit_Proyek.this,
                                     "Edit Data Proyek Berhasil",
                                     Toast.LENGTH_LONG).show();
@@ -226,18 +233,21 @@ public class Edit_Proyek extends AppCompatActivity {
         idpengembang.setText(map.get(sm.KEY_ID));
         token=(map.get(sm.KEY_TOKEN));
         apiKey = "oa00000000app";
-
+        dateFormatter = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
+        et_tanggal.setFocusableInTouchMode(false);
+        et_tanggal.setFocusable(false);
         //Getting Intent Data//
         Bundle bundle = getIntent().getExtras();
         mId = bundle.getString("idproyek");
         nama_proyek = bundle.getString("namaproyek");
         lokasi_= bundle.getString("lokasi");
+         et_tanggal.setText(bundle.getString("tanggal"));
+        luasbangunan.setText(bundle.getString("luasbangunan"));
+        luastanah.setText(bundle.getString("luastanah"));
 
 //        Toast.makeText(Edit_Proyek.this, "Proyek Id"+mId,
 //                Toast.LENGTH_SHORT).show();
         //Date//
-        dateFormatter = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
-        et_tanggal.setFocusableInTouchMode(false);
-        et_tanggal.setFocusable(false);
+
     }
 }

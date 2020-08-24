@@ -17,6 +17,7 @@ import android.widget.Toast;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.bangunankita.Editbidang;
+import com.example.bangunankita.Model.Jenispengerjaan;
 import com.example.bangunankita.Model.Perhitunganbidang1;
 import com.example.bangunankita.Perhitunganbidang;
 import com.example.bangunankita.R;
@@ -35,8 +36,8 @@ import retrofit2.Response;
 
 public class Bidang_adapter extends RecyclerView.Adapter<Bidang_adapter.ViewHolder> {
 
-
     private Context context;
+
     private List<Perhitunganbidang1> bidangs;
 
     public Bidang_adapter(Context context, List<Perhitunganbidang1> bidangs) {
@@ -53,10 +54,12 @@ public class Bidang_adapter extends RecyclerView.Adapter<Bidang_adapter.ViewHold
 
     @Override
     public void onBindViewHolder(Bidang_adapter.ViewHolder viewHolder, final int i) {
+
         final Perhitunganbidang1 BidangModel = bidangs.get(i);
         final String id = String.valueOf(bidangs.get(i).getId());
         final String Proyekid = String.valueOf(bidangs.get(i).getProyekId());
         final String Name = String.valueOf(bidangs.get(i).getNama());
+        final String Jenispeng= String.valueOf(bidangs.get(i).getJenisPengerjaan());
         final String Panjangbid = String.valueOf(bidangs.get(i).getPanjangbid());
         final String Tinggibid = String.valueOf(bidangs.get(i).getTinggibid());
         final String Panjangjen = String.valueOf(bidangs.get(i).getPanjangjen());
@@ -108,7 +111,7 @@ public class Bidang_adapter extends RecyclerView.Adapter<Bidang_adapter.ViewHold
                 setData.putString("id", id);
                 setData.putString("ProyekId", Proyekid);
                 setData.putString("nama", Name);
-                setData.putString("jenis_pengerjaan", "bangunan");
+                setData.putString("jenis_pengerjaan", Jenispeng);
                 setData.putString("panjangbid", Panjangbid);
                 setData.putString("tinggibid", Tinggibid);
                 setData.putString("panjangpin", Panjangpin);

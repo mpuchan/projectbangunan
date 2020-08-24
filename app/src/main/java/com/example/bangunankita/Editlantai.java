@@ -3,6 +3,7 @@ package com.example.bangunankita;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -26,6 +27,7 @@ import com.example.bangunankita.Util.SessionManager;
 import com.example.bangunankita.adapter.Campuran_adapter;
 import com.example.bangunankita.adapter.Jenispengerjaan_adapter;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -44,6 +46,9 @@ public class Editlantai extends AppCompatActivity {
             hargapasir1,hargakeramik1,harganat1,totpasir,hargasementot,getluaskeramik,kebutuhankeramik,kebutuhansemen,keb1kardus;
     Context mContext;
     SessionManager sm;
+    ProgressDialog pd;
+    private int numberkeramik,numberpasir,numbersemen,numbernat,numbertotal;
+    private String namajenis1,campuran1,totkeramik1,totsemen1,totpasir1,tothitungan,totnat1;
     String token,nama,p,t,pw,namasemen1,idperhitunganlantai,jenis,namanat1,harkeramik1,namaker1,metode,namapas,namasemen,namapasir,harsemen1,harpasir1,harker1,harnat1;
     String mId,Ju;
     int ProyekID,idperhitunganlantai1;
@@ -52,21 +57,23 @@ public class Editlantai extends AppCompatActivity {
     private List<Material> Semennat = new ArrayList<>();
     private List<Material> Pasir = new ArrayList<>();
     private List<Material> Keramik = new ArrayList<>();
-    Campuran[] campurans ={
-            new Campuran("keramik ukuran 20*20", 10.4,0.045,1.620),
-            new Campuran("keramik ukuran 30*30", 10, 0.045,1.5),
-            new Campuran("keramik ukuran 40*40", 8.190,0.045,1.620)
-    };
-    Jenispengerjaan[] jenispengerjaans  ={
-            new Jenispengerjaan("ruang utama"),
-            new Jenispengerjaan("kamar"),
-            new Jenispengerjaan("kamar mandi"),
-            new Jenispengerjaan("teras"),
-            new Jenispengerjaan("ruang tamu"),
-            new Jenispengerjaan("ruang makan"),
-            new Jenispengerjaan("dapur"),
-            new Jenispengerjaan("Lainnya"),
-    };
+    private List<Jenispengerjaan> jensi = new ArrayList<>();
+    private List<Campuran> campura = new ArrayList<>();
+//    Campuran[] campurans ={
+//            new Campuran("keramik ukuran 20*20", 10.4,0.045,1.620),
+//            new Campuran("keramik ukuran 30*30", 10, 0.045,1.5),
+//            new Campuran("keramik ukuran 40*40", 8.190,0.045,1.620)
+//    };
+//    Jenispengerjaan[] jenispengerjaans  ={
+//            new Jenispengerjaan("ruang utama"),
+//            new Jenispengerjaan("kamar"),
+//            new Jenispengerjaan("kamar mandi"),
+//            new Jenispengerjaan("teras"),
+//            new Jenispengerjaan("ruang tamu"),
+//            new Jenispengerjaan("ruang makan"),
+//            new Jenispengerjaan("dapur"),
+//            new Jenispengerjaan("Lainnya"),
+//    };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,6 +85,7 @@ public class Editlantai extends AppCompatActivity {
         HashMap<String,String> map = sm.getDetailLogin();
         token=(map.get(sm.KEY_TOKEN));
         sm.checkLogin();
+        pd = new ProgressDialog(this);
         nama_pengerjaan = findViewById(R.id.nama_pengerjaan1);
         spinkeramik = findViewById(R.id.spinkeramik);
         spinsemen = findViewById(R.id.spinsemen);
@@ -107,14 +115,6 @@ public class Editlantai extends AppCompatActivity {
         hasilnat1 = findViewById(R.id.hasilnat1);
         total = findViewById(R.id.total);
 
-        Campuran_adapter campuran_adapter =
-                new Campuran_adapter(Editlantai.this,
-                        android.R.layout.simple_spinner_item, campurans);
-        campuran.setAdapter(campuran_adapter);
-        Jenispengerjaan_adapter jenispengerjaan_adapter =
-                new Jenispengerjaan_adapter(Editlantai.this,
-                        android.R.layout.simple_spinner_item, jenispengerjaans);
-        spinjenis.setAdapter(jenispengerjaan_adapter);
         Bundle bundle = getIntent().getExtras();
         if (bundle != null)
         {
@@ -127,7 +127,7 @@ public class Editlantai extends AppCompatActivity {
 
         idperhitunganlantai= bundle.getString("id");
         nama_pengerjaan.setText(bundle.getString("nama"));
-        bundle.getString("jenis_pengerjaan");
+        namajenis1= bundle.getString("jenis_pengerjaan");
         panjang.setText(bundle.getString("panjanglan"));
         lebar.setText(bundle.getString("lebarlan"));
         luaslan.setText(bundle.getString("luas_lantai"));
@@ -147,14 +147,51 @@ public class Editlantai extends AppCompatActivity {
         namasemen= bundle.getString("nama_semen");
         namakeramik= bundle.getString("nama_keramik");
         namanat= bundle.getString("nama_semennat");
-//        namasemen= bundle.getString("metode");
+        campuran1= bundle.getString("metode");
         namapas= bundle.getString("nama_pasir");
-        hasilker1.setText(bundle.getString("hargakeramiktotal"));
-        hasilpas2.setText(bundle.getString("hargapasirtotal"));
-        hasilnat1.setText(bundle.getString("harganattotal"));
-        hasilse2.setText(bundle.getString("hargasementotal"));
-        total.setText(bundle.getString("hargatotal"));
 
+        hargakeramik1= Float.parseFloat(bundle.getString("hargakeramiktotal"));
+        DecimalFormat df1 = new DecimalFormat("#");
+        totkeramik1 = df1.format(hargakeramik1);
+        numberkeramik = Integer.parseInt(totkeramik1);
+        DecimalFormat formatter1 = new DecimalFormat("#,###.##");
+        String totalbiayakeramik = formatter1.format(numberkeramik);
+        hasilker1.setText(totalbiayakeramik);
+
+        hargapasir1 = Float.parseFloat(bundle.getString("hargapasirtotal"));
+        DecimalFormat df = new DecimalFormat("#");
+        totpasir1 = df.format(hargapasir1);
+        numberpasir = Integer.parseInt(totpasir1);
+        DecimalFormat formatter = new DecimalFormat("#,###.##");
+        String totalbiayapasir = formatter.format(numberpasir);
+        hasilpas2.setText(totalbiayapasir);
+
+        harganat1 = Float.parseFloat(bundle.getString("harganattotal"));
+        DecimalFormat df2 = new DecimalFormat("#");
+        totnat1 = df2.format(harganat1);
+        numbernat = Integer.parseInt(totnat1);
+        DecimalFormat formatter2 = new DecimalFormat("#,###.##");
+        String totalbiayanat = formatter2.format(numbernat);
+        hasilnat1.setText(totalbiayanat);
+
+
+        hargasemen1 = Float.parseFloat(bundle.getString("hargasementotal"));
+        DecimalFormat df3 = new DecimalFormat("#");
+        totsemen1 = df3.format(hargasemen1);
+        numbersemen = Integer.parseInt(totsemen1);
+        DecimalFormat formatter3 = new DecimalFormat("#,###.##");
+        String totalbiayasemen = formatter3.format(numbersemen);
+        hasilse2.setText(totalbiayasemen);
+
+        float tothitung = Float.parseFloat(bundle.getString("hargatotal"));
+        DecimalFormat df4 = new DecimalFormat("#");
+        tothitungan = df4.format(tothitung);
+        numbertotal = Integer.parseInt(tothitungan);
+        DecimalFormat formatter4 = new DecimalFormat("#,###.##");
+        String totalbiaya = formatter4.format(numbertotal);
+        total.setText(totalbiaya);
+        initcampuran();
+        initjenispengerjaan();
         initSpinnerSemen();
         initSpinnerPasir();
         initSpinnerSemenNat();
@@ -268,11 +305,6 @@ public class Editlantai extends AppCompatActivity {
                 }
 
 
-                hp = String.valueOf(Pasir.get(position).getHarga());
-                idp = String.valueOf(Pasir.get(position).getId());
-                namapasir = String.valueOf(Pasir.get(position).getNama());
-                hpasir.setText(hp);
-
                 Toast.makeText(mContext, "Kamu memilih Pasir " + selectedName, Toast.LENGTH_SHORT).show();
             }
 
@@ -286,8 +318,8 @@ public class Editlantai extends AppCompatActivity {
 
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Jenispengerjaan je = (Jenispengerjaan) (parent.getItemAtPosition(position));
-                jenis = String.valueOf(je.getJenispengerjaan());
+                String selectedName = parent.getItemAtPosition(position).toString();
+                jenis = String.valueOf(jensi.get(position).getJenispengerjaan());
 
 
 //                Toast.makeText(mContext, "Kamu memilih Campuran " + pc, Toast.LENGTH_SHORT).show();
@@ -302,11 +334,11 @@ public class Editlantai extends AppCompatActivity {
 
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Campuran obj = (Campuran) (parent.getItemAtPosition(position));
-                pp = String.valueOf(obj.getPp());
-                pc = String.valueOf(obj.getPc());
-                pw = String.valueOf(obj.getPw());
-                metode = String.valueOf(obj.getCampuran());
+                String selectedName = parent.getItemAtPosition(position).toString();
+                pp = String.valueOf(campura.get(position).getPp());
+                pc = String.valueOf(campura.get(position).getPc());
+                pw = String.valueOf(campura.get(position).getPw());
+                metode = String.valueOf(campura.get(position).getCampuran());
 
                 Toast.makeText(mContext, "Kamu memilih Campuran " + pc, Toast.LENGTH_SHORT).show();
             }
@@ -330,13 +362,29 @@ public class Editlantai extends AppCompatActivity {
                 hargakeramikparse =Float.parseFloat(hargakeramik);
                 String harganat = hnat.getText().toString().trim();
                 harganatparse =Float.parseFloat(harganat);
+
+
                 hitungkeramik();
                 hitungsemen();
                 htungsemennat();
                 hitungpasir();
+                hitungtotal();
             }
         });
     }
+
+
+
+    private void hitungtotal() {
+        float tothitung = numberkeramik+numbernat+numbersemen+numberpasir;
+        DecimalFormat df = new DecimalFormat("#");
+        tothitungan = df.format(tothitung);
+        numbertotal = Integer.parseInt(tothitungan);
+        DecimalFormat formatter = new DecimalFormat("#,###.##");
+        String totalbiaya = formatter.format(numbertotal);
+        total.setText(totalbiaya);
+    }
+
     private void hitungkeramik() {
         float panjangkeramik = Float.parseFloat(pker);
         float lebarkeramik = Float.parseFloat(lker);
@@ -352,8 +400,15 @@ public class Editlantai extends AppCompatActivity {
         keb1kardus = kebutuhankeramik/jumlahker;
         hargakeramik1 = keb1kardus*hargakeramikparse;
 
+
+        DecimalFormat df1 = new DecimalFormat("#");
+        totkeramik1 = df1.format(hargakeramik1);
+        numberkeramik = Integer.parseInt(totkeramik1);
+        DecimalFormat formatter = new DecimalFormat("#,###.##");
+        String totalbiaya = formatter.format(numberkeramik);
+
         hasilker.setText(String.valueOf(kebutuhankeramik));
-        hasilker1.setText(String.valueOf(hargakeramik1));
+        hasilker1.setText(totalbiaya);
         hasilker2.setText(String.valueOf(keb1kardus));
 
     }
@@ -362,9 +417,14 @@ public class Editlantai extends AppCompatActivity {
         float koefpasir = Float.parseFloat(pp);
         kebutuhanpasir = luasba*koefpasir;
         hargapasir1 = kebutuhanpasir*hargapasirparse;
+        DecimalFormat df1 = new DecimalFormat("#");
+        totpasir1 = df1.format(hargapasir1);
+        numberpasir = Integer.parseInt(totpasir1);
+        DecimalFormat formatter = new DecimalFormat("#,###.##");
+        String totalbiaya = formatter.format(numberpasir);
         hasilpas.setText(String.valueOf(kebutuhanpasir));
         hasilpas1.setText(String.valueOf(kebutuhanpasir));
-        hasilpas2.setText(String.valueOf(hargapasir1));
+        hasilpas2.setText(totalbiaya);
 
     }
 
@@ -372,9 +432,13 @@ public class Editlantai extends AppCompatActivity {
         float koefnat = Float.parseFloat(pw);
         kebutuhannat = luasba*koefnat;
         harganat1 = kebutuhannat*harganatparse;
+        DecimalFormat df1 = new DecimalFormat("#");
+        totnat1 = df1.format(harganat1);
+        numbernat = Integer.parseInt(totnat1);
+        DecimalFormat formatter = new DecimalFormat("#,###.##");
+        String totalbiaya = formatter.format(numbernat);
         hasilnat.setText(String.valueOf(kebutuhannat));
-        hasilnat1.setText(String.valueOf(harganat1));
-
+        hasilnat1.setText(totalbiaya);
     }
 
     private void hitungsemen() {
@@ -383,10 +447,57 @@ public class Editlantai extends AppCompatActivity {
         kebutuhansemen = luasba*koefsemen;
         kebutuhansemensak = kebutuhansemen/beratsak;
         hargasemen1 = kebutuhansemensak*hargasemenparse;
+        DecimalFormat df1 = new DecimalFormat("#");
+        totsemen1 = df1.format(hargasemen1);
+        numbersemen = Integer.parseInt(totsemen1);
+        DecimalFormat formatter = new DecimalFormat("#,###.##");
+        String totalbiaya = formatter.format(numbersemen);
         hasilse.setText(String.valueOf(kebutuhansemen));
         hasilse1.setText(String.valueOf(kebutuhansemensak));
-        hasilse2.setText(String.valueOf(hargasemen1));
+        hasilse2.setText(totalbiaya);
 
+    }
+    private void initcampuran() {
+        campura.add(new Campuran("keramik ukuran 20*20",10.4,0.045,1.620));
+        campura.add(new Campuran("keramik ukuran 30*30",10,0.045,1.5));
+        campura.add(new Campuran("keramik ukuran 40*40",8.190,0.045,1.620));
+
+        int i = 0;
+        List<String> listSpinner = new ArrayList<String>();
+        String data = campuran1;
+        for (int j = 0; j <jensi.size(); j++) {
+            if (data.equalsIgnoreCase(String.valueOf(jensi.get(j).getJenispengerjaan()))) {
+                i = j;
+            }
+            listSpinner.add(String.valueOf(jensi.get(j).getJenispengerjaan()));
+        }
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(mContext,
+                android.R.layout.simple_spinner_item, listSpinner);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinjenis.setAdapter(adapter);
+        spinjenis.setSelection(i);
+
+    }
+    private void initjenispengerjaan() {
+        jensi.add(new Jenispengerjaan("Sloof 15/20"));
+        jensi.add(new Jenispengerjaan("Kolom 10/10"));
+        jensi.add(new Jenispengerjaan("Kolom 15/20"));
+        jensi.add(new Jenispengerjaan("Ring balok 10/15"));
+
+        int i = 0;
+        List<String> listSpinner = new ArrayList<String>();
+        String data = namajenis1;
+        for (int j = 0; j <jensi.size(); j++) {
+            if (data.equalsIgnoreCase(String.valueOf(jensi.get(j).getJenispengerjaan()))) {
+                i = j;
+            }
+            listSpinner.add(String.valueOf(jensi.get(j).getJenispengerjaan()));
+        }
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(mContext,
+                android.R.layout.simple_spinner_item, listSpinner);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinjenis.setAdapter(adapter);
+        spinjenis.setSelection(i);
     }
 
     private void initSpinnerKeramik() {
@@ -395,8 +506,9 @@ public class Editlantai extends AppCompatActivity {
             @Override
             public void onResponse(Call<ResponseMaterial> call, Response<ResponseMaterial> response) {
                 if (response.code() == 200) {
-                    int i = 0;
+                    pd.hide();
                     Keramik = response.body().getMaterials();
+                    int i = 0;
                     List<String> listSpinner = new ArrayList<String>();
                     String data = namakeramik;
                     for (int j = 0; j < Keramik.size(); j++) {
@@ -429,6 +541,7 @@ public class Editlantai extends AppCompatActivity {
             @Override
             public void onResponse(Call<ResponseMaterial> call, Response<ResponseMaterial> response) {
                 if (response.code() == 200) {
+                    pd.hide();
                     Semennat = response.body().getMaterials();
                     int i=0;
                     List<String> listSpinner = new ArrayList<String>();
@@ -462,6 +575,7 @@ public class Editlantai extends AppCompatActivity {
             @Override
             public void onResponse(Call<ResponseMaterial> call, Response<ResponseMaterial> response) {
                 if (response.code() == 200) {
+                    pd.hide();
                     Semen = response.body().getMaterials();
                     int i=0;
                     List<String> listSpinner = new ArrayList<String>();
@@ -498,6 +612,7 @@ public class Editlantai extends AppCompatActivity {
             @Override
             public void onResponse(Call<ResponseMaterial> call, Response<ResponseMaterial> response) {
                 if (response.code() == 200) {
+                    pd.hide();
                     Pasir = response.body().getMaterials();
                     int i = 0;
                     List<String> listSpinner = new ArrayList<String>();
@@ -534,7 +649,9 @@ public class Editlantai extends AppCompatActivity {
         item.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
+                pd.show();
                 String apiKey = "oa00000000app";
+                idperhitunganlantai1 = Integer.parseInt(idperhitunganlantai);
                 HashMap<String, String> map = new HashMap<>();
                 map.put("nama",nama_pengerjaan.getText().toString());
                 map.put("jenis_pengerjaan", jenis);
@@ -560,11 +677,12 @@ public class Editlantai extends AppCompatActivity {
                 map.put("hargasementotal", hasilse2.getText().toString());
                 map.put("hargapasirtotal", hasilpas2.getText().toString());
                 map.put("harganattotal", hasilnat1.getText().toString());
-                Call<Void> call = ApiClient.getRequestInterface().actionPutPerhitunganlantai(ProyekID,apiKey,token,map);
+                Call<Void> call = ApiClient.getRequestInterface().actionPutPerhitunganlantai(idperhitunganlantai1,apiKey,token,map);
                 call.enqueue(new Callback<Void>() {
                     @Override
                     public void onResponse(Call<Void> call, Response<Void> response) {
-                        if (response.code() == 200) {
+                        if (response.code() == 201) {
+                            pd.hide();
                             Intent Perhitunganlantai = (new Intent(Editlantai.this, Perhitunganlantai.class)
                                     .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
                             Bundle setData = new Bundle();

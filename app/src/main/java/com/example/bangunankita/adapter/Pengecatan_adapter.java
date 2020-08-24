@@ -131,11 +131,11 @@ public class Pengecatan_adapter extends RecyclerView.Adapter<Pengecatan_adapter.
                 TextView hargatotalcat = detaildialog.findViewById(R.id.cat);
                 TextView totalbiaya = detaildialog.findViewById(R.id.totalbiaya);
                 nama.setText(Name);
-                luaspengecatan.setText("Panjang "+Panjangbid+"m"+"tinggi "+Tinggibid+"m");
-                namacat.setText(Name);
+                luaspengecatan.setText("Luas area cat : " + Luas+"m2");
+                namacat.setText(Namacat);
                 namaplamur.setText(Namaplamur);
-                jumlahcat.setText(Jumlahcatkaleng);
-                jumlahplamur.setText(Jumlahplamur);
+                jumlahcat.setText(Jumlahcatkaleng + "kaleng");
+                jumlahplamur.setText(Jumlahplamursak +"kg");
                 hargacat.setText("Rp."+Hargacat);
                 hargatotalcat.setText("Rp."+Hargatotalcat);
                 hargaplamur.setText("Rp."+Hargaplamur);

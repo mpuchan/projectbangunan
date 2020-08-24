@@ -3,6 +3,7 @@ package com.example.bangunankita;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -39,10 +40,11 @@ public class Editplafon extends AppCompatActivity {
     String token;
     private String harpaku,hartriplek,harreng,namapaku,namatriplek,namareng;
     String mId,Ju;
+    ProgressDialog pd;
     int ProyekID,thisid;
     private float hasil,luasba,koefplafon,koefpaku;
     Context mContext;
-    private String luas1;
+    private String luas1,namatriplek1,namapaku1,namareng1,harpaku1,harreng1,hartriplek1;
     SessionManager sm;
     private List<Material> Triplek = new ArrayList<>();
     private List<Material> Paku = new ArrayList<>();
@@ -55,6 +57,7 @@ public class Editplafon extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_editplafon);
         init();
+        pd = new ProgressDialog(this);
         initSpinnerPaku();
         initSpinnerTriplek();
         initSpinnerReng();
@@ -68,7 +71,7 @@ public class Editplafon extends AppCompatActivity {
                 float lb = Float.parseFloat(lebar1);
                 hasil = (pb*lb);
                 Luasplafon.setText(String.valueOf(hasil));
-                luas1 = Luasplafon.getText().toString().trim();
+
 
             }
         });
@@ -77,9 +80,16 @@ public class Editplafon extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String selectedName = parent.getItemAtPosition(position).toString();
-                harpaku = String.valueOf(Paku.get(position).getHarga());
-                namapaku = String.valueOf(Paku.get(position).getNama());
-                Hpaku.setText(harpaku);
+
+                if (selectedName.equalsIgnoreCase(namapaku1)){
+                    namapaku = namapaku1;
+                    Hpaku.setText(harpaku1);
+                }else{
+                    namapaku= String.valueOf(Paku.get(position).getNama());
+                    harpaku = String.valueOf(Paku.get(position).getHarga());
+                    Hpaku.setText(harpaku);
+
+                }
 
 //                Toast.makeText(mContext, "Kamu memilih Pasir " + selectedName, Toast.LENGTH_SHORT).show();
             }
@@ -95,22 +105,41 @@ public class Editplafon extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String selectedName = parent.getItemAtPosition(position).toString();
-                hartriplek = String.valueOf(Triplek.get(position).getHarga());
-                namatriplek = String.valueOf(Triplek.get(position).getNama());
-                Htriplek.setText(hartriplek);
-                if (selectedName.contains("Triplek")){
-                    koefplafon = 0.375f;
-                    koefpaku = 0.03f;
-                }else if (selectedName.contains("Gypsum")){
-                    koefplafon = 0.364f;
-                    koefpaku = 0.11f;
-                }else if (selectedName.contains("Kalsiboard")) {
-                    koefplafon = 0.364f;
-                    koefpaku = 0.03f;
+                if (selectedName.equalsIgnoreCase(namatriplek1)){
+                    namatriplek = namatriplek1;
+                    Htriplek.setText(hartriplek1);
+                    if (selectedName.contains("Triplek")){
+                        koefplafon = 0.375f;
+                        koefpaku = 0.03f;
+                    }else if (selectedName.contains("Gypsum")){
+                        koefplafon = 0.364f;
+                        koefpaku = 0.11f;
+                    }else if (selectedName.contains("Kalsiboard")) {
+                        koefplafon = 0.364f;
+                        koefpaku = 0.03f;
+                    }else{
+                        koefplafon = 0.0375f;
+                        koefpaku = 0.03f;
+                    }
                 }else{
-                    koefplafon = 0.0375f;
-                    koefpaku = 0.03f;
+                    namatriplek= String.valueOf(Triplek.get(position).getNama());
+                    hartriplek = String.valueOf(Triplek.get(position).getHarga());
+                    Htriplek.setText(hartriplek);
+                    if (selectedName.contains("Triplek")){
+                        koefplafon = 0.375f;
+                        koefpaku = 0.03f;
+                    }else if (selectedName.contains("Gypsum")){
+                        koefplafon = 0.364f;
+                        koefpaku = 0.11f;
+                    }else if (selectedName.contains("Kalsiboard")) {
+                        koefplafon = 0.364f;
+                        koefpaku = 0.03f;
+                    }else{
+                        koefplafon = 0.0375f;
+                        koefpaku = 0.03f;
+                    }
                 }
+
 
             }
 
@@ -125,9 +154,16 @@ public class Editplafon extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String selectedName = parent.getItemAtPosition(position).toString();
-                harreng = String.valueOf(Kayu.get(position).getHarga());
-                namareng = String.valueOf(Kayu.get(position).getNama());
-                Hreng.setText(harreng);
+
+                if (selectedName.equalsIgnoreCase(namareng1)){
+                    namareng = namareng1;
+                    Hreng.setText(harreng1);
+                }else{
+                    namareng= String.valueOf(Kayu.get(position).getNama());
+                    harreng = String.valueOf(Kayu.get(position).getHarga());
+                    Hreng.setText(harreng);
+
+                }
 
 //                Toast.makeText(mContext, "Kamu memilih Pasir " + selectedName, Toast.LENGTH_SHORT).show();
             }
@@ -141,7 +177,8 @@ public class Editplafon extends AppCompatActivity {
         Hitungb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                luasba = Float.parseFloat(luas1);
+                String luas = Luasplafon.getText().toString().trim();
+                luasba = Float.parseFloat(luas);
                 luas_plafon.setText(String.valueOf(luasba));
                 hitungtriplek();
                 hitungkayu();
@@ -214,16 +251,24 @@ public class Editplafon extends AppCompatActivity {
             @Override
             public void onResponse(Call<ResponseMaterial> call, Response<ResponseMaterial> response) {
                 if (response.code() == 200) {
+                    pd.hide();
                     Kayu = response.body().getMaterials();
+                    int i=0;
                     List<String> listSpinner = new ArrayList<String>();
-                    for (int i = 0; i < Kayu.size(); i++){
-                        listSpinner.add(Kayu.get(i).getNama());
+                    String data = namareng1;
+                    for (int j = 0; j < Kayu.size(); j++){
+                        if (data.equalsIgnoreCase(String.valueOf(Kayu.get(j).getNama()))) {
+                            i = j;
+                        }
+                        listSpinner.add(Kayu.get(j).getNama());
 
                     }
                     ArrayAdapter<String> adapter = new ArrayAdapter<String>(mContext,
                             android.R.layout.simple_spinner_item, listSpinner);
                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     spinreng.setAdapter(adapter);
+                    spinreng.setSelection(i);
+
                 } else {
                     Toast.makeText(mContext, "Gagal mengambil data Reng/Hollow", Toast.LENGTH_SHORT).show();
                 }
@@ -243,16 +288,25 @@ public class Editplafon extends AppCompatActivity {
             @Override
             public void onResponse(Call<ResponseMaterial> call, Response<ResponseMaterial> response) {
                 if (response.code() == 200) {
+                    pd.hide();
                     Triplek = response.body().getMaterials();
+                    int i=0;
                     List<String> listSpinner = new ArrayList<String>();
-                    for (int i = 0; i < Triplek.size(); i++){
-                        listSpinner.add(Triplek.get(i).getNama());
+                    String data = namatriplek1;
+                    for (int j = 0; j < Triplek.size(); j++){
+                        if (data.equalsIgnoreCase(String.valueOf(Triplek.get(j).getNama()))) {
+                            i = j;
+                        }
+                        listSpinner.add(Triplek.get(j).getNama());
 
                     }
                     ArrayAdapter<String> adapter = new ArrayAdapter<String>(mContext,
                             android.R.layout.simple_spinner_item, listSpinner);
                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     spintriplek.setAdapter(adapter);
+                    spintriplek.setSelection(i);
+
+
                 } else {
                     Toast.makeText(mContext, "Gagal mengambil data Triplek", Toast.LENGTH_SHORT).show();
                 }
@@ -272,16 +326,24 @@ public class Editplafon extends AppCompatActivity {
             @Override
             public void onResponse(Call<ResponseMaterial> call, Response<ResponseMaterial> response) {
                 if (response.code() == 200) {
+                    pd.hide();
                     Paku = response.body().getMaterials();
+                    int i=0;
                     List<String> listSpinner = new ArrayList<String>();
-                    for (int i = 0; i < Paku.size(); i++){
-                        listSpinner.add(Paku.get(i).getNama());
+                    String data = namapaku1;
+                    for (int j = 0; j < Paku.size(); j++){
+                        if (data.equalsIgnoreCase(String.valueOf(Paku.get(j).getNama()))) {
+                            i = j;
+                        }
+                        listSpinner.add(Paku.get(j).getNama());
 
                     }
                     ArrayAdapter<String> adapter = new ArrayAdapter<String>(mContext,
                             android.R.layout.simple_spinner_item, listSpinner);
                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     spinpaku.setAdapter(adapter);
+                    spinpaku.setSelection(i);
+
                 } else {
                     Toast.makeText(mContext, "Gagal mengambil data Paku", Toast.LENGTH_SHORT).show();
                 }
@@ -336,13 +398,14 @@ public class Editplafon extends AppCompatActivity {
         Panjang.setText(bundle.getString("panjang"));
         Lebar.setText(bundle.getString("lebar"));
         Luasplafon.setText(bundle.getString("luas"));
-//        Namapengerjaan.setText(bundle.getString("namatriplek"));
-//        Namapengerjaan.setText(bundle.getString("namapaku"));
-//        Namapengerjaan.setText(bundle.getString("namareng"));
-
-        Htriplek.setText(bundle.getString("hargatriplek"));
-        Hpaku.setText(bundle.getString("hargapaku"));
-        Hreng.setText(bundle.getString("hargareng"));
+        namatriplek1=bundle.getString("namatriplek");
+        namapaku1=bundle.getString("namapaku");
+        namareng1=bundle.getString("namareng");
+        luas_plafon.setText(bundle.getString("luas"));
+        hartriplek1 = bundle.getString("hargatriplek");
+        harpaku1= bundle.getString("hargapaku");
+        harreng1 =bundle.getString("hargareng");
+        hasilkayu.setText(bundle.getString("jumlahreng"));
         hasiltriplek.setText(bundle.getString("jumlahtriplek"));
         hasilpaku.setText(bundle.getString("jumlahpaku"));
         float hargatotpaku = Float.parseFloat(bundle.getString("hargapakutotal"));
@@ -382,11 +445,13 @@ public class Editplafon extends AppCompatActivity {
             public boolean onMenuItemClick(MenuItem item) {
                 String apiKey = "oa00000000app";
 //                initvalidation();
+                pd.show();
                 HashMap<String, String> map = new HashMap<>();
                 map.put("ProyekId", mId);
                 map.put("nama", Namapengerjaan.getText().toString());
                 map.put("panjang", Panjang.getText().toString());
                 map.put("lebar", Lebar.getText().toString());
+                map.put("luas", Luasplafon.getText().toString());
                 map.put("namapaku", namapaku);
                 map.put("namareng", namareng);
                 map.put("namatriplek", namatriplek);
@@ -408,6 +473,7 @@ public class Editplafon extends AppCompatActivity {
                     @Override
                     public void onResponse(Call<Void> call, Response<Void> response) {
                         if (response.code() == 201) {
+                            pd.hide();
                             Intent Perhitunganplafon = (new Intent(Editplafon.this, Perhitunganplafond.class)
                                     .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
                             Bundle setData = new Bundle();

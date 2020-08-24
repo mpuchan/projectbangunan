@@ -114,8 +114,6 @@ public class Profile extends AppCompatActivity {
         }
 
 
-
-
     private void hubungi() {
         PackageManager pm=getPackageManager();
         try {
